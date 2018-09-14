@@ -2,7 +2,7 @@
 #include "Application.h"
 #include "PhysBody3D.h"
 #include "ModuleCamera3D.h"
-#include "PhysVehicle3D.h"
+
 
 ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -19,7 +19,7 @@ ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(ap
 ModuleCamera3D::~ModuleCamera3D()
 {}
 
-// -----------------------------------------------------------------
+
 bool ModuleCamera3D::Start()
 {
 	LOG("Setting up the camera");
@@ -28,7 +28,6 @@ bool ModuleCamera3D::Start()
 	return ret;
 }
 
-// -----------------------------------------------------------------
 bool ModuleCamera3D::CleanUp()
 {
 	LOG("Cleaning camera");
@@ -36,7 +35,6 @@ bool ModuleCamera3D::CleanUp()
 	return true;
 }
 
-// -----------------------------------------------------------------
 update_status ModuleCamera3D::Update(float dt)
 {
 

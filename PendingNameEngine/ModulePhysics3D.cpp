@@ -2,7 +2,6 @@
 #include "Application.h"
 #include "ModulePhysics3D.h"
 #include "PhysBody3D.h"
-#include "PhysVehicle3D.h"
 #include "Primitive.h"
 
 #ifdef _DEBUG
@@ -53,7 +52,6 @@ bool ModulePhysics3D::Start()
 	world = new btDiscreteDynamicsWorld(dispatcher, broad_phase, solver, collision_conf);
 	world->setDebugDrawer(debug_draw);
 	world->setGravity(GRAVITY);
-	vehicle_raycaster = new btDefaultVehicleRaycaster(world);
 
 	// Big plane as ground
 	{
@@ -119,14 +117,6 @@ update_status ModulePhysics3D::Update(float dt)
 	{
 		world->debugDrawWorld();
 
-		// Render vehicles
-		p2List_item<PhysVehicle3D*>* item = vehicles.getFirst();
-		while(item)
-		{
-			item->data->Render();
-			item = item->next;
-		}
-
 		/*if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 		{
 			Sphere s(1);
@@ -180,12 +170,7 @@ bool ModulePhysics3D::CleanUp()
 
 	bodies.clear();
 
-	for(p2List_item<PhysVehicle3D*>* item = vehicles.getFirst(); item; item = item->next)
-		delete item->data;
 
-	vehicles.clear();
-
-	delete vehicle_raycaster;
 	delete world;
 
 	return true;
@@ -220,7 +205,6 @@ PhysBody3D* ModulePhysics3D::AddBody(const Sphere& sphere, Module* listener, flo
 }
 
 
-// ---------------------------------------------------------
 PhysBody3D* ModulePhysics3D::AddBody(const Cube& cube, Module* listener, float mass)
 {
 	btCollisionShape* colShape = new btBoxShape(btVector3(cube.size.x*0.5f, cube.size.y*0.5f, cube.size.z*0.5f));
@@ -248,7 +232,6 @@ PhysBody3D* ModulePhysics3D::AddBody(const Cube& cube, Module* listener, float m
 	return pbody;
 }
 
-// ---------------------------------------------------------
 PhysBody3D* ModulePhysics3D::AddBody(const Cylinder& cylinder, Module* listener, float mass)
 {
 	btCollisionShape* colShape = new btCylinderShapeX(btVector3(cylinder.height*0.5f, cylinder.radius, 0.0f));
@@ -276,66 +259,7 @@ PhysBody3D* ModulePhysics3D::AddBody(const Cylinder& cylinder, Module* listener,
 	return pbody;
 }
 
-// ---------------------------------------------------------
-PhysVehicle3D* ModulePhysics3D::AddVehicle(const VehicleInfo& info)
-{
-	btCompoundShape* comShape = new btCompoundShape();
-	shapes.add(comShape);
 
-	btCollisionShape* colShape = new btBoxShape(btVector3((info.chassis_mid_size.x*3)*0.5f, info.chassis_mid_size.y*1.0f, info.chassis_mid_size.z*0.5f));
-	shapes.add(colShape);
-
-	btTransform trans;
-	trans.setIdentity();
-	trans.setOrigin(btVector3(info.chassis_mid_size.x - info.chassis_mid_size.x, info.chassis_mid_offset.y + 0.5f, info.chassis_mid_offset.z));
-
-	comShape->addChildShape(trans, colShape);
-
-	btTransform startTransform;
-	startTransform.setIdentity();
-
-	btVector3 localInertia(0, 0, 0);
-	comShape->calculateLocalInertia(info.mass, localInertia);
-
-	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
-	btRigidBody::btRigidBodyConstructionInfo rbInfo(info.mass, myMotionState, comShape, localInertia);
-
-	btRigidBody* body = new btRigidBody(rbInfo);
-	body->setContactProcessingThreshold(BT_LARGE_FLOAT);
-	body->setActivationState(DISABLE_DEACTIVATION);
-
-	world->addRigidBody(body);
-
-	btRaycastVehicle::btVehicleTuning tuning;
-	tuning.m_frictionSlip = info.frictionSlip;
-	tuning.m_maxSuspensionForce = info.maxSuspensionForce;
-	tuning.m_maxSuspensionTravelCm = info.maxSuspensionTravelCm;
-	tuning.m_suspensionCompression = info.suspensionCompression;
-	tuning.m_suspensionDamping = info.suspensionDamping;
-	tuning.m_suspensionStiffness = info.suspensionStiffness;
-
-	btRaycastVehicle* vehicle = new btRaycastVehicle(tuning, body, vehicle_raycaster);
-
-	vehicle->setCoordinateSystem(0, 1, 2);
-
-	for(int i = 0; i < info.num_wheels; ++i)
-	{
-		btVector3 conn(info.wheels[i].connection.x, info.wheels[i].connection.y, info.wheels[i].connection.z);
-		btVector3 dir(info.wheels[i].direction.x, info.wheels[i].direction.y, info.wheels[i].direction.z);
-		btVector3 axis(info.wheels[i].axis.x, info.wheels[i].axis.y, info.wheels[i].axis.z);
-
-		vehicle->addWheel(conn, dir, axis, info.wheels[i].suspensionRestLength, info.wheels[i].radius, tuning, info.wheels[i].front);
-	}
-	// ---------------------
-
-	PhysVehicle3D* pvehicle = new PhysVehicle3D(body, vehicle, info);
-	world->addVehicle(vehicle);
-	vehicles.add(pvehicle);
-
-	return pvehicle;
-}
-
-// ---------------------------------------------------------
 void ModulePhysics3D::AddConstraintP2P(PhysBody3D& bodyA, PhysBody3D& bodyB, const vec3& anchorA, const vec3& anchorB)
 {
 	btTypedConstraint* p2p = new btPoint2PointConstraint(

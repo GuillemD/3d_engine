@@ -2,7 +2,7 @@
 #include "Module.h"
 #include "Globals.h"
 #include "glmath.h"
-#include "PhysVehicle3D.h"
+
 
 class btRigidBody;
 
@@ -25,7 +25,6 @@ private:
 	float maxDistanceToVehicle = 25.0f;
 	void CalculateViewMatrix();
 	mat4x4 ViewMatrix, ViewMatrixInverse;
-	PhysVehicle3D* vehicleBody;
 	bool isPlaying = false;
 public:
 	
