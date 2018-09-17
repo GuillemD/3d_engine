@@ -4,8 +4,8 @@
 #define __ModuleUI_H__
 
 #include "Module.h"
-#include "imgui.h"
-
+#include "ImGui/imgui.h"
+#include "ImGui/imgui_impl_sdl.h"
 
 class ModuleUI : public Module
 {
@@ -14,7 +14,10 @@ public:
 	~ModuleUI();
 
 	bool Start();
+	update_status PreUpdate(float dt);
 	update_status Update(float dt);
+	update_status PostUpdate(float dt);
+
 	bool CleanUp();
 
 };
