@@ -19,6 +19,8 @@ public:
 
 	void OnResize(int width, int height);
 
+	void DisableLight();  //Use this in the PostUpdate of a Module for it to ignore Scene Lights
+	void EnableLight();
 public:
 
 	Light lights[MAX_LIGHTS];
