@@ -26,7 +26,35 @@ update_status ModuleUI::PreUpdate(float dt)
 
 update_status ModuleUI::Update(float dt)
 {
-	ImGui::ShowTestWindow();
+	
+	if (ImGui::BeginMainMenuBar()) {
+
+		if (ImGui::BeginMenu("Menu")) {
+
+			
+			if (ImGui::MenuItem("ShowTestWindow")) {
+				if (ShowTestWindow) {
+					ShowTestWindow = false;
+				}
+				else
+				{
+					ShowTestWindow = true;
+				}
+			}
+			if (ImGui::MenuItem("Close Application")) {
+				return UPDATE_STOP;
+			}
+			ImGui::EndMenu();
+		}
+	}
+
+	ImGui::EndMainMenuBar();
+	if (ShowTestWindow) {
+		ImGui::ShowTestWindow();
+	}
+
+
+
 	return UPDATE_CONTINUE;
 }
 

@@ -20,6 +20,9 @@ public:
 
 	bool CleanUp();
 
+
+private:
+	bool ShowTestWindow = false;
 };
 
 
