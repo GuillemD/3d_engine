@@ -309,6 +309,8 @@
     <ClInclude Include="PCG\pcg_basic.h">
       <Filter>Sources\PCG</Filter>
     </ClInclude>
+    <ClInclude Include="p2DynArray.h" />
+    <ClInclude Include="p2Point.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
