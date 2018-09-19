@@ -1,5 +1,5 @@
 # 
-# PCG Random Number Generation for C++.
+# PCG Random Number Generation for C.
 # 
 # Copyright 2014 Melissa O'Neill <oneill@pcg-random.org>
 # 
@@ -21,29 +21,29 @@
 #     http://www.pcg-random.org
 #
 
-TARGETS           = pcg-demo codebook cppref-sample make-partytrick
-BINARYOUT_TARGETS = spew use-partytrick
+TARGETS = pcg32-demo pcg32-global-demo pcg32x2-demo pcg64-demo
 
-CPPFLAGS += -I../include 
-CXXFLAGS += -std=c++11 -O2
-CC       = $(CXX)       # Cheat so that linking uses the C++ compiler
+LDFLAGS  += -L../src
+LDLIBS   += -lpcg_random
+CPPFLAGS += -I../include -I../extras
+CFLAGS   += -std=c99
 
 all: $(TARGETS)
 
-posix-binaryoutput: spew use-partytrick
-
 clean:
-	rm -f *.o $(TARGETS) $(BINARYOUT_TARGETS)
+	rm -f *.o $(TARGETS)
+	rm -rf actual
 
-codebook.o: codebook.cpp ../include/pcg_random.hpp \
-  ../include/pcg_extras.hpp ../include/pcg_uint128.hpp
-cppref-sample.o: cppref-sample.cpp ../include/pcg_random.hpp \
-  ../include/pcg_extras.hpp ../include/pcg_uint128.hpp
-make-partytrick.o: make-partytrick.cpp ../include/pcg_random.hpp \
-  ../include/pcg_extras.hpp ../include/pcg_uint128.hpp
-pcg-demo.o: pcg-demo.cpp ../include/pcg_random.hpp \
-  ../include/pcg_extras.hpp ../include/pcg_uint128.hpp
-spew.o: spew.cpp ../include/pcg_random.hpp ../include/pcg_extras.hpp \
-  ../include/pcg_uint128.hpp
-use-partytrick.o: use-partytrick.cpp ../include/pcg_random.hpp \
-  ../include/pcg_extras.hpp ../include/pcg_uint128.hpp
+../extras/entropy.o: ../extras/entropy.c ../include/pcg_variants.h \
+  ../extras/pcg_spinlock.h ../extras/entropy.h
+
+pcg32-demo: pcg32-demo.o ../extras/entropy.o
+pcg32-global-demo: pcg32-global-demo.o ../extras/entropy.o
+pcg32x2-demo: pcg32x2-demo.o ../extras/entropy.o
+pcg64-demo: pcg64-demo.o ../extras/entropy.o
+
+pcg32-demo.o: pcg32-demo.c ../include/pcg_variants.h ../extras/entropy.h
+pcg32-global-demo.o: pcg32-global-demo.c ../include/pcg_variants.h \
+  ../extras/entropy.h
+pcg32x2-demo.o: pcg32x2-demo.c ../include/pcg_variants.h ../extras/entropy.h
+pcg64-demo.o: pcg64-demo.c ../include/pcg_variants.h ../extras/entropy.h
