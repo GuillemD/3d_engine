@@ -1,7 +1,6 @@
 #pragma once
 #include "Module.h"
 #include "Globals.h"
-#include "p2List.h"
 #include <list>
 #include "MathGeoLib/MathGeoLib.h"
 
@@ -29,8 +28,7 @@ public:
 
 	std::list<float2> GetSphereCollisionsList();
 	std::list<float2> GetCubeCollisionsList();
-
-
+	std::list<float2> GetCapsuleCollisionsList();
 
 	std::vector<math::Sphere> SpheresArray;
 	std::vector<math::Capsule> CapsulesArray;

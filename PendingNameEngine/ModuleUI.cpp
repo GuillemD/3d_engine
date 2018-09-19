@@ -67,6 +67,9 @@ update_status ModuleUI::Update(float dt)
 			if (ImGui::MenuItem("Cube collision checkers")) {
 				App->physics->GetCubeCollisionsList();
 			}
+			if (ImGui::MenuItem("Capsule collision checkers")) {
+				App->physics->GetCapsuleCollisionsList();
+			}
 			ImGui::EndMenu();
 		}
 	}

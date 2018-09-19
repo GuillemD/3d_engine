@@ -134,7 +134,9 @@ std::list<float2> ModulePhysics3D::GetSphereCollisionsList()
 		}
 		object_two = 0;
 	}
-
+	if (SphereCollisionsList.size() == 0) {
+		LOG("There are no Spheres colliding with each other.")
+	}
 	return SphereCollisionsList;
 }
 
@@ -158,8 +160,36 @@ std::list<float2> ModulePhysics3D::GetCubeCollisionsList()
 		}
 		object_two = 0;
 	}
-
+	if (CubeCollisionsList.size() == 0) {
+		LOG("There are no Cubes colliding with each other.")
+	}
 	return CubeCollisionsList;
+}
+
+std::list<float2> ModulePhysics3D::GetCapsuleCollisionsList()
+{
+	std::list<float2> CapsuleCollisionsList;
+	int object_one = 0, object_two = 0;
+	//To check if two objects of the same kind are colliding we use math::Wahtever.Intersects(). 
+	//We use 2 fors to iterate and check all the items in the Sphere vector. Objects collisions with themselves should be ignored
+
+	for (object_one; object_one < CapsulesArray.size(); object_one++)
+	{
+		for (object_two; object_two < CapsulesArray.size(); object_two++) {
+			if (object_one == object_two) {
+				continue;
+			}
+			if (CapsulesArray[object_one].Intersects(CapsulesArray[object_two])) {
+				CapsuleCollisionsList.push_back({ (float)object_one, (float)object_two });
+				LOG("Object %d intersects with Object %d.", object_one, object_two);
+			}
+		}
+		object_two = 0;
+	}
+	if (CapsuleCollisionsList.size() == 0) {
+		LOG("There are no Capsules colliding with each other.")
+	}
+	return CapsuleCollisionsList;
 }
 
 // ---------------------------------------------------------
