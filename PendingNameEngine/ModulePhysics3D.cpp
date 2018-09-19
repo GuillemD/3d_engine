@@ -114,4 +114,52 @@ void ModulePhysics3D::CreateCube(vec aabbmin, vec aabbmax)
 
 }
 
+std::list<float2> ModulePhysics3D::GetSphereCollisionsList()
+{
+	std::list<float2> SphereCollisionsList;
+	int object_one = 0, object_two = 0;
+	//To check if two objects of the same kind are colliding we use math::Wahtever.Intersects(). 
+	//We use 2 fors to iterate and check all the items in the Sphere vector. Objects collisions with themselves should be ignored
+	
+	for (object_one; object_one < SpheresArray.size(); object_one++)
+	{
+		for (object_two; object_two < SpheresArray.size(); object_two++) {
+			if (object_one == object_two) {
+				continue;
+			}
+			if (SpheresArray[object_one].Intersects(SpheresArray[object_two])) {
+				SphereCollisionsList.push_back({ (float)object_one, (float)object_two });
+				LOG("Object %d intersects with Object %d", object_one, object_two);
+			}
+		}
+		object_two = 0;
+	}
+
+	return SphereCollisionsList;
+}
+
+std::list<float2> ModulePhysics3D::GetCubeCollisionsList()
+{
+	std::list<float2> CubeCollisionsList;
+	int object_one= 0, object_two = 0;
+	//To check if two objects of the same kind are colliding we use math::Wahtever.Intersects(). 
+	//We use 2 fors to iterate and check all the items in the Sphere vector. Objects collisions with themselves should be ignored
+
+	for (object_one; object_one < CubesArray.size(); object_one++)
+	{
+		for (object_two; object_two < CubesArray.size(); object_two++) {
+			if (object_one == object_two) {
+				continue;
+			}
+			if (CubesArray[object_one].Intersects(CubesArray[object_two])) {
+				CubeCollisionsList.push_back({ (float)object_one, (float)object_two });
+				LOG("Object %d intersects with Object %d", object_one, object_two);
+			}
+		}
+		object_two = 0;
+	}
+
+	return CubeCollisionsList;
+}
+
 // ---------------------------------------------------------

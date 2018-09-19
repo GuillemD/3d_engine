@@ -60,7 +60,15 @@ update_status ModuleUI::Update(float dt)
 			ImGui::EndMenu();
 		
 		}
-		
+		if (ImGui::BeginMenu("Collision Checkers")) {
+			if (ImGui::MenuItem("Sphere collision checkers")) {
+				App->physics->GetSphereCollisionsList();
+			}
+			if (ImGui::MenuItem("Cube collision checkers")) {
+				App->physics->GetCubeCollisionsList();
+			}
+			ImGui::EndMenu();
+		}
 	}
 
 	ImGui::EndMainMenuBar();

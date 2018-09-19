@@ -2,6 +2,7 @@
 #include "Module.h"
 #include "Globals.h"
 #include "p2List.h"
+#include <list>
 #include "MathGeoLib/MathGeoLib.h"
 
 
@@ -26,11 +27,16 @@ public:
 	void CreateCapsule(float radius, LineSegment l);
 	void CreateCube(vec aabbmin, vec aabbmax);
 
+	std::list<float2> GetSphereCollisionsList();
+	std::list<float2> GetCubeCollisionsList();
+
 
 
 	std::vector<math::Sphere> SpheresArray;
 	std::vector<math::Capsule> CapsulesArray;
 	std::vector<math::AABB> CubesArray;
+
+	
 private:
 	
 
