@@ -74,13 +74,13 @@ update_status Application::Update()
 	PrepareUpdate();
 	
 
-	for (std::list<Module*>::iterator item = list_modules.begin(); item != list_modules.end(); item++) {
+	for (std::list<Module*>::iterator item = list_modules.begin(); item != list_modules.end() && ret==UPDATE_CONTINUE; item++) {
 		ret = (*item)->PreUpdate(dt);
 	}
-	for (std::list<Module*>::iterator item = list_modules.begin(); item != list_modules.end(); item++) {
+	for (std::list<Module*>::iterator item = list_modules.begin(); item != list_modules.end() && ret == UPDATE_CONTINUE; item++) {
 		ret = (*item)->Update(dt);
 	}
-	for (std::list<Module*>::iterator item = list_modules.begin(); item != list_modules.end(); item++) {
+	for (std::list<Module*>::iterator item = list_modules.begin(); item != list_modules.end() && ret == UPDATE_CONTINUE; item++) {
 		ret = (*item)->PostUpdate(dt);
 	}
 
