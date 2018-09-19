@@ -43,6 +43,9 @@
     <Filter Include="Sources\MathGeoLib\Algorithm\Random">
       <UniqueIdentifier>{8ce2d6ef-5e68-479f-bf1f-f03c9ac8cb5a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\PCG">
+      <UniqueIdentifier>{5ba698d6-30a5-4cb7-a189-575d4ffd9924}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -300,6 +303,12 @@
     <ClInclude Include="MathGeoLib\Algorithm\Random\LCG.h">
       <Filter>Sources\MathGeoLib\Algorithm\Random</Filter>
     </ClInclude>
+    <ClInclude Include="PCG\pcg_variants.h">
+      <Filter>Sources\PCG</Filter>
+    </ClInclude>
+    <ClInclude Include="PCG\pcg_basic.h">
+      <Filter>Sources\PCG</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -463,6 +472,9 @@
     </ClCompile>
     <ClCompile Include="MathGeoLib\Algorithm\Random\LCG.cpp">
       <Filter>Sources\MathGeoLib\Algorithm\Random</Filter>
+    </ClCompile>
+    <ClCompile Include="PCG\pcg_basic.c">
+      <Filter>Sources\PCG</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

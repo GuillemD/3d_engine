@@ -3,6 +3,9 @@
 #include "Globals.h"
 
 
+struct PhysBody3D;
+
+
 class ModuleSceneIntro : public Module
 {
 public:
@@ -12,6 +15,9 @@ public:
 	bool Start();
 	update_status Update(float dt);
 	bool CleanUp();
+
+	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
+
 
 	
 private:
