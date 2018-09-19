@@ -27,9 +27,14 @@ private:
 	bool ShowSphereCreatorPanel = false;
 	bool ShowCapsuleCreatorPanel = false;
 
-	float tmpint = 0;
-	vec tmpvec;
+	float tmpfloat = 0.0f;
+	vec tmpvec = vec(0.0f, 0.0f, 0.0f);
+	vec tmpvec2 = vec(0.0f, 0.0f, 0.0f);
 
+private:
+	void ModuleUI::ShowCubeCreator();
+	void ModuleUI::ShowSphereCreator();
+	void ModuleUI::ShowCapsuleCreator();
 };
 
 

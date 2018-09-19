@@ -85,6 +85,7 @@ void ModulePhysics3D::CreateSphere(vec position, float radius)
 	ret.pos = position;
 	ret.r = radius;
 	SpheresArray.push_back(ret);
+	LOG("Created sphere with radius %f",radius);
 	
 }
 
@@ -100,7 +101,7 @@ void ModulePhysics3D::CreateCapsule(float radius, LineSegment l)
 	ret.r = radius;
 	ret.l = l;
 	CapsulesArray.push_back(ret);
-
+	LOG("Created Capsule");
 }
 
 void ModulePhysics3D::CreateCube(vec aabbmin, vec aabbmax)
@@ -109,6 +110,7 @@ void ModulePhysics3D::CreateCube(vec aabbmin, vec aabbmax)
 	ret.minPoint = aabbmin;
 	ret.maxPoint = aabbmax;
 	CubesArray.push_back(ret);
+	LOG("Created cube");
 
 }
 
