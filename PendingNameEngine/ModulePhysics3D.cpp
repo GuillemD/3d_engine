@@ -71,12 +71,16 @@ bool ModulePhysics3D::CleanUp()
 
 void ModulePhysics3D::CreateSphere(vec position, float radius)
 {
-	math::Sphere ret;
-	ret.pos = position;
-	ret.r = radius;
-	SpheresArray.push_back(ret);
-	LOG("Created sphere with radius %f",radius);
-	
+	if(radius>0){
+		math::Sphere ret;
+		ret.pos = position;
+		ret.r = radius;
+		SpheresArray.push_back(ret);
+		LOG("Created sphere with radius %f",radius);
+	}
+	else {
+		LOG("Can't create Spheres with radius 0");
+	}
 }
 
 void ModulePhysics3D::CreateCylinder(vec position, float radius, float height)
