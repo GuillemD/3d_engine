@@ -26,25 +26,21 @@ update_status ModuleUI::PreUpdate(float dt)
 
 update_status ModuleUI::Update(float dt)
 {
-	
-	if (ImGui::BeginMainMenuBar()) {
 
+	if (ImGui::BeginMainMenuBar()) {
 		if (ImGui::BeginMenu("Menu")) {
 
-			
 			if (ImGui::MenuItem("ShowTestWindow")) {
 				ShowTestWindow = !ShowTestWindow;
 			}
-
-
 			if (ImGui::MenuItem("Close Application")) {
 				return UPDATE_STOP;
 			}
-
-
 			ImGui::EndMenu();
+
 		}
 		if (ImGui::BeginMenu("Object creators")) {
+
 			if (ImGui::MenuItem("Sphere creator panel")) {
 				//bool to show the sphere creator
 				ShowSphereCreatorPanel = !ShowSphereCreatorPanel;
@@ -58,7 +54,7 @@ update_status ModuleUI::Update(float dt)
 				ShowCapsuleCreatorPanel = !ShowCapsuleCreatorPanel;
 			}
 			ImGui::EndMenu();
-		
+
 		}
 		if (ImGui::BeginMenu("Collision Checkers")) {
 			if (ImGui::MenuItem("Sphere collision checkers")) {
@@ -72,9 +68,9 @@ update_status ModuleUI::Update(float dt)
 			}
 			ImGui::EndMenu();
 		}
+		ImGui::EndMainMenuBar();
 	}
-
-	ImGui::EndMainMenuBar();
+	
 	if (ShowTestWindow) {
 		ImGui::ShowTestWindow();
 	}
@@ -85,8 +81,8 @@ update_status ModuleUI::Update(float dt)
 
 
 	return UPDATE_CONTINUE;
-}
 
+}
 update_status ModuleUI::PostUpdate(float dt)
 {
 	App->renderer3D->DisableLight();
