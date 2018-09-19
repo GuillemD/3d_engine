@@ -324,6 +324,9 @@
     <ClInclude Include="PCG\pcg_variants.h">
       <Filter>Sources\PCG</Filter>
     </ClInclude>
+    <ClInclude Include="PCG\pcg_basic.h">
+      <Filter>Sources\PCG</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -496,6 +499,9 @@
     </ClCompile>
     <ClCompile Include="MathGeoLib\Algorithm\Random\LCG.cpp">
       <Filter>Sources\MathGeoLib\Algorithm\Random</Filter>
+    </ClCompile>
+    <ClCompile Include="PCG\pcg_basic.c">
+      <Filter>Sources\PCG</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

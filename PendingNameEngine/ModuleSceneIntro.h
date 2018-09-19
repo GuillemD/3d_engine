@@ -3,7 +3,6 @@
 #include "p2DynArray.h"
 #include "Globals.h"
 #include "Primitive.h"
-#include "PCG/pcg_variants.h"
 
 struct PhysBody3D;
 
@@ -19,6 +18,7 @@ public:
 	bool CleanUp();
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
+
 	
 private:
 	Plane grid;
