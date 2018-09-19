@@ -1,80 +1,55 @@
-# PCG Random Number Generation, C Edition
+# PCG Random Number Generation, Minimal C Edition
 
 [PCG-Random website]: http://www.pcg-random.org
 
-This code provides an implementation of the PCG family of random number
-generators, which are fast, statistically excellent, and offer a number of
-useful features.
+This code provides a minimal implementation of one member of the PCG family
+of random number generators, which are fast, statistically excellent,
+and offer a number of useful features.
 
 Full details can be found at the [PCG-Random website].  This version
-of the code provides many family members -- if you just want one
-simple generator, you may prefer the minimal version of the library.
-
-There are two APIs, a low-level one which explicitly names the output
-functions, and a higher-level one (which maps directly to the low-level
-code).  Generally, you should use the high-level API.
+of the code provides a single family member and skips some useful features
+(such as jump-ahead/jump-back) -- if you want a more full-featured library, 
+you may prefer the full version of the C library, or for all features,
+the C++ library.
 
 ## Documentation and Examples
 
 Visit [PCG-Random website] for information on how to use this library, or look
-at the sample code in the `sample` directory -- hopefully it should be fairly
-self explanatory.
+at the sample code -- hopefully it should be fairly self explanatory.
 
 ## Building
 
-The code is written in C99-style C with no significant platform dependencies.
-On a Unix-style system (e.g., Linux, Mac OS X) you should be able to just
-type type
+There is no library to build.  Just use the code.  You can however build the
+three demo programs.
+
+The code is written in C89-style C with no significant platform dependencies.
+On a Unix-style system (e.g., Linux, Mac OS X), or any system with `make`,
+you should be able to just type type
 
     make
 
-Almost all the real code is in `include/pcg_variants.h`.  Because the
-individual RNGs have a very small amount of code, they are provided as
-inline functions to allow the compiler the option of inlining them.
-But because C requires there to also be an external definition, the
-`src` directory contains code to build `libpcg_random.a` which provides
-non-inline definitions for all the PCG generators.
+Almost all the real code is in `pcg_basic.c`, with type and function
+declarations in `pcg_basic.h`.  
 
-On other systems, it should be straightforward to build a library by
-compiling the files in the src directory.  Or, write your own file giving
-an `extern` declaration for every function you actually use.
+On other systems, it should be straightforward to build.  For example, you
+even run the code directly using the tinycc compiler, using
+
+    cat pcg_basic.c pcg32-demo.c | tcc -run
 
 ## Testing
 
-Run
+This command will build the three provided demo programs, `pcg32-global-demo`
+(which uses the global rng), `pcg32-demo` (which uses a local generator), and
+pcg32x2-demo (which gangs together two generators, showing the usefulness of
+creating multiple generators).
 
-    make test
+To run the demos using a fixed seed (same output every time), run
 
-## Directory Structure
+    ./pcg32-demo
+    
+To produce different output, run
 
-The directories are arranged as follows:
+    ./pcg32-demo -r
 
-* `include` -- contains `pcg_variants.h`
-* `src` -- code to define external versions of the inline functions from
-  `pcg_variants.h` plus all the `_advance_r` functions.
-* `test-low` -- test code for the low-level API where the functions have long
-  scary-looking names
-* `test-high` -- test code for the high-level API where the functions have
-  shorter, less scary-looking names.
-* `extras` -- other useful code, such as code to read /dev/random
-* `sample` -- sample code, similar to the code in `test-high` but more human
-  readable
-  
-## 128-bit Math
-
-On systems that support it (64-bit systems using GCC or Clang), the library
-provides RNGs that use 128-bit intger math. These generators produce 64-bit
-output (or more) and have a period of 2^128.
-
-If you don't have 128-bit support on your system, you aren't losing that much.
-Thanks to the 2^63 random streams/sequences, you can gang together multiple
-32-bit generators.  (Note: This approach *would not work* well with generators
-that only have a single stream/sequence).  Example code is provided in
-`sample/pcg32x2-demo.c`.
-
-The C++ implementation provides 128-bit integers even on systems that don't
-natively support it, but doing so would be too much trouble in C.
-
-
-
-
+You can also pass an integer count to specify how may rounds of output you
+would like.

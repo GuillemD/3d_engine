@@ -29,10 +29,11 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <stdbool.h>
+#include <time.h>
 #include <string.h>
 
-#include "pcg_variants.h"
-#include "entropy.h"                    // Wrapper around /dev/random
+#include "pcg_basic.h"
 
 int main(int argc, char** argv)
 {
@@ -40,6 +41,7 @@ int main(int argc, char** argv)
 
     int rounds = 5;
     bool nondeterministic_seed = false;
+    int round, i;
 
     ++argv;
     --argc;
@@ -67,11 +69,13 @@ int main(int argc, char** argv)
     // shows three possible ways to do so.
 
     if (nondeterministic_seed) {
-        // Seed with external entropy
-
-        uint64_t seeds[2];
-        entropy_getbytes((void*)seeds, sizeof(seeds));
-        pcg32_srandom_r(&rng, seeds[0], seeds[1]);
+        // Seed with external entropy -- the time and some program addresses
+        // (which will actually be somewhat random on most modern systems).
+        // A better solution, entropy_getbytes, using /dev/random, is provided
+        // in the full library.
+        
+        pcg32_srandom_r(&rng, time(NULL) ^ (intptr_t)&printf, 
+			      (intptr_t)&rounds);
     } else {
         // Seed with a fixed constant
 
@@ -86,41 +90,35 @@ int main(int argc, char** argv)
            "\n",
            sizeof(pcg32_random_t));
 
-    for (int round = 1; round <= rounds; ++round) {
+    for (round = 1; round <= rounds; ++round) {
         printf("Round %d:\n", round);
-
         /* Make some 32-bit numbers */
         printf("  32bit:");
-        for (int i = 0; i < 6; ++i)
-            printf(" 0x%08x", pcg32_random_r(&rng));
-        printf("\n");
-
-        printf("  Again:");
-        pcg32_advance_r(&rng, -6);
-        for (int i = 0; i < 6; ++i)
+        for (i = 0; i < 6; ++i)
             printf(" 0x%08x", pcg32_random_r(&rng));
         printf("\n");
 
         /* Toss some coins */
         printf("  Coins: ");
-        for (int i = 0; i < 65; ++i)
+        for (i = 0; i < 65; ++i)
             printf("%c", pcg32_boundedrand_r(&rng, 2) ? 'H' : 'T');
         printf("\n");
 
         /* Roll some dice */
         printf("  Rolls:");
-        for (int i = 0; i < 33; ++i)
+        for (i = 0; i < 33; ++i) {
             printf(" %d", (int)pcg32_boundedrand_r(&rng, 6) + 1);
+        }
         printf("\n");
 
         /* Deal some cards */
         enum { SUITS = 4, NUMBERS = 13, CARDS = 52 };
         char cards[CARDS];
 
-        for (int i = 0; i < CARDS; ++i)
+        for (i = 0; i < CARDS; ++i)
             cards[i] = i;
 
-        for (int i = CARDS; i > 1; --i) {
+        for (i = CARDS; i > 1; --i) {
             int chosen = pcg32_boundedrand_r(&rng, i);
             char card = cards[chosen];
             cards[chosen] = cards[i - 1];
@@ -131,7 +129,7 @@ int main(int argc, char** argv)
         static const char number[] = {'A', '2', '3', '4', '5', '6', '7',
                                       '8', '9', 'T', 'J', 'Q', 'K'};
         static const char suit[] = {'h', 'c', 'd', 's'};
-        for (int i = 0; i < CARDS; ++i) {
+        for (i = 0; i < CARDS; ++i) {
             printf(" %c%c", number[cards[i] / SUITS], suit[cards[i] % SUITS]);
             if ((i + 1) % 22 == 0)
                 printf("\n\t");
