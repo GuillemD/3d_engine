@@ -13,8 +13,8 @@ bool ModuleSceneIntro::Start()
 {
 	LOG("Loading Intro assets");
 	bool ret = true;
-	App->camera->Move(vec3(0.0f, 2.0f, 0.0f));
-	App->camera->LookAt(vec3(0.0f, 0.0f, 0.0f));
+	App->camera->Move(vec(0.0f, 2.0f, 0.0f));
+	App->camera->LookAt(vec(0.0f, 0.0f, 0.0f));
 	return ret;
 }
 

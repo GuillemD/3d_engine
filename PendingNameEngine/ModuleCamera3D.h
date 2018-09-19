@@ -1,7 +1,6 @@
 #pragma once
 #include "Module.h"
 #include "Globals.h"
-#include "glmath.h"
 
 
 class btRigidBody;
@@ -16,18 +15,18 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
-	void Look(const vec3 &Position, const vec3 &Reference, bool RotateAroundReference = false);
-	void LookAt(const vec3 &Spot);
-	void Move(const vec3 &Movement);
+	void Look(const vec &Position, const vec &Reference, bool RotateAroundReference = false);
+	void LookAt(const vec &Spot);
+	void Move(const vec &Movement);
 	float* GetViewMatrix();
 
 private:
 	float maxDistanceToVehicle = 25.0f;
 	void CalculateViewMatrix();
-	mat4x4 ViewMatrix, ViewMatrixInverse;
+	float4x4 ViewMatrix, ViewMatrixInverse;
 	bool isPlaying = false;
 public:
 	
-	vec3 X, Y, Z, Position, Reference;
+	vec X, Y, Z, Position, Reference;
 	
 };
