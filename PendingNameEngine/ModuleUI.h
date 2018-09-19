@@ -23,6 +23,13 @@ public:
 
 private:
 	bool ShowTestWindow = false;
+	bool ShowCubeCreatorPanel = false;
+	bool ShowSphereCreatorPanel = false;
+	bool ShowCapsuleCreatorPanel = false;
+
+	float tmpint = 0;
+	vec tmpvec;
+
 };
 
 
