@@ -24,8 +24,10 @@ public:
 
 
 private:
+	//Checkers
 	bool ShowTestWindow = false;
 	bool ShowRNG = false;
+	bool ShowAbout = false;
 	bool ShowCubeCreatorPanel = false;
 	bool ShowSphereCreatorPanel = false;
 	bool ShowCapsuleCreatorPanel = false;
@@ -35,9 +37,13 @@ private:
 	vec tmpvec2 = vec(0.0f, 0.0f, 0.0f);
 
 private:
+	//Functions
 	void ModuleUI::ShowCubeCreator();
 	void ModuleUI::ShowSphereCreator();
 	void ModuleUI::ShowCapsuleCreator();
+
+	void ModuleUI::ShowAboutWindow();
+	void ModuleUI::ShowDemoWindow();
 
 public:
 	pcg32_random_t rng1 = PCG32_INITIALIZER;

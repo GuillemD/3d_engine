@@ -30,15 +30,6 @@ update_status ModuleUI::Update(float dt)
 	if (ImGui::BeginMainMenuBar()) {
 		if (ImGui::BeginMenu("Menu")) {
 
-			if (ImGui::MenuItem("Show Test Window")) {
-				if (ShowTestWindow) {
-					ShowTestWindow = false;
-				}
-				else
-				{
-					ShowTestWindow = true;
-				}
-			}
 			if (ImGui::MenuItem("Show Random Number Generator")) {
 				if (ShowRNG) {
 					ShowRNG = false;
@@ -83,12 +74,29 @@ update_status ModuleUI::Update(float dt)
 			}
 			ImGui::EndMenu();
 		}
+		if (ImGui::BeginMenu("Help")) {
+			if (ImGui::MenuItem("ImGui Demo Window")) {
+				ShowTestWindow = !ShowTestWindow;
+			}
+			if (ImGui::MenuItem("Engine documentation")) {
+				ShellExecuteA(NULL, "open", "https://github.com/GuillemD/PendingNameEngine-3D/wiki", NULL, NULL, SW_SHOWNORMAL);
+			}
+			if (ImGui::MenuItem("Latest Release")) {
+				ShellExecuteA(NULL, "open", "https://github.com/GuillemD/PendingNameEngine-3D/releases", NULL, NULL, SW_SHOWNORMAL);
+			}
+			if (ImGui::MenuItem("Report Bugs")) {
+				ShellExecuteA(NULL, "open", "https://github.com/GuillemD/PendingNameEngine-3D/issues", NULL, NULL, SW_SHOWNORMAL);
+			}
+			if (ImGui::MenuItem("About")) {
+				ShowAbout = !ShowAbout;
+			}
+			ImGui::EndMenu();
+		}
 		ImGui::EndMainMenuBar();
 	}
-	
-	if (ShowTestWindow) {
-		ImGui::ShowTestWindow();
-	}
+	if (ShowAbout) ShowAboutWindow();
+
+	if (ShowTestWindow) ShowDemoWindow();
 	if (ShowRNG)
 	{
 		
@@ -206,4 +214,23 @@ void ModuleUI::ShowCapsuleCreator()
 		}
 	}
 	ImGui::End();
+}
+
+void ModuleUI::ShowDemoWindow()
+{
+	ImGui::ShowTestWindow();
+}
+void ModuleUI::ShowAboutWindow()
+{
+	if (ImGui::Begin("About"))
+	{
+		ImGui::Text("PendingName Engine made by Asier Arellano and Guillem Dominguez for academic purposes.");
+		ImGui::Spacing();
+		ImGui::Separator();
+
+		ImGui::Text("SDL v2.0.4");
+		//ShellExecuteA(NULL, "open", "https://www.libsdl.org/", NULL, NULL, SW_SHOWNORMAL);
+	}
+	ImGui::End();
+	
 }
