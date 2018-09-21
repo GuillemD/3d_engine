@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "Globals.h"
 
 Application::Application()
 {
@@ -67,6 +68,7 @@ void Application::FinishUpdate()
 {
 }
 
+
 // Call PreUpdate, Update and PostUpdate on all modules
 update_status Application::Update()
 {
@@ -100,4 +102,18 @@ bool Application::CleanUp()
 void Application::AddModule(Module* mod)
 {
 	list_modules.push_back(mod);
+}
+
+void Application::OpenBrowser(const char * url)
+{
+	ShellExecuteA(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);
+}
+void Application::OpenFile(const char * path)
+{
+	ShellExecute(NULL, NULL, path, NULL, NULL, SW_SHOW);
+}
+
+const char * Application::GetVersion() const
+{
+	return VERSION;
 }

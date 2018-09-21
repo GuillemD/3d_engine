@@ -39,10 +39,14 @@ public:
 	update_status Update();
 	bool CleanUp();
 	
+	void OpenBrowser(const char* url);
+	void OpenFile(const char* path);
+	const char* GetVersion() const;
 
 private:
 
 	void AddModule(Module* mod);
 	void PrepareUpdate();
 	void FinishUpdate();
+
 };
