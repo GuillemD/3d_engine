@@ -7,7 +7,7 @@ shallow_clone: true
 build:
   verbosity: minimal
 before_package:
-- ps: Copy-Item C:\projects\PendingNameEngine-3D\$env:CONFIGURATION\PendingNameEngine.exe C:\projects\PendingNameEngine\Game\.
+- ps: Copy-Item C:\projects\PendingNameEngine-3D\$env:CONFIGURATION\PendingName.exe C:\projects\PendingNameEngine\Game\.
 artifacts:
 - path: PendingNameEngine\Game
   name: PendingNameEngine-3D
