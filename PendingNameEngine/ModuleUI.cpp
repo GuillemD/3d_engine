@@ -26,74 +26,8 @@ update_status ModuleUI::PreUpdate(float dt)
 
 update_status ModuleUI::Update(float dt)
 {
-
-	if (ImGui::BeginMainMenuBar()) {
-		if (ImGui::BeginMenu("Menu")) {
-
-			if (ImGui::MenuItem("Show Random Number Generator")) {
-				if (ShowRNG) {
-					ShowRNG = false;
-				}
-				else
-				{
-					ShowRNG = true;
-				}
-			}
-			if (ImGui::MenuItem("Close Application")) {
-				return UPDATE_STOP;
-			}
-			ImGui::EndMenu();
-
-		}
-		if (ImGui::BeginMenu("Object creators")) {
-
-			if (ImGui::MenuItem("Sphere creator panel")) {
-				//bool to show the sphere creator
-				ShowSphereCreatorPanel = !ShowSphereCreatorPanel;
-			}
-			if (ImGui::MenuItem("Cube creator panel")) {
-				//bool to show the sphere creator
-				ShowCubeCreatorPanel = !ShowCubeCreatorPanel;
-			}
-			if (ImGui::MenuItem("Capsule creator panel")) {
-				//bool to show the sphere creator
-				ShowCapsuleCreatorPanel = !ShowCapsuleCreatorPanel;
-			}
-			ImGui::EndMenu();
-
-		}
-		if (ImGui::BeginMenu("Collision Checkers")) {
-			if (ImGui::MenuItem("Sphere collision checkers")) {
-				App->physics->GetSphereCollisionsList();
-			}
-			if (ImGui::MenuItem("Cube collision checkers")) {
-				App->physics->GetCubeCollisionsList();
-			}
-			if (ImGui::MenuItem("Capsule collision checkers")) {
-				App->physics->GetCapsuleCollisionsList();
-			}
-			ImGui::EndMenu();
-		}
-		if (ImGui::BeginMenu("Help")) {
-			if (ImGui::MenuItem("ImGui Demo Window")) {
-				ShowTestWindow = !ShowTestWindow;
-			}
-			if (ImGui::MenuItem("Engine documentation")) {
-				ShellExecuteA(NULL, "open", "https://github.com/GuillemD/PendingNameEngine-3D/wiki", NULL, NULL, SW_SHOWNORMAL);
-			}
-			if (ImGui::MenuItem("Latest Release")) {
-				ShellExecuteA(NULL, "open", "https://github.com/GuillemD/PendingNameEngine-3D/releases", NULL, NULL, SW_SHOWNORMAL);
-			}
-			if (ImGui::MenuItem("Report Bugs")) {
-				ShellExecuteA(NULL, "open", "https://github.com/GuillemD/PendingNameEngine-3D/issues", NULL, NULL, SW_SHOWNORMAL);
-			}
-			if (ImGui::MenuItem("About")) {
-				ShowAbout = !ShowAbout;
-			}
-			ImGui::EndMenu();
-		}
-		ImGui::EndMainMenuBar();
-	}
+	CreateMainMenu();
+	
 	if (ShowAbout) ShowAboutWindow();
 	if (ShowTestWindow) ShowDemoWindow();
 	if (ShowRNG) ShowRNGenerator();	
@@ -101,6 +35,8 @@ update_status ModuleUI::Update(float dt)
 	if (ShowSphereCreatorPanel)ShowSphereCreator();
 	if (ShowCubeCreatorPanel)ShowCubeCreator();
 	if (ShowCapsuleCreatorPanel)ShowCapsuleCreator();
+
+	if (closeApp) return UPDATE_STOP;
 
 
 	return UPDATE_CONTINUE;
@@ -225,6 +161,70 @@ void ModuleUI::ShowRNGenerator()
 		}
 		ImGui::Text("%f", rand_float);
 		ImGui::End();
+	}
+}
+void ModuleUI::CreateMainMenu()
+{
+	if (ImGui::BeginMainMenuBar()) {
+		if (ImGui::BeginMenu("Menu")) {
+
+			if (ImGui::MenuItem("Show Random Number Generator")) {
+				ShowRNG = !ShowRNG;
+			}
+			if (ImGui::MenuItem("Close Application")) {
+				closeApp = !closeApp;
+			}
+			ImGui::EndMenu();
+
+		}
+		if (ImGui::BeginMenu("Object creators")) {
+
+			if (ImGui::MenuItem("Sphere creator panel")) {
+				//bool to show the sphere creator
+				ShowSphereCreatorPanel = !ShowSphereCreatorPanel;
+			}
+			if (ImGui::MenuItem("Cube creator panel")) {
+				//bool to show the sphere creator
+				ShowCubeCreatorPanel = !ShowCubeCreatorPanel;
+			}
+			if (ImGui::MenuItem("Capsule creator panel")) {
+				//bool to show the sphere creator
+				ShowCapsuleCreatorPanel = !ShowCapsuleCreatorPanel;
+			}
+			ImGui::EndMenu();
+
+		}
+		if (ImGui::BeginMenu("Collision Checkers")) {
+			if (ImGui::MenuItem("Sphere collision checkers")) {
+				App->physics->GetSphereCollisionsList();
+			}
+			if (ImGui::MenuItem("Cube collision checkers")) {
+				App->physics->GetCubeCollisionsList();
+			}
+			if (ImGui::MenuItem("Capsule collision checkers")) {
+				App->physics->GetCapsuleCollisionsList();
+			}
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("Help")) {
+			if (ImGui::MenuItem("ImGui Demo Window")) {
+				ShowTestWindow = !ShowTestWindow;
+			}
+			if (ImGui::MenuItem("Engine documentation")) {
+				ShellExecuteA(NULL, "open", "https://github.com/GuillemD/PendingNameEngine-3D/wiki", NULL, NULL, SW_SHOWNORMAL);
+			}
+			if (ImGui::MenuItem("Latest Release")) {
+				ShellExecuteA(NULL, "open", "https://github.com/GuillemD/PendingNameEngine-3D/releases", NULL, NULL, SW_SHOWNORMAL);
+			}
+			if (ImGui::MenuItem("Report Bugs")) {
+				ShellExecuteA(NULL, "open", "https://github.com/GuillemD/PendingNameEngine-3D/issues", NULL, NULL, SW_SHOWNORMAL);
+			}
+			if (ImGui::MenuItem("About")) {
+				ShowAbout = !ShowAbout;
+			}
+			ImGui::EndMenu();
+		}
+		ImGui::EndMainMenuBar();
 	}
 }
 void ModuleUI::ShowAboutWindow()

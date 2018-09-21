@@ -25,6 +25,7 @@ public:
 
 private:
 	//Checkers
+	bool closeApp = false;
 	bool ShowTestWindow = false;
 	bool ShowRNG = false;
 	bool ShowAbout = false;
@@ -46,6 +47,7 @@ private:
 	void ModuleUI::ShowDemoWindow();
 	void ModuleUI::ShowRNGenerator();
 
+	void CreateMainMenu();
 public:
 	pcg32_random_t rng1 = PCG32_INITIALIZER;
 
