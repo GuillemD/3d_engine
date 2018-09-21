@@ -105,24 +105,30 @@ update_status ModuleUI::Update(float dt)
 			ImGui::InputInt("Insert first int", &input_min);
 			ImGui::InputInt("Insert second int", &input_max);
 
-			if (input_min > input_max)
+			if (input_min == input_max)
 			{
-				if (ImGui::Button("Generate Random Between given ints"))
-				{
-					rand_bounded_int = (" %i", (int)pcg32_boundedrand_r(&rng1, input_min) + input_max);
-				}
-				ImGui::Text("%i", rand_bounded_int);
+				rand_bounded_int = input_max = input_min;
 			}
 			else
 			{
-				if (ImGui::Button("Generate Int"))
+				if (input_min > input_max)
 				{
-					rand_bounded_int = (" %i", (int)pcg32_boundedrand_r(&rng1, input_max) + input_min);
+					if (ImGui::Button("Generate Random Between given ints"))
+					{
+						rand_bounded_int = (" %i", (int)pcg32_boundedrand_r(&rng1, input_min) + input_max);
+					}
+					ImGui::Text("%i", rand_bounded_int);
 				}
-				ImGui::Text("%i", rand_bounded_int);
+				else
+				{
+					if (ImGui::Button("Generate Random Between given ints"))
+					{
+						rand_bounded_int = (" %i", (int)pcg32_boundedrand_r(&rng1, input_max) + input_min);
+					}
+					ImGui::Text("%i", rand_bounded_int);
+				}
 			}
 
-			
 			if (ImGui::Button("Generate Float between 0.0 and 1.0"))
 			{
 				rand_float = ldexp(pcg32_random_r(&rng1), -32);
