@@ -44,6 +44,7 @@ private:
 
 	void ModuleUI::ShowAboutWindow();
 	void ModuleUI::ShowDemoWindow();
+	void ModuleUI::ShowRNGenerator();
 
 public:
 	pcg32_random_t rng1 = PCG32_INITIALIZER;

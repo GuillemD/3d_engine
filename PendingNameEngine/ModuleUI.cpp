@@ -95,49 +95,8 @@ update_status ModuleUI::Update(float dt)
 		ImGui::EndMainMenuBar();
 	}
 	if (ShowAbout) ShowAboutWindow();
-
 	if (ShowTestWindow) ShowDemoWindow();
-	if (ShowRNG)
-	{
-		
-		if (ImGui::Begin("Random Number Generator using PCG"))
-		{
-			ImGui::InputInt("Insert first int", &input_min);
-			ImGui::InputInt("Insert second int", &input_max);
-
-			if (input_min == input_max)
-			{
-				rand_bounded_int = input_max = input_min;
-			}
-			else
-			{
-				if (input_min > input_max)
-				{
-					if (ImGui::Button("Generate Random Between given ints"))
-					{
-						rand_bounded_int = (" %i", (int)pcg32_boundedrand_r(&rng1, input_min) + input_max);
-					}
-					ImGui::Text("%i", rand_bounded_int);
-				}
-				else
-				{
-					if (ImGui::Button("Generate Random Between given ints"))
-					{
-						rand_bounded_int = (" %i", (int)pcg32_boundedrand_r(&rng1, input_max) + input_min);
-					}
-					ImGui::Text("%i", rand_bounded_int);
-				}
-			}
-
-			if (ImGui::Button("Generate Float between 0.0 and 1.0"))
-			{
-				rand_float = ldexp(pcg32_random_r(&rng1), -32);
-			}
-			ImGui::Text("%f", rand_float);
-			ImGui::End();
-		}
-		
-	}
+	if (ShowRNG) ShowRNGenerator();	
 
 	if (ShowSphereCreatorPanel)ShowSphereCreator();
 	if (ShowCubeCreatorPanel)ShowCubeCreator();
@@ -226,6 +185,48 @@ void ModuleUI::ShowDemoWindow()
 {
 	ImGui::ShowTestWindow();
 }
+void ModuleUI::ShowRNGenerator()
+{
+	if (ImGui::Begin("Random Number Generator using PCG"))
+	{
+		ImGui::InputInt("Insert first int", &input_min);
+		ImGui::InputInt("Insert second int", &input_max);
+
+		if (input_min == input_max)
+		{
+			rand_bounded_int = input_max = input_min;
+		}
+		else
+		{
+			if (input_min > input_max)
+			{
+				
+				
+				if (ImGui::Button("Generate Random Between given ints"))
+				{
+					Swap<int>(input_min, input_max);
+					rand_bounded_int = (" %i", (int)pcg32_boundedrand_r(&rng1, input_max) + input_min);
+				}
+				ImGui::Text("%i", rand_bounded_int);
+			}
+			else
+			{
+				if (ImGui::Button("Generate Random Between given ints"))
+				{
+					rand_bounded_int = (" %i", (int)pcg32_boundedrand_r(&rng1, input_max) + input_min);
+				}
+				ImGui::Text("%i", rand_bounded_int);
+			}
+		}
+
+		if (ImGui::Button("Generate Float between 0.0 and 1.0"))
+		{
+			rand_float = ldexp(pcg32_random_r(&rng1), -32);
+		}
+		ImGui::Text("%f", rand_float);
+		ImGui::End();
+	}
+}
 void ModuleUI::ShowAboutWindow()
 {
 	if (ImGui::Begin("About"))
@@ -234,7 +235,7 @@ void ModuleUI::ShowAboutWindow()
 		ImGui::Spacing();
 		ImGui::Separator();
 
-		ImGui::Text("SDL v2.0.4");
+		ImGui::Text("SDL v2.0");
 		//ShellExecuteA(NULL, "open", "https://www.libsdl.org/", NULL, NULL, SW_SHOWNORMAL);
 	}
 	ImGui::End();
