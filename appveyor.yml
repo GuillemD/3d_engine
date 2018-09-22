@@ -9,11 +9,11 @@ before_package:
 - ps: Copy-Item C:\projects\PendingNameEngine-3D\PendingNameEngine\$env:CONFIGURATION\PendingName.exe C:\projects\PendingNameEngine-3D\PendingNameEngine\Game\.
 artifacts:
 - path: PendingNameEngine\Game
-  name: PendingNameEngine-3D
+  name: PendingNameEngine3D
   type: WebDeployPackage
 deploy:
 - provider: GitHub
   description: Auto-generated release
   auth_token:
-    secure: +hvsWp+UhCXGd74rors53etQ9GHr8XzklnDsYkitBXRGPhEcG/h+ESK8HNwWP5czVwgcokXcLxD7h+/BnQ+D4UJksvRfcG7lSSATjUDduoM=
+    secure: E3bX215lhBfnskIU2QcRSn8cpY2Lx21OI0fxPcYPP8bQ8MdR6zEk8vwk16s7HRkXnky1DJ8apx/VXraxspXgnsJqRMG1LPkINqqX1VnD6Sk=
   draft: true
