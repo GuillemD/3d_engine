@@ -15,5 +15,5 @@ deploy:
 - provider: GitHub
   description: Auto-generated release
   auth_token:
-    secure: VP1h5U2zs15Im2Fiscl72vAcgQoMD5+aUH+QI5XcKj4ozuYh+v5faLEMdnAcQOEV/YgEmPmAOWAU6tesfWsWjVnyPTT+X6K8MhjpUxQwIxY=
+    secure: 5f6ce428a5804a715ab212d0b0b6bb76ea61c49b 
   draft: true
