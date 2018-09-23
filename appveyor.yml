@@ -15,5 +15,6 @@ deploy:
 - provider: GitHub
   description: Auto-generated release
   auth_token:
-    secure: SrjjvJEMhHGoURMweSb6+Eb0dn3HncapCF0mpNjnhD8l5LjT4WMCzFVJOypUPsxp 
+    secure: PRoV4Pomu8T2dXv3BGEP1N/wfBaH3TkRTXFpKtEADIRZ88cXsCu3eme3QKHCJKQQtnxmdhNBYYDntZt/aVSaDQYsMUb42nv5a1XT9WQ6RuI=
+  repository: GuillemD/PendingNameEngine-3D
   draft: true
