@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "Globals.h"
+#include "Configuration.h"
 
 Application::Application()
 {
@@ -41,6 +42,10 @@ Application::~Application()
 bool Application::Init()
 {
 	bool ret = true;
+
+	SetAppName("PendingNameEngine");
+	SetVersion("v0.1.1");
+	SetOrgName("UPC CITM");
 
 	// Call Init() in all modules
 
@@ -115,5 +120,39 @@ void Application::OpenFile(const char * path)
 
 const char * Application::GetVersion() const
 {
-	return VERSION;
+	return app_version.c_str();
+}
+
+void Application::SetVersion(const char * version)
+{
+	if (version != nullptr)
+	{
+		app_version = version;
+	}
+}
+
+const char * Application::GetAppName() const
+{
+	return app_name.c_str();
+}
+
+void Application::SetAppName(const char * app)
+{
+	if (app != nullptr)
+	{
+		app_name = app;
+	}
+}
+
+const char * Application::GetOrgName() const
+{
+	return org_name.c_str();
+}
+
+void Application::SetOrgName(const char * org)
+{
+	if (org != nullptr)
+	{
+		org_name = org;
+	}
 }

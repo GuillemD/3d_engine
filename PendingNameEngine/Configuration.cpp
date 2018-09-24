@@ -1,4 +1,5 @@
 #include "Configuration.h"
+#include "Application.h"
 
 Configuration::Configuration()
 {
@@ -14,6 +15,11 @@ void Configuration::ShowElement()
 	{
 		if (ImGui::CollapsingHeader("Application"))
 		{
+			ImGui::Text("App Name: %s ", App->GetAppName());
+			ImGui::SameLine();
+			ImGui::Text("Version: %s", App->GetVersion());
+			ImGui::Text("Org Name: %s", App->GetOrgName());
+			ImGui::Separator();
 
 		}
 		if (ImGui::CollapsingHeader("FileSystem"))
