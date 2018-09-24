@@ -1,0 +1,20 @@
+version: 1.0.{build}
+image: Visual Studio 2017
+configuration:
+- Debug
+- Release
+build:
+  verbosity: minimal
+before_package:
+- ps: Copy-Item C:\projects\PendingNameEngine-3D\$env:CONFIGURATION\PendingName.exe C:\projects\PendingNameEngine-3D\PendingNameEngine\Game\.
+artifacts:
+- path: PendingNameEngine\Game
+  name: PendingNameEngine3D
+  type: WebDeployPackage
+deploy:
+- provider: GitHub
+  description: Auto-generated release
+  auth_token:
+    secure: WkiZHbu/7W2N37M/lpWGqtAtsh4NY2RQDs9ZjKBosbmFwd7rR3B8yiybeO8/y5eR
+  repository: GuillemD/PendingNameEngine-3D
+  draft: true
