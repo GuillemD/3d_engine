@@ -29,6 +29,7 @@ public:
 
 
 private:
+	
 	//Checkers
 	bool closeApp = false;
 	bool ShowTestWindow = false;
