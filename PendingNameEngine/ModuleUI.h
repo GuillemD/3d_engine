@@ -6,9 +6,9 @@
 #include "Module.h"
 #include "ImGui/imgui.h"
 #include "ImGui/imgui_impl_sdl.h"
-
+#include "MathGeoLib/MathGeoLib.h"
 #include "PCG/pcg_basic.h"
-
+#include "Console.h"
 class ModuleUI : public Module
 {
 public:
@@ -19,6 +19,8 @@ public:
 	update_status PreUpdate(float dt);
 	update_status Update(float dt);
 	update_status PostUpdate(float dt);
+
+	Console console;
 
 	bool CleanUp();
 
@@ -34,6 +36,7 @@ private:
 	bool ShowCapsuleCreatorPanel = false;
 
 	float tmpfloat = 0.0f;
+
 	vec tmpvec = vec(0.0f, 0.0f, 0.0f);
 	vec tmpvec2 = vec(0.0f, 0.0f, 0.0f);
 
@@ -57,6 +60,4 @@ public:
 	float rand_float = 0.0f;
 
 };
-
-
 #endif // __ModuleUI_H__

@@ -1,6 +1,6 @@
 #include "Application.h"
 #include "ModuleUI.h"
-
+#include "Globals.h"
 ModuleUI::ModuleUI(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	
@@ -14,6 +14,7 @@ bool ModuleUI::Start()
 	LOG("Setting up UI");
 	bool ret = true;
 	ImGui_ImplSdl_Init(App->window->window);
+
 	return ret;
 }
 
@@ -38,6 +39,8 @@ update_status ModuleUI::Update(float dt)
 
 	if (closeApp) return UPDATE_STOP;
 
+
+	console.CreateConsole();
 
 	return UPDATE_CONTINUE;
 
@@ -113,6 +116,7 @@ void ModuleUI::ShowCapsuleCreator()
 		if (ImGui::Button("Create Capsule")) {
 			App->physics->CreateCapsule(tmpfloat, LineSegment(tmpvec,tmpvec2));
 		}
+
 	}
 	ImGui::End();
 }
