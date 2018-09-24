@@ -49,6 +49,9 @@
     <Filter Include="Sources\Libraries\ImGui">
       <UniqueIdentifier>{2e3baae4-7a5e-45c1-8305-6cca44097a26}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Modules\uiElements">
+      <UniqueIdentifier>{f0b78027-fa9e-4ea6-9241-145ef87833ed}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -315,6 +318,9 @@
     <ClInclude Include="Console.h">
       <Filter>Sources\Helpers</Filter>
     </ClInclude>
+    <ClInclude Include="About.h">
+      <Filter>Sources\Modules\uiElements</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -484,6 +490,9 @@
     </ClCompile>
     <ClCompile Include="Console.cpp">
       <Filter>Sources\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="About.cpp">
+      <Filter>Sources\Modules\uiElements</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

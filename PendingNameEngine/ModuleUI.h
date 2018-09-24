@@ -9,6 +9,8 @@
 #include "MathGeoLib/MathGeoLib.h"
 #include "PCG/pcg_basic.h"
 #include "Console.h"
+#include "About.h"
+
 class ModuleUI : public Module
 {
 public:
@@ -21,6 +23,7 @@ public:
 	update_status PostUpdate(float dt);
 
 	Console console;
+	About about;
 
 	bool CleanUp();
 
@@ -30,7 +33,7 @@ private:
 	bool closeApp = false;
 	bool ShowTestWindow = false;
 	bool ShowRNG = false;
-	bool ShowAbout = false;
+	
 	bool ShowCubeCreatorPanel = false;
 	bool ShowSphereCreatorPanel = false;
 	bool ShowCapsuleCreatorPanel = false;
@@ -46,7 +49,6 @@ private:
 	void ModuleUI::ShowSphereCreator();
 	void ModuleUI::ShowCapsuleCreator();
 
-	void ModuleUI::ShowAboutWindow();
 	void ModuleUI::ShowDemoWindow();
 	void ModuleUI::ShowRNGenerator();
 
