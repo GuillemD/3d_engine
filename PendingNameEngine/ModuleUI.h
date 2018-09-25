@@ -10,7 +10,7 @@
 #include "PCG/pcg_basic.h"
 #include "Console.h"
 #include "About.h"
-
+#include "Configuration.h"
 class ModuleUI : public Module
 {
 public:
@@ -24,7 +24,7 @@ public:
 
 	Console console;
 	About about;
-
+	Configuration confg;
 	bool CleanUp();
 
 

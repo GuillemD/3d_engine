@@ -1,6 +1,7 @@
 #include "Application.h"
 #include "ModuleUI.h"
 #include "Globals.h"
+
 ModuleUI::ModuleUI(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	
@@ -30,7 +31,7 @@ update_status ModuleUI::Update(float dt)
 	CreateMainMenu();
 
 	about.ShowElement();
-	
+	confg.ShowElement();
 	if (ShowTestWindow) ShowDemoWindow();
 	if (ShowRNG) ShowRNGenerator();	
 	

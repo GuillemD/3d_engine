@@ -1,6 +1,6 @@
 #include "Configuration.h"
 #include "Application.h"
-
+#include "ModuleWindow.h"
 Configuration::Configuration()
 {
 }
@@ -11,7 +11,7 @@ Configuration::~Configuration()
 
 void Configuration::ShowElement()
 {
-	if (ImGui::Begin("Configuration"))
+	if (ImGui::Begin("Configuration",&active,ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse ))
 	{
 		if (ImGui::CollapsingHeader("Application"))
 		{
@@ -28,7 +28,7 @@ void Configuration::ShowElement()
 		}
 		if (ImGui::CollapsingHeader("Window"))
 		{
-
+			App->window->ShowWindowConfiguration();
 		}
 		if (ImGui::CollapsingHeader("Input"))
 		{

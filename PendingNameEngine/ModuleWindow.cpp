@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleWindow.h"
+#include "ImGui/imgui.h"
 
 ModuleWindow::ModuleWindow(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -27,30 +28,30 @@ bool ModuleWindow::Init()
 	else
 	{
 		//Create window
-		int width = SCREEN_WIDTH * SCREEN_SIZE;
-		int height = SCREEN_HEIGHT * SCREEN_SIZE;
-		Uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
+		width = SCREEN_WIDTH * SCREEN_SIZE;
+		height = SCREEN_HEIGHT * SCREEN_SIZE;
+		flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
 
 		//Use OpenGL 2.1
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 
-		if(WIN_FULLSCREEN == true)
+		if(fullscreen)
 		{
 			flags |= SDL_WINDOW_FULLSCREEN;
 		}
 
-		if(WIN_RESIZABLE == true)
+		if(resizable)
 		{
 			flags |= SDL_WINDOW_RESIZABLE;
 		}
 
-		if(WIN_BORDERLESS == true)
+		if(borderlessfullscreen)
 		{
 			flags |= SDL_WINDOW_BORDERLESS;
 		}
 
-		if(WIN_FULLSCREEN_DESKTOP == true)
+		if(fullscreendesktop)
 		{
 			flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
 		}
@@ -92,3 +93,44 @@ void ModuleWindow::SetTitle(const char* title)
 {
 	SDL_SetWindowTitle(window, title);
 }
+
+void ModuleWindow::ShowWindowConfiguration()
+{
+	if (ImGui::SliderInt("Height", &height, 600, 1080)) {
+		SDL_SetWindowSize(window, width, height);
+	}
+	
+	if (ImGui::SliderInt("Width", &width, 600, 1920)) {
+		SDL_SetWindowSize(window, width, height);
+	}
+
+	if (ImGui::Checkbox("Fullscreen",&fullscreen)){
+		if (fullscreen) {
+			SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
+		}
+		else {
+			SDL_SetWindowFullscreen(window, 0);
+		}
+	}
+	if (ImGui::Checkbox("Borderless", &borderlessfullscreen)) {
+		if (borderlessfullscreen) {
+			
+			SDL_SetWindowBordered(window, SDL_FALSE);
+		}
+		else {
+			SDL_SetWindowBordered(window, SDL_TRUE);
+		}
+	}
+
+	if (ImGui::Checkbox("Fullscreen Desktop", &fullscreendesktop)) {
+		if (borderlessfullscreen) {
+			SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+		}
+		else {
+			SDL_SetWindowFullscreen(window, 0);
+		}
+	}
+
+
+}
+
