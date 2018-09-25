@@ -52,6 +52,9 @@
     <Filter Include="Sources\Modules\uiElements">
       <UniqueIdentifier>{f0b78027-fa9e-4ea6-9241-145ef87833ed}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Panels">
+      <UniqueIdentifier>{9ac8daec-f69c-411a-ae68-03cfa2dfb8ba}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -315,9 +318,6 @@
     <ClInclude Include="PCG\pcg_basic.h">
       <Filter>Sources\Libraries\PCG</Filter>
     </ClInclude>
-    <ClInclude Include="Console.h">
-      <Filter>Sources\Helpers</Filter>
-    </ClInclude>
     <ClInclude Include="About.h">
       <Filter>Sources\Modules\uiElements</Filter>
     </ClInclude>
@@ -326,6 +326,12 @@
     </ClInclude>
     <ClInclude Include="Hardware.h">
       <Filter>Sources\Modules\uiElements</Filter>
+    </ClInclude>
+    <ClInclude Include="Console.h">
+      <Filter>Sources\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="Panel.h">
+      <Filter>Sources\Panels</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -494,9 +500,6 @@
     <ClCompile Include="PCG\pcg_basic.c">
       <Filter>Sources\Libraries\PCG</Filter>
     </ClCompile>
-    <ClCompile Include="Console.cpp">
-      <Filter>Sources\Helpers</Filter>
-    </ClCompile>
     <ClCompile Include="About.cpp">
       <Filter>Sources\Modules\uiElements</Filter>
     </ClCompile>
@@ -505,6 +508,12 @@
     </ClCompile>
     <ClCompile Include="Hardware.cpp">
       <Filter>Sources\Modules\uiElements</Filter>
+    </ClCompile>
+    <ClCompile Include="Console.cpp">
+      <Filter>Sources\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="Panel.cpp">
+      <Filter>Sources\Panels</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

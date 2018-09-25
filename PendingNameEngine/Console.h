@@ -3,8 +3,9 @@
 #define Console_H
 #include "Globals.h"
 #include "ImGui/imgui.h"
+#include "Panel.h"
 
-class Console
+class Console : public Panel
 {
 public:
 	Console();

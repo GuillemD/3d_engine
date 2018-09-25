@@ -22,7 +22,7 @@ void Configuration::ShowElement()
 			ImGui::Text("Version: %s", App->GetVersion());
 			ImGui::Text("Org Name: %s", App->GetOrgName());
 			ImGui::Separator();
-
+			App->ShowApplicationCongfig();
 		}
 		if (ImGui::CollapsingHeader("Window"))
 		{

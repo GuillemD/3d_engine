@@ -58,6 +58,7 @@ bool Application::Init()
 		ret = (*item)->Start();
 	}
 	ms_timer.Start();
+	MsSinceStart.Start();
 	return ret;
 }
 
@@ -90,6 +91,45 @@ update_status Application::Update()
 	for (std::list<Module*>::iterator item = list_modules.begin(); item != list_modules.end() && ret == UPDATE_CONTINUE; item++) {
 		ret = (*item)->PostUpdate(dt);
 	}
+
+	// FPS stuff for Application Config Window
+
+	ThisSecFrameCount++; // We add 1 each time we update, 1 time per frame
+	TotalFrameCount++; //This one is used for calculating our average fps, so we add 1 each time also.
+	//its important to do this before, otherwise we would show 1 less fps.
+
+	AverageFPS = TotalFrameCount / (MsSinceStart.Read()/1000.0f);
+
+	if (LastSecondFrameTimer.Read()>=1000) { // Basically if a whole 1000ms(1s) has passed restart the frame timer.
+		LastSecondFrameTimer.Start();
+		LastSecFrameCount = ThisSecFrameCount; //We store this second frames in the previous one
+		ThisSecFrameCount = 0;					// and then we restart the frame count
+	}
+
+
+
+	// We will only show 20 bars in our histogram
+
+	if (FPSBars.size() >= 20)
+	{
+		for (int a = 0; a <= FPSBars.size() - 2; a++)
+		{
+			FPSBars[a] = FPSBars[a + 1];
+		}
+		FPSBars.pop_back();
+	}
+	if (MillisecondsBars.size() >= 20)
+	{
+		for (int a = 0; a <= MillisecondsBars.size() - 2; a++)
+		{
+			MillisecondsBars[a] = MillisecondsBars[a + 1];
+		}
+		MillisecondsBars.pop_back();
+	}
+
+	LastSecMs = ms_timer.Read();
+	MillisecondsBars.push_back((float)LastSecMs);
+	if (LastSecMs) FPSBars.push_back((float)(1000/LastSecMs));
 
 	FinishUpdate();
 	return ret;
@@ -155,4 +195,19 @@ void Application::SetOrgName(const char * org)
 	{
 		org_name = org;
 	}
+}
+
+void Application::ShowApplicationCongfig()
+{
+	char title[30];
+
+	if(ImGui::Checkbox("Vsync",&vsync)){
+	}
+
+	sprintf_s(title, 30, "Frames per second: %.1f", App->FPSBars[App->FPSBars.size() - 1]);
+	ImGui::PlotHistogram("", &App->FPSBars[0], App->FPSBars.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
+
+	sprintf_s(title, 30, "ms: %.1f", App->MillisecondsBars[App->MillisecondsBars.size() - 1]);
+	ImGui::PlotHistogram("", &App->MillisecondsBars[0], App->MillisecondsBars.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
+
 }

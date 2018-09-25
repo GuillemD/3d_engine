@@ -1,7 +1,11 @@
 #include "Console.h"
 
-Console::Console()
+Console::Console() :Panel("Console")
 {
+	width = 750;
+	height = 300;
+	pos_x = 300;
+	pos_y = 1050;
 }
 
 Console::~Console()

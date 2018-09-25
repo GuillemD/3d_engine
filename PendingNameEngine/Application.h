@@ -37,6 +37,19 @@ private:
 	std::string org_name;
 	std::string app_version;
 
+	std::vector<float>	FPSBars;
+	std::vector<float>	MillisecondsBars;
+	std::vector<float>	MemoryBars;
+
+	uint TotalFrameCount = 0;
+	uint ThisSecFrameCount = 0;
+	uint LastSecFrameCount = 0;
+	Uint32 LastSecMs = 0;
+	Timer LastSecondFrameTimer;
+	Timer MsSinceStart;
+	float AverageFPS = 0;
+	bool vsync = VSYNC;
+
 public:
 
 	Application();
@@ -54,6 +67,10 @@ public:
 	void SetAppName(const char* app);
 	const char* GetOrgName() const;
 	void SetOrgName(const char* org);
+	void ShowApplicationCongfig();
+
+
+
 
 private:
 
@@ -61,6 +78,7 @@ private:
 	void PrepareUpdate();
 	void FinishUpdate();
 	
+
 
 };
 extern Application* app;
