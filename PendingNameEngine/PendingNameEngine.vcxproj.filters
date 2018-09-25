@@ -49,6 +49,9 @@
     <Filter Include="Sources\Libraries\ImGui">
       <UniqueIdentifier>{2e3baae4-7a5e-45c1-8305-6cca44097a26}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Libraries\GLEW">
+      <UniqueIdentifier>{4999cec3-5827-4d56-9b35-a7870a45df4b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -314,6 +317,15 @@
     </ClInclude>
     <ClInclude Include="Console.h">
       <Filter>Sources\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="GLEW\include\glew.h">
+      <Filter>Sources\Libraries\GLEW</Filter>
+    </ClInclude>
+    <ClInclude Include="GLEW\include\glxew.h">
+      <Filter>Sources\Libraries\GLEW</Filter>
+    </ClInclude>
+    <ClInclude Include="GLEW\include\wglew.h">
+      <Filter>Sources\Libraries\GLEW</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
