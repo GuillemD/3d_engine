@@ -324,6 +324,9 @@
     <ClInclude Include="Configuration.h">
       <Filter>Sources\Modules\uiElements</Filter>
     </ClInclude>
+    <ClInclude Include="Hardware.h">
+      <Filter>Sources\Modules\uiElements</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -498,6 +501,9 @@
       <Filter>Sources\Modules\uiElements</Filter>
     </ClCompile>
     <ClCompile Include="Configuration.cpp">
+      <Filter>Sources\Modules\uiElements</Filter>
+    </ClCompile>
+    <ClCompile Include="Hardware.cpp">
       <Filter>Sources\Modules\uiElements</Filter>
     </ClCompile>
   </ItemGroup>

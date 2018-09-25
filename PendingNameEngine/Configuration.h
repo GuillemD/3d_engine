@@ -4,6 +4,8 @@
 
 #include "Globals.h"
 #include "ImGui/imgui.h"
+#include "Hardware.h"
+
 
 class Configuration
 {
@@ -14,6 +16,9 @@ public:
 
 	void ShowElement();
 
+	void PrintCaps(std::vector<bool> list);
+
+	Hardware hw;
 
 private:
 	
