@@ -13,7 +13,7 @@ Configuration::~Configuration()
 
 void Configuration::ShowElement()
 {
-	if (ImGui::Begin("Configuration",&active,ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse ))
+	if (ImGui::Begin("Configuration",&active,ImGuiWindowFlags_NoCollapse ))
 	{
 		if (ImGui::CollapsingHeader("Application"))
 		{
