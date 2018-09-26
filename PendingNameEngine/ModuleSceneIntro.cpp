@@ -16,7 +16,7 @@ bool ModuleSceneIntro::Start()
 {
 	LOG("Loading Intro assets");
 	bool ret = true;
-	App->camera->Move(vec(0.0f, 50.0f, 0.0f));
+	App->camera->Move(vec(0.0f, 10.0f, 0.0f));
 	App->camera->LookAt(vec(0.0f, 0.0f, 0.0f));
 	return ret;
 }
@@ -36,42 +36,34 @@ update_status ModuleSceneIntro::Update(float dt)
 
 void ModuleSceneIntro::DrawGrid()
 {
-
-	glLineWidth(1.0f);
-	glColor3f(0.5f, 0.5f, 0.5f);
-	glBegin(GL_LINES);
-
-	float d = 20.0f;
-
-	for (float i = -d; i <= d; i += 1.0f)
+	glEnableClientState(GL_VERTEX_ARRAY);
+	struct vertex
 	{
-		glVertex3f(i, 0.0f, -d);
-		glVertex3f(i, 0.0f, d);
-		glVertex3f(-d, 0.0f, i);
-		glVertex3f(d, 0.0f, i);
-	}
-
-	glEnd();
-	/*glColor3f(.3, .3, .3);
-	glBegin(GL_QUADS);
-	glVertex3f(0, -0.001, 0);
-	glVertex3f(0, -0.001, 2);
-	glVertex3f(2, -0.001, 2);
-	glVertex3f(2, -0.001, 0);
-	glEnd();
-
-	glBegin(GL_LINES);
-	for (int i = 0; i <= 10; i++) {
-		if (i == 0) { glColor3f(.6, .3, .3); }
-		else { glColor3f(.25, .25, .25); };
-		glVertex3f(i, 0, 0);
-		glVertex3f(i, 0, 2);
-		if (i == 0) { glColor3f(.3, .3, .6); }
-		else { glColor3f(.25, .25, .25); };
-		glVertex3f(0, 0, i);
-		glVertex3f(2, 0, i);
+		GLfloat x, y, z;
 	};
-	glEnd();*/
+	vertex *vertices = new vertex[3];
+
+	// Assign some values to all 3 points
+	vertices[0].x = 10.0f;
+	vertices[0].y = 5.0f;
+	vertices[0].z = 7.0f;
+
+	// Vertex 2
+	vertices[1].x = -10.0f;
+	vertices[1].y = 3.0f;
+	vertices[1].z = 1.0f;
+
+	// Vertex 3
+	vertices[2].x = 5.0f;
+	vertices[2].y = -5.0f;
+	vertices[2].z = 2.0f;
+
+	glVertexPointer(3, GL_FLOAT,sizeof(vertex), vertices);
+
+	int num_indices = 3;
+	glDrawArrays(GL_TRIANGLES, 0, num_indices);
+	
+	
 }
 
 
