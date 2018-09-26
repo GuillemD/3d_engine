@@ -2,12 +2,12 @@
 #include "Primitive.h"
 #include "GLEW/include/glew.h"
 #include "SDL\include\SDL_opengl.h"
-#include <gl/GL.h>
-#include <gl/GLU.h>
+
 
 // ------------------------------------------------------------
-/*Primitive::Primitive() : transform(IdentityMatrix), color(White), wire(false), axis(false), type(PrimitiveTypes::Primitive_Point)
-{}
+Primitive::Primitive() : transform(transform.identity), color(White), wire(false), axis(false), type(PrimitiveTypes::Primitive_Point)
+{
+}
 
 // ------------------------------------------------------------
 PrimitiveTypes Primitive::GetType() const
@@ -19,8 +19,8 @@ PrimitiveTypes Primitive::GetType() const
 void Primitive::Render() const
 {
 	glPushMatrix();
-	glMultMatrixf(transform.M);
-
+	glMultMatrixf((GLfloat*) &transform);
+	
 	glDisable(GL_LIGHTING);
 	glDisable(GL_TEXTURE_2D);
 
@@ -87,26 +87,26 @@ void Primitive::InnerRender() const
 	glVertex3f(0.0f, 0.0f, 0.0f);
 
 	glEnd();
-
+	
 	glPointSize(1.0f);
 }
 
 // ------------------------------------------------------------
 void Primitive::SetPos(float x, float y, float z)
 {
-	transform.translate(x, y, z);
+	transform.Translate(x, y, z);
 }
 
 // ------------------------------------------------------------
-void Primitive::SetRotation(float angle, const vec3 &u)
+void Primitive::SetRotation(float angle, const vec &u)
 {
-	transform.rotate(angle, u);
+	transform.RotateAxisAngle(u, angle);
 }
 
 // ------------------------------------------------------------
 void Primitive::Scale(float x, float y, float z)
 {
-	transform.scale(x, y, z);
+	transform.Scale(x, y, z);
 }
 
 // CUBE ============================================
@@ -312,4 +312,4 @@ void PPlane::InnerRender() const
 	}
 
 	glEnd();
-}*/
+}

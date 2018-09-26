@@ -16,6 +16,9 @@ bool ModuleSceneIntro::Start()
 {
 	LOG("Loading Intro assets");
 	bool ret = true;
+	pl.axis = true;
+	
+
 	App->camera->Move(vec(0.0f, 10.0f, 0.0f));
 	App->camera->LookAt(vec(0.0f, 0.0f, 0.0f));
 	return ret;
@@ -28,15 +31,15 @@ bool ModuleSceneIntro::CleanUp()
 }
 update_status ModuleSceneIntro::Update(float dt)
 {
-	if (grid_active)
-		DrawGrid(30);
+	pl.InnerRender();
+
 	return UPDATE_CONTINUE;
 }
 
 
 void ModuleSceneIntro::DrawGrid(int HALF_GRID_SIZE)
 {
-	
+	pl.Render();
 	
 }
 
