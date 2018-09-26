@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleRenderer3D.h"
+#include "MathGeoLib/MathGeoLib.h"
 #include "GLEW/include/glew.h"
 #include "SDL\include\SDL_opengl.h"
 #include <gl/GL.h>
@@ -28,14 +29,36 @@ bool ModuleRenderer3D::Init()
 	
 	//Create context
 	context = SDL_GL_CreateContext(App->window->window);
-	if(context == NULL)
+	if(context == nullptr)
 	{
 		LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
+	else
+	{
+		LOG("OPenGL context created!");
+	}
 	
+	GLenum glew_err = glewInit();
+
+	if (glew_err != GLEW_NO_ERROR)
+	{
+		LOG("Glew could not be initialised correctly! %s\n", glewGetErrorString(glew_err));
+		ret = false;
+	}
+	else
+	{
+		LOG("Glew initialised! Version: %s ", glewGetString(GLEW_VERSION));
+	}
+
 	if(ret == true)
 	{
+		//Capabilities
+		LOG("Vendor: %s", glGetString(GL_VENDOR));
+		LOG("Renderer: %s", glGetString(GL_RENDERER));
+		LOG("OpenGL version supported %s", glGetString(GL_VERSION));
+		LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+
 		//Use Vsync
 		if(VSYNC && SDL_GL_SetSwapInterval(1) < 0)
 			LOG("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
@@ -63,12 +86,13 @@ bool ModuleRenderer3D::Init()
 			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
 			ret = false;
 		}
-		
+
+		//INITIALIZATION		
 		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 		glClearDepth(1.0f);
-		
 		//Initialize clear color
 		glClearColor(0.f, 0.f, 0.f, 1.f);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		//Check for error
 		error = glGetError();
@@ -79,6 +103,13 @@ bool ModuleRenderer3D::Init()
 		}
 		
 		EnableLight();
+
+
+		glEnable(GL_DEPTH_TEST);
+		glEnable(GL_CULL_FACE);
+		glEnable(GL_LIGHTING);
+		glEnable(GL_COLOR_MATERIAL);
+		glEnable(GL_TEXTURE_2D);
 	}
 
 	// Projection matrix for
@@ -131,9 +162,8 @@ void ModuleRenderer3D::OnResize(int width, int height)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
-	//I dont know what this is commenting just to compile gotta redo prob
-	//ProjectionMatrix = perspective(60.0f, (float)width / (float)height, 0.125f, 512.0f);
-	//glLoadMatrixf(&ProjectionMatrix);
+	ProjectionMatrix.perspective(60.0f, (float)width / (float)height, 0.125f, 512.0f);
+	glLoadMatrixf((float*)ProjectionMatrix.v);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -156,11 +186,8 @@ void ModuleRenderer3D::EnableLight()
 	GLfloat MaterialDiffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MaterialDiffuse);
 
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
 	lights[0].Active(true);
-	glEnable(GL_LIGHTING);
-	glEnable(GL_COLOR_MATERIAL);
+	
 }
 
 void ModuleRenderer3D::DisableLight()
@@ -178,4 +205,5 @@ void ModuleRenderer3D::DisableLight()
 	glDisable(GL_CULL_FACE);
 	glDisable(GL_LIGHTING);
 	glDisable(GL_COLOR_MATERIAL);
+	glDisable(GL_TEXTURE_2D);
 }
