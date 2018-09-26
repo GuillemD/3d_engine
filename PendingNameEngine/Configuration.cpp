@@ -35,7 +35,8 @@ void Configuration::ShowElement()
 		if (ImGui::CollapsingHeader("Hardware"))
 		{
 			ImGui::Text("CPUs: %d (Cache: %d kb)", hw.GetNumberCPU(), hw.GetCPUCache());
-			ImGui::Text("System RAM: %d", hw.GetRAM());
+			ImGui::Text("System RAM: "); ImGui::SameLine(0, 10);
+			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%i", SDL_GetSystemRAM());
 			
 			PrintCaps(hw.GetCaps());
 
