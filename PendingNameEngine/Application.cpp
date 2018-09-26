@@ -108,9 +108,9 @@ update_status Application::Update()
 
 
 
-	// We will only show 20 bars in our histogram
+	// We will only show 30 bars in our histogram
 
-	if (FPSBars.size() >= 20)
+	if (FPSBars.size() >= 30)
 	{
 		for (int a = 0; a <= FPSBars.size() - 2; a++)
 		{
@@ -118,7 +118,7 @@ update_status Application::Update()
 		}
 		FPSBars.pop_back();
 	}
-	if (MillisecondsBars.size() >= 20)
+	if (MillisecondsBars.size() >= 30)
 	{
 		for (int a = 0; a <= MillisecondsBars.size() - 2; a++)
 		{
@@ -202,12 +202,18 @@ void Application::ShowApplicationCongfig()
 	char title[30];
 
 	if(ImGui::Checkbox("Vsync",&vsync)){
+		if (vsync) {
+			SDL_GL_SetSwapInterval(1);
+		}
+		else {
+			SDL_GL_SetSwapInterval(0);
+		}
 	}
 
 	sprintf_s(title, 30, "Frames per second: %.1f", App->FPSBars[App->FPSBars.size() - 1]);
-	ImGui::PlotHistogram("", &App->FPSBars[0], App->FPSBars.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
+	ImGui::PlotHistogram("", &App->FPSBars[0], App->FPSBars.size(), 0, title, 0.0f, 120.0f, ImVec2(310, 100));
 
 	sprintf_s(title, 30, "ms: %.1f", App->MillisecondsBars[App->MillisecondsBars.size() - 1]);
-	ImGui::PlotHistogram("", &App->MillisecondsBars[0], App->MillisecondsBars.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
+	ImGui::PlotHistogram("", &App->MillisecondsBars[0], App->MillisecondsBars.size(), 0, title, 0.0f, 120.0f, ImVec2(310, 100));
 
 }
