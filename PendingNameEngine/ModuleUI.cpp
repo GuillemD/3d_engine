@@ -1,7 +1,7 @@
 #include "Application.h"
 #include "ModuleUI.h"
 #include "Globals.h"
-ModuleUI::ModuleUI(Application* app, bool start_enabled) : Module(app, start_enabled)
+ModuleUI::ModuleUI( bool start_enabled) : Module(start_enabled)
 {
 	
 }
