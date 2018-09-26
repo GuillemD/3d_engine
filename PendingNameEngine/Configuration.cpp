@@ -3,7 +3,7 @@
 #include "ModuleWindow.h"
 
 
-Configuration::Configuration()
+Configuration::Configuration():Panel("Configuration")
 {
 }
 
@@ -30,7 +30,7 @@ void Configuration::ShowElement()
 		}
 		if (ImGui::CollapsingHeader("Input"))
 		{
-
+			App->input->ShowInputConfiguration();
 		}
 		if (ImGui::CollapsingHeader("Hardware"))
 		{
