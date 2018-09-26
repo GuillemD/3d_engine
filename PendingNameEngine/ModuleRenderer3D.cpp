@@ -139,6 +139,7 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
+	
 	SDL_GL_SwapWindow(App->window->window);
 	return UPDATE_CONTINUE;
 }
@@ -188,6 +189,7 @@ void ModuleRenderer3D::EnableLight()
 	lights[0].Active(true);
 	
 }
+
 
 void ModuleRenderer3D::DisableLight()
 {
