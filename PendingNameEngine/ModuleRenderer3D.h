@@ -22,7 +22,7 @@ public:
 	void DisableLight();  //Use this in the PostUpdate of a Module for it to ignore Scene Lights
 	void EnableLight();
 
-	void DrawGrid(int size);
+
 
 public:
 
@@ -31,5 +31,23 @@ public:
 	float3x3 NormalMatrix;
 	float4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 	bool debug_draw = true;
+	bool show_plane = true;
+
+	//attributes
+	bool wireframe = false;
+	bool depth_test = false;
+	bool cullface = false;
+	bool texture = false;
+	bool color_material = false;
+	bool lighting = false;
+	bool line_smooth = false;
+	//swap-checkers
+	void update_wireframe();
+	void update_depth_test();
+	void update_cullface();
+	void update_texture();
+	void update_color_material();
+	void update_lighting();
+	void update_line_smooth();
 
 };

@@ -27,6 +27,7 @@ public:
 	Configuration confg;
 	bool CleanUp();
 
+	void DrawImGui();
 
 private:
 	
@@ -54,6 +55,7 @@ private:
 	void ModuleUI::ShowRNGenerator();
 
 	void CreateMainMenu();
+	
 public:
 	pcg32_random_t rng1 = PCG32_INITIALIZER;
 

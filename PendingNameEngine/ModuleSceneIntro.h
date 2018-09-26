@@ -16,11 +16,8 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
-	void DrawGrid(int HALF_GRID_SIZE);
 	
-
-	PPlane pl=PPlane(1.0f,1.0f,1.0f,1.0f);
 public:
-	bool grid_active = true;
+	
 
 };

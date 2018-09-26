@@ -13,4 +13,6 @@ void DebugDraw(const AABB& aabb, Color color = White, const float4x4& transform 
 
 void CubeDirectDraw(const float3 * corners, Color color);
 
+void PlaneDirectDraw(const float4x4 & transform);
+
 #endif //__DEBUGDRAW_H__

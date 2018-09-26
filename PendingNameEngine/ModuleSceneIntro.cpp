@@ -1,6 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleSceneIntro.h"
+#include "Primitive.h"
 
 #include "SDL/include/SDL_opengl.h"
 
@@ -16,11 +17,16 @@ bool ModuleSceneIntro::Start()
 {
 	LOG("Loading Intro assets");
 	bool ret = true;
-	pl.axis = true;
-	
 
-	App->camera->Move(vec(0.0f, 10.0f, 0.0f));
-	App->camera->LookAt(vec(0.0f, 0.0f, 0.0f));
+	if (App->renderer3D->show_plane == true)
+	{
+		PPlane base_plane(0, 1, 0, 0);
+		base_plane.axis = true;
+		base_plane.Render();
+	}
+
+	App->camera->Move(float3(1.0f, 10.0f, 0.0f));
+	App->camera->LookAt(float3(0.0f, 0.0f, 0.0f));
 	return ret;
 }
 
@@ -31,17 +37,11 @@ bool ModuleSceneIntro::CleanUp()
 }
 update_status ModuleSceneIntro::Update(float dt)
 {
-	pl.InnerRender();
+	
 
 	return UPDATE_CONTINUE;
 }
 
-
-void ModuleSceneIntro::DrawGrid(int HALF_GRID_SIZE)
-{
-	pl.Render();
-	
-}
 
 
 

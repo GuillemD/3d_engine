@@ -110,17 +110,17 @@ void Primitive::Scale(float x, float y, float z)
 }
 
 // CUBE ============================================
-Cube::Cube() : Primitive(), size(1.0f, 1.0f, 1.0f)
+PCube::PCube() : Primitive(), size(1.0f, 1.0f, 1.0f)
 {
 	type = PrimitiveTypes::Primitive_Cube;
 }
 
-Cube::Cube(float sizeX, float sizeY, float sizeZ) : Primitive(), size(sizeX, sizeY, sizeZ)
+PCube::PCube(float sizeX, float sizeY, float sizeZ) : Primitive(), size(sizeX, sizeY, sizeZ)
 {
 	type = PrimitiveTypes::Primitive_Cube;
 }
 
-void Cube::InnerRender() const
+void PCube::InnerRender() const
 {
 	float sx = size.x * 0.5f;
 	float sy = size.y * 0.5f;
@@ -167,122 +167,6 @@ void Cube::InnerRender() const
 	glEnd();
 }
 
-// SPHERE ============================================
-PSphere::PSphere() : Primitive(), radius(1.0f)
-{
-	type = PrimitiveTypes::Primitive_Sphere;
-}
-
-PSphere::PSphere(float radius) : Primitive(), radius(radius)
-{
-	type = PrimitiveTypes::Primitive_Sphere;
-}
-
-void PSphere::InnerRender() const
-{
-	int stacks = 10;
-	int slices = 10;
-
-	int i, j;
-	for (j = 0; j < stacks; j++) {
-		double latitude1 = (PI / stacks) * j - PI / 2;
-		double latitude2 = (PI / stacks) * (j + 1) - PI / 2;
-		double sinLat1 = sin(latitude1);
-		double cosLat1 = cos(latitude1);
-		double sinLat2 = sin(latitude2);
-		double cosLat2 = cos(latitude2);
-		glBegin(GL_QUAD_STRIP);
-		for (i = 0; i <= slices; i++) {
-			double longitude = (2 * PI / slices) * i;
-			double sinLong = sin(longitude);
-			double cosLong = cos(longitude);
-			double x1 = cosLong * cosLat1;
-			double y1 = sinLong * cosLat1;
-			double z1 = sinLat1;
-			double x2 = cosLong * cosLat2;
-			double y2 = sinLong * cosLat2;
-			double z2 = sinLat2;
-			glNormal3d(x2, y2, z2);
-			glVertex3d(radius*x2, radius*y2, radius*z2);
-			glNormal3d(x1, y1, z1);
-			glVertex3d(radius*x1, radius*y1, radius*z1);
-		}
-		glEnd();
-	}
-}
-
-
-// CYLINDER ============================================
-PCylinder::PCylinder() : Primitive(), radius(1.0f), height(1.0f)
-{
-	type = PrimitiveTypes::Primitive_Cylinder;
-}
-
-PCylinder::PCylinder(float radius, float height) : Primitive(), radius(radius), height(height)
-{
-	type = PrimitiveTypes::Primitive_Cylinder;
-}
-
-void PCylinder::InnerRender() const
-{
-	int n = 30;
-
-	// Cylinder Bottom
-	glBegin(GL_POLYGON);
-
-	for (int i = 360; i >= 0; i -= (360 / n))
-	{
-		float a = (float)i * PI / 180.f; // degrees to radians
-		glVertex3f(-height * 0.5f, radius * cosf(a), radius * sinf(a));
-	}
-	glEnd();
-
-	// Cylinder Top
-	glBegin(GL_POLYGON);
-	glNormal3f(0.0f, 0.0f, 1.0f);
-	for (int i = 0; i <= 360; i += (360 / n))
-	{
-		float a = (float)i * PI / 180.f; // degrees to radians
-		glVertex3f(height * 0.5f, radius * cosf(a), radius * sinf(a));
-	}
-	glEnd();
-
-	// Cylinder "Cover"
-	glBegin(GL_QUAD_STRIP);
-	for (int i = 0; i < 480; i += (360 / n))
-	{
-		float a = (float)i * PI / 180.f; // degrees to radians
-
-		glVertex3f(height*0.5f, radius * cosf(a), radius * sinf(a));
-		glVertex3f(-height * 0.5f, radius * cosf(a), radius * sinf(a));
-	}
-	glEnd();
-}
-
-// LINE ==================================================
-PLine::PLine() : Primitive(), origin(0, 0, 0), destination(1, 1, 1)
-{
-	type = PrimitiveTypes::Primitive_Line;
-}
-
-PLine::PLine(float x, float y, float z) : Primitive(), origin(0, 0, 0), destination(x, y, z)
-{
-	type = PrimitiveTypes::Primitive_Line;
-}
-
-void PLine::InnerRender() const
-{
-	glLineWidth(2.0f);
-
-	glBegin(GL_LINES);
-
-	glVertex3f(origin.x, origin.y, origin.z);
-	glVertex3f(destination.x, destination.y, destination.z);
-
-	glEnd();
-
-	glLineWidth(1.0f);
-}
 
 // PLANE ==================================================
 PPlane::PPlane() : Primitive(), normal(0, 1, 0), constant(1)

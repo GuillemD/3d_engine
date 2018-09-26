@@ -3,11 +3,13 @@
 #include "ModuleRenderer3D.h"
 #include "ModulePhysics3D.h"
 #include "MathGeoLib/MathGeoLib.h"
+#include "Primitive.h"
+#include "DebugDraw.h"
 #include "GLEW/include/glew.h"
 #include "SDL\include\SDL_opengl.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
-#include "DebugDraw.h"
+
 
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
@@ -106,12 +108,6 @@ bool ModuleRenderer3D::Init()
 		
 		EnableLight();
 
-
-		glEnable(GL_DEPTH_TEST);
-		glEnable(GL_CULL_FACE);
-		glEnable(GL_LIGHTING);
-		glEnable(GL_COLOR_MATERIAL);
-		glEnable(GL_TEXTURE_2D);
 	}
 
 	// Projection matrix for
@@ -141,19 +137,31 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
-	if (debug_draw)
+
+	
+	
+	if (show_plane == true)
 	{
-		BeginDebugDraw();
-		/*bool mpty = App->physics->CubesArray.empty();
-		if(!mpty)
-		{
-			DebugDraw(App->physics->CubesArray[0],White);
-		}*/
-		DrawGrid(30);
+		PPlane base(0, 1, 0, 0);
+		base.axis = true;
+		base.Render();
+	}
 		
-		EndDebugDraw();
+	
+	
+	if (debug_draw == true)
+	{
+		/*BeginDebugDraw();
+		
+		PlaneDirectDraw(base.transform);
+		
+		EndDebugDraw();*/
 
 	}
+	
+	App->ui->DrawImGui();
+	EnableLight();
+
 	SDL_GL_SwapWindow(App->window->window);
 	return UPDATE_CONTINUE;
 }
@@ -200,24 +208,15 @@ void ModuleRenderer3D::EnableLight()
 	GLfloat MaterialDiffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MaterialDiffuse);
 
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
 	lights[0].Active(true);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_COLOR_MATERIAL);
 	
 }
 
-void ModuleRenderer3D::DrawGrid(int size)
-{
-	glBegin(GL_LINES);
-	glColor3f(0.75f, 0.75f, 0.75f);
-	for (int i = -size; i <= size; i++)
-	{
-		glVertex3f((float)i, 0, (float)-size);
-		glVertex3f((float)i, 0, (float)size);
 
-		glVertex3f((float)-size, 0, (float)i);
-		glVertex3f((float)size, 0, (float)i);
-	}
-	glEnd();
-}
 
 
 void ModuleRenderer3D::DisableLight()
@@ -236,4 +235,62 @@ void ModuleRenderer3D::DisableLight()
 	glDisable(GL_LIGHTING);
 	glDisable(GL_COLOR_MATERIAL);
 	glDisable(GL_TEXTURE_2D);
+}
+
+void ModuleRenderer3D::update_wireframe()
+{
+	if(wireframe)
+	
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	else
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	
+}
+
+void ModuleRenderer3D::update_depth_test()
+{
+	if (depth_test)
+		glEnable(GL_DEPTH_TEST);
+	else
+		glDisable(GL_DEPTH_TEST);
+}
+
+void ModuleRenderer3D::update_cullface()
+{
+	if (cullface)
+		glEnable(GL_CULL_FACE);
+	else
+		glDisable(GL_CULL_FACE);
+}
+
+void ModuleRenderer3D::update_texture()
+{
+	if (texture)
+		glEnable(GL_TEXTURE_2D);
+	else
+		glDisable(GL_TEXTURE_2D);
+}
+
+void ModuleRenderer3D::update_color_material()
+{
+	if (color_material)
+		glEnable(GL_COLOR_MATERIAL);
+	else
+		glDisable(GL_COLOR_MATERIAL);
+}
+
+void ModuleRenderer3D::update_lighting()
+{
+	if (lighting)
+		glEnable(GL_LIGHTING);
+	else
+		glDisable(GL_LIGHTING);
+}
+
+void ModuleRenderer3D::update_line_smooth()
+{
+	if (line_smooth)
+		glEnable(GL_LINE_SMOOTH);
+	else
+		glDisable(GL_LINE_SMOOTH);
 }
