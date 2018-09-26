@@ -406,6 +406,9 @@ extern DECLSPEC int SDLCALL SDL_GetWindowDisplayMode(SDL_Window * window,
  */
 extern DECLSPEC Uint32 SDLCALL SDL_GetWindowPixelFormat(SDL_Window * window);
 
+
+
+
 /**
  *  \brief Create a window with the specified position, dimensions, and flags.
  *

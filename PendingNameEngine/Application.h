@@ -12,6 +12,9 @@
 #include "ModulePhysics3D.h"
 #include "ModuleUI.h"
 #include <list>
+
+class Configuration;
+
 class Application
 {
 public:
@@ -30,6 +33,23 @@ private:
 	float	dt;
 	std::list<Module*> list_modules;
 
+	std::string app_name;
+	std::string org_name;
+	std::string app_version;
+
+	std::vector<float>	FPSBars;
+	std::vector<float>	MillisecondsBars;
+	std::vector<float>	MemoryBars;
+
+	uint TotalFrameCount = 0;
+	uint ThisSecFrameCount = 0;
+	uint LastSecFrameCount = 0;
+	Uint32 LastSecMs = 0;
+	Timer LastSecondFrameTimer;
+	Timer MsSinceStart;
+	float AverageFPS = 0;
+	bool vsync = VSYNC;
+
 public:
 
 	Application();
@@ -42,11 +62,23 @@ public:
 	void OpenBrowser(const char* url);
 	void OpenFile(const char* path);
 	const char* GetVersion() const;
+	void SetVersion(const char* version);
+	const char* GetAppName() const;
+	void SetAppName(const char* app);
+	const char* GetOrgName() const;
+	void SetOrgName(const char* org);
+	void ShowApplicationCongfig();
+
+
+
 
 private:
 
 	void AddModule(Module* mod);
 	void PrepareUpdate();
 	void FinishUpdate();
+	
+
 
 };
+extern Application* app;
