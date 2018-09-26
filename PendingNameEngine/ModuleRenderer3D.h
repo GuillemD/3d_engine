@@ -22,11 +22,14 @@ public:
 	void DisableLight();  //Use this in the PostUpdate of a Module for it to ignore Scene Lights
 	void EnableLight();
 
+	void DrawGrid(int size);
+
 public:
 
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
 	float3x3 NormalMatrix;
 	float4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
+	bool debug_draw = true;
 
 };

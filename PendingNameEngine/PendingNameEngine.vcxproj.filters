@@ -333,6 +333,9 @@
     <ClInclude Include="Panel.h">
       <Filter>Sources\Panels</Filter>
     </ClInclude>
+    <ClInclude Include="DebugDraw.h">
+      <Filter>Sources\Helpers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -514,6 +517,9 @@
     </ClCompile>
     <ClCompile Include="Panel.cpp">
       <Filter>Sources\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugDraw.cpp">
+      <Filter>Sources\Helpers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

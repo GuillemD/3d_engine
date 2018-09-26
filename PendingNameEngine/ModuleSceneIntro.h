@@ -16,7 +16,7 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
-	void DrawGrid();
+	void DrawGrid(int HALF_GRID_SIZE);
 	
 public:
 	bool grid_active = true;

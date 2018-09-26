@@ -1,11 +1,13 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleRenderer3D.h"
+#include "ModulePhysics3D.h"
 #include "MathGeoLib/MathGeoLib.h"
 #include "GLEW/include/glew.h"
 #include "SDL\include\SDL_opengl.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
+#include "DebugDraw.h"
 
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
@@ -139,7 +141,19 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
-	
+	if (debug_draw)
+	{
+		BeginDebugDraw();
+		/*bool mpty = App->physics->CubesArray.empty();
+		if(!mpty)
+		{
+			DebugDraw(App->physics->CubesArray[0],White);
+		}*/
+		DrawGrid(30);
+		
+		EndDebugDraw();
+
+	}
 	SDL_GL_SwapWindow(App->window->window);
 	return UPDATE_CONTINUE;
 }
@@ -188,6 +202,21 @@ void ModuleRenderer3D::EnableLight()
 
 	lights[0].Active(true);
 	
+}
+
+void ModuleRenderer3D::DrawGrid(int size)
+{
+	glBegin(GL_LINES);
+	glColor3f(0.75f, 0.75f, 0.75f);
+	for (int i = -size; i <= size; i++)
+	{
+		glVertex3f((float)i, 0, (float)-size);
+		glVertex3f((float)i, 0, (float)size);
+
+		glVertex3f((float)-size, 0, (float)i);
+		glVertex3f((float)size, 0, (float)i);
+	}
+	glEnd();
 }
 
 
