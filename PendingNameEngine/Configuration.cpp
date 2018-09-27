@@ -50,7 +50,10 @@ void Configuration::ShowElement()
 			{
 				App->input->ShowInputConfiguration();
 			}
-
+			if (ImGui::CollapsingHeader("Camera"))
+			{
+				App->camera->ShowCameraConfiguration();
+			}
 			if (ImGui::CollapsingHeader("Hardware"))
 			{
 				ImGui::Text("CPUs: %d (Cache: %d kb)", hw.GetNumberCPU(), hw.GetCPUCache());

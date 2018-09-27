@@ -19,7 +19,7 @@ public:
 	void LookAt(const vec &Spot);
 	void Move(const vec &Movement);
 	float* GetViewMatrix();
-
+	void ShowCameraConfiguration();
 private:
 	float maxDistanceToVehicle = 25.0f;
 	void CalculateViewMatrix();
