@@ -35,9 +35,9 @@ update_status ModuleUI::Update(float dt)
 	if (ShowTestWindow) ShowDemoWindow();
 	if (ShowRNG) ShowRNGenerator();	
 	
-	if (ShowSphereCreatorPanel)ShowSphereCreator();
+	/*if (ShowSphereCreatorPanel)ShowSphereCreator();
 	if (ShowCubeCreatorPanel)ShowCubeCreator();
-	if (ShowCapsuleCreatorPanel)ShowCapsuleCreator();
+	if (ShowCapsuleCreatorPanel)ShowCapsuleCreator();*/
 
 	if (closeApp) return UPDATE_STOP;
 
@@ -66,7 +66,7 @@ bool ModuleUI::CleanUp()
 }
 
 
-void ModuleUI::ShowCubeCreator() {
+/*void ModuleUI::ShowCubeCreator() {
 	if (ImGui::Begin("Cube Creator Panel")) {
 		ImGui::Text("AABB Min Positions");
 		ImGui::InputFloat("MinX Positon", &tmpvec.x, 0.05f, 0, 3);
@@ -125,7 +125,7 @@ void ModuleUI::ShowCapsuleCreator()
 
 	}
 	ImGui::End();
-}
+}*/
 
 void ModuleUI::ShowDemoWindow()
 {
@@ -146,8 +146,7 @@ void ModuleUI::ShowRNGenerator()
 		{
 			if (input_min > input_max)
 			{
-				
-				
+							
 				if (ImGui::Button("Generate Random Between given ints"))
 				{
 					Swap<int>(input_min, input_max);
@@ -181,38 +180,22 @@ void ModuleUI::CreateMainMenu()
 			if (ImGui::MenuItem("Show Random Number Generator")) {
 				ShowRNG = !ShowRNG;
 			}
+
 			if (ImGui::MenuItem("Close Application")) {
 				closeApp = !closeApp;
 			}
 			ImGui::EndMenu();
 
 		}
-		if (ImGui::BeginMenu("Object creators")) {
-
-			if (ImGui::MenuItem("Sphere creator panel")) {
-				//bool to show the sphere creator
-				ShowSphereCreatorPanel = !ShowSphereCreatorPanel;
-			}
-			if (ImGui::MenuItem("Cube creator panel")) {
-				//bool to show the sphere creator
-				ShowCubeCreatorPanel = !ShowCubeCreatorPanel;
-			}
-			if (ImGui::MenuItem("Capsule creator panel")) {
-				//bool to show the sphere creator
-				ShowCapsuleCreatorPanel = !ShowCapsuleCreatorPanel;
-			}
-			ImGui::EndMenu();
-
-		}
-		if (ImGui::BeginMenu("Collision Checkers")) {
-			if (ImGui::MenuItem("Sphere collision checkers")) {
-				App->physics->GetSphereCollisionsList();
-			}
-			if (ImGui::MenuItem("Cube collision checkers")) {
-				App->physics->GetCubeCollisionsList();
-			}
-			if (ImGui::MenuItem("Capsule collision checkers")) {
-				App->physics->GetCapsuleCollisionsList();
+		if (ImGui::BeginMenu("Options")) {
+			if (ImGui::MenuItem("Show Configuration"))
+			{
+				if (confg.active) {}
+				else
+				{
+					confg.active = true;
+				}
+				
 			}
 			ImGui::EndMenu();
 		}

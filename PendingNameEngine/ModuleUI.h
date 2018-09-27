@@ -36,9 +36,9 @@ private:
 	bool ShowTestWindow = false;
 	bool ShowRNG = false;
 	
-	bool ShowCubeCreatorPanel = false;
+	/*bool ShowCubeCreatorPanel = false;
 	bool ShowSphereCreatorPanel = false;
-	bool ShowCapsuleCreatorPanel = false;
+	bool ShowCapsuleCreatorPanel = false;*/
 
 	float tmpfloat = 0.0f;
 
@@ -47,9 +47,9 @@ private:
 
 private:
 	//Functions
-	void ModuleUI::ShowCubeCreator();
+	/*void ModuleUI::ShowCubeCreator();
 	void ModuleUI::ShowSphereCreator();
-	void ModuleUI::ShowCapsuleCreator();
+	void ModuleUI::ShowCapsuleCreator();*/
 
 	void ModuleUI::ShowDemoWindow();
 	void ModuleUI::ShowRNGenerator();

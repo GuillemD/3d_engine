@@ -21,7 +21,7 @@ public:
 
 	Hardware hw;
 
-private:
+public:
 	bool active = true;
 	
 	
