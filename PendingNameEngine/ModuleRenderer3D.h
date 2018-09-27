@@ -30,14 +30,14 @@ public:
 	SDL_GLContext context;
 	float3x3 NormalMatrix;
 	float4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
-	bool debug_draw = false;
+	bool debug_draw = true;
 	bool show_plane = true;
 
 	//attributes
 	bool wireframe = false;
 	bool depth_test = false;
-	bool cullface = false;
-	bool texture = false;
+	bool cullface = true;
+	bool texture = true;
 	bool color_material = true;
 	bool lighting = true;
 	bool line_smooth = false;

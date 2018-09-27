@@ -16,8 +16,7 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
-	
+	void Draw() const;
 public:
 	
-
 };

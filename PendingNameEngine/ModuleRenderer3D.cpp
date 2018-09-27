@@ -103,11 +103,12 @@ bool ModuleRenderer3D::Init()
 			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
 			ret = false;
 		}
-	
-		glEnable(GL_LIGHTING);
 		
+		glEnable(GL_CULL_FACE);
 		EnableLight();
+		glEnable(GL_TEXTURE_2D);
 		glEnable(GL_COLOR_MATERIAL);
+		glEnable(GL_LIGHTING);
 	}
 
 	// Projection matrix for
@@ -137,24 +138,24 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
-
-	/*if (show_plane == true)
+	if (show_plane == true) //BASE
 	{
 		PPlane base(0, 1, 0, 0);
 		base.axis = true;
 		base.Render();
-	}*/
-		
+	}
+
+	App->scene_intro->Draw();
 	
-	/*if (debug_draw == true)
+	if (debug_draw == true)
 	{
 		BeginDebugDraw();
 		
-		//PlaneDirectDraw(base.transform);
+
 		
 		EndDebugDraw();
 
-	}*/
+	}
 	
 	App->ui->DrawImGui();
 	EnableLight();

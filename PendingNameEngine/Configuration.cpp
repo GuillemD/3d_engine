@@ -58,6 +58,7 @@ void Configuration::ShowElement()
 			PrintCaps(hw.GetCaps());
 
 		}
+		
 		ImGui::End();
 	}
 }
