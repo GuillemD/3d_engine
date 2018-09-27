@@ -151,11 +151,11 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	
 	if (debug_draw == true)
 	{
-		/*BeginDebugDraw();
+		BeginDebugDraw();
 		
-		PlaneDirectDraw(base.transform);
+		//PlaneDirectDraw(base.transform);
 		
-		EndDebugDraw();*/
+		EndDebugDraw();
 
 	}
 	
@@ -235,6 +235,7 @@ void ModuleRenderer3D::DisableLight()
 	glDisable(GL_LIGHTING);
 	glDisable(GL_COLOR_MATERIAL);
 	glDisable(GL_TEXTURE_2D);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
 void ModuleRenderer3D::update_wireframe()
