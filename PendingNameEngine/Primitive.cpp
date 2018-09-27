@@ -22,7 +22,7 @@ void Primitive::Render() const
 	glPushMatrix();
 	glMultMatrixf((GLfloat*) &transform);
 	
-	glDisable(GL_LIGHTING);
+	//glDisable(GL_LIGHTING);
 	glDisable(GL_TEXTURE_2D);
 
 	if (axis == true)

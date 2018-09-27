@@ -1,8 +1,6 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleRenderer3D.h"
-#include "ModulePhysics3D.h"
-#include "MathGeoLib/MathGeoLib.h"
 #include "Primitive.h"
 #include "DebugDraw.h"
 #include "GLEW/include/glew.h"
@@ -58,10 +56,10 @@ bool ModuleRenderer3D::Init()
 	if(ret == true)
 	{
 		//Capabilities
-		LOG("Vendor: %s", glGetString(GL_VENDOR));
-		LOG("Renderer: %s", glGetString(GL_RENDERER));
-		LOG("OpenGL version supported %s", glGetString(GL_VERSION));
-		LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+		CONSOLELOG("Vendor: %s", glGetString(GL_VENDOR));
+		CONSOLELOG("Renderer: %s", glGetString(GL_RENDERER));
+		CONSOLELOG("OpenGL version supported %s", glGetString(GL_VERSION));
+		CONSOLELOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
 		//Use Vsync
 		if(VSYNC && SDL_GL_SetSwapInterval(1) < 0)
@@ -106,11 +104,11 @@ bool ModuleRenderer3D::Init()
 			ret = false;
 		}
 		
-		glEnable(GL_DEPTH_TEST);
+		/*glEnable(GL_DEPTH_TEST);
 		glEnable(GL_CULL_FACE);
 		EnableLight();
 		glEnable(GL_LIGHTING);
-		glEnable(GL_COLOR_MATERIAL);
+		glEnable(GL_COLOR_MATERIAL);*/
 
 	}
 
@@ -130,10 +128,10 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	glLoadMatrixf(App->camera->GetViewMatrix());
 
 	// light 0 on cam pos
-	lights[0].SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
+	//lights[0].SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
 
-	for(uint i = 0; i < MAX_LIGHTS; ++i)
-		lights[i].Render();
+	/*for(uint i = 0; i < MAX_LIGHTS; ++i)
+		lights[i].Render();*/
 
 	return UPDATE_CONTINUE;
 }
@@ -142,8 +140,6 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 
-	
-	
 	if (show_plane == true)
 	{
 		PPlane base(0, 1, 0, 0);
@@ -153,7 +149,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		
 	
 	
-	if (debug_draw == true)
+	/*if (debug_draw == true)
 	{
 		BeginDebugDraw();
 		
@@ -161,10 +157,10 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		
 		EndDebugDraw();
 
-	}
+	}*/
 	
 	App->ui->DrawImGui();
-	EnableLight();
+	//EnableLight();
 
 	SDL_GL_SwapWindow(App->window->window);
 	return UPDATE_CONTINUE;
@@ -184,11 +180,10 @@ bool ModuleRenderer3D::CleanUp()
 void ModuleRenderer3D::OnResize(int width, int height)
 {
 	glViewport(0, 0, width, height);
-
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
-	ProjectionMatrix.perspective(60.0f, (float)width / (float)height, 0.125f, 512.0f);
+	ProjectionMatrix = ProjectionMatrix.perspective(150.0, (float)width / (float)height, 0.125f, 1000.0f);
 	glLoadMatrixf((float*)ProjectionMatrix.v);
 
 	glMatrixMode(GL_MODELVIEW);

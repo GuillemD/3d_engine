@@ -53,7 +53,7 @@ update_status ModuleUI::PostUpdate(float dt)
 	return UPDATE_CONTINUE;
 }
 void ModuleUI::DrawImGui() {
-	App->renderer3D->DisableLight();
+	
 	ImGui::Render();
 }
 

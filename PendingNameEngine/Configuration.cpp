@@ -32,7 +32,7 @@ void Configuration::ShowElement()
 		}
 		if (ImGui::CollapsingHeader("Renderer"))
 		{
-			if (ImGui::Checkbox("Wireframe", &App->renderer3D->wireframe)) App->renderer3D->update_wireframe();
+			/*if (ImGui::Checkbox("Wireframe", &App->renderer3D->wireframe)) App->renderer3D->update_wireframe();
 			ImGui::SameLine();
 			if (ImGui::Checkbox("Depth test", &App->renderer3D->depth_test)) App->renderer3D->update_depth_test();
 			ImGui::SameLine();
@@ -42,7 +42,7 @@ void Configuration::ShowElement()
 			if (ImGui::Checkbox("Color Material", &App->renderer3D->color_material)) App->renderer3D->update_color_material();
 			ImGui::SameLine();
 			if (ImGui::Checkbox("Texture2D", &App->renderer3D->texture)) App->renderer3D->update_texture();
-			if (ImGui::Checkbox("Smooth line", &App->renderer3D->line_smooth)) App->renderer3D->update_line_smooth();
+			if (ImGui::Checkbox("Smooth line", &App->renderer3D->line_smooth)) App->renderer3D->update_line_smooth();*/
 		}
 		if (ImGui::CollapsingHeader("Input"))
 		{
