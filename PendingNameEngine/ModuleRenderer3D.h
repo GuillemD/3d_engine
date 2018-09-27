@@ -38,8 +38,8 @@ public:
 	bool depth_test = false;
 	bool cullface = false;
 	bool texture = false;
-	bool color_material = false;
-	bool lighting = false;
+	bool color_material = true;
+	bool lighting = true;
 	bool line_smooth = false;
 	//swap-checkers
 	void update_wireframe();

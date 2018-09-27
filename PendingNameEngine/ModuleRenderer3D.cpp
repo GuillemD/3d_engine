@@ -103,13 +103,11 @@ bool ModuleRenderer3D::Init()
 			LOG("Error initializing OpenGL! %s\n", gluErrorString(error));
 			ret = false;
 		}
-		
-		/*glEnable(GL_DEPTH_TEST);
-		glEnable(GL_CULL_FACE);
-		EnableLight();
+	
 		glEnable(GL_LIGHTING);
-		glEnable(GL_COLOR_MATERIAL);*/
-
+		
+		EnableLight();
+		glEnable(GL_COLOR_MATERIAL);
 	}
 
 	// Projection matrix for
@@ -128,10 +126,10 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 	glLoadMatrixf(App->camera->GetViewMatrix());
 
 	// light 0 on cam pos
-	//lights[0].SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
+	lights[0].SetPos(App->camera->Position.x, App->camera->Position.y, App->camera->Position.z);
 
-	/*for(uint i = 0; i < MAX_LIGHTS; ++i)
-		lights[i].Render();*/
+	for(uint i = 0; i < MAX_LIGHTS; ++i)
+		lights[i].Render();
 
 	return UPDATE_CONTINUE;
 }
@@ -140,14 +138,13 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 
-	if (show_plane == true)
+	/*if (show_plane == true)
 	{
 		PPlane base(0, 1, 0, 0);
 		base.axis = true;
 		base.Render();
-	}
+	}*/
 		
-	
 	
 	/*if (debug_draw == true)
 	{
@@ -160,7 +157,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	}*/
 	
 	App->ui->DrawImGui();
-	//EnableLight();
+	EnableLight();
 
 	SDL_GL_SwapWindow(App->window->window);
 	return UPDATE_CONTINUE;
@@ -209,8 +206,6 @@ void ModuleRenderer3D::EnableLight()
 
 	
 	lights[0].Active(true);
-	
-	
 }
 
 

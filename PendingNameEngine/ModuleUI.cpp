@@ -54,6 +54,7 @@ update_status ModuleUI::PostUpdate(float dt)
 }
 void ModuleUI::DrawImGui() {
 	
+	App->renderer3D->DisableLight();
 	ImGui::Render();
 }
 

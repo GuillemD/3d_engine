@@ -31,7 +31,9 @@ bool ModuleSceneIntro::CleanUp()
 update_status ModuleSceneIntro::Update(float dt)
 {
 	
-
+	PPlane base(0, 1, 0, 0);
+	base.axis = true;
+	base.Render();
 	return UPDATE_CONTINUE;
 }
 
