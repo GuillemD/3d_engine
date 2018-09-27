@@ -30,7 +30,7 @@ public:
 	SDL_GLContext context;
 	float3x3 NormalMatrix;
 	float4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
-	bool debug_draw = true;
+	bool debug_draw = false;
 	bool show_plane = true;
 
 	//attributes

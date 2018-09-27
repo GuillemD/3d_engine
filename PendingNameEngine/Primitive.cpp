@@ -1,4 +1,5 @@
 #include "Globals.h"
+#include "Module.h"
 #include "Primitive.h"
 #include "GLEW/include/glew.h"
 #include "SDL\include\SDL_opengl.h"
@@ -60,20 +61,8 @@ void Primitive::Render() const
 
 	glColor3f(color.r, color.g, color.b);
 
-	if (wire) {
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		glDisable(GL_CULL_FACE);
-	}
-
 	InnerRender();
 
-	if (wire) {
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		glEnable(GL_CULL_FACE);
-	}
-
-	glEnable(GL_TEXTURE_2D);
-	glEnable(GL_LIGHTING);
 	glPopMatrix();
 }
 
