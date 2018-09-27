@@ -155,26 +155,21 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 {
 
 	
-	//DRAW BASE PLANE
-	if (show_plane == true)
+	
+	/*if (show_plane == true)
 	{
 		PPlane base(0, 1, 0, 0);
 		base.axis = true;
 		base.Render();
-	}
+	}*/
+		
 	
-	//DRAW VERTEX ARRAY
-	/*glEnableClientState(GL_VERTEX_ARRAY);
-	glBindBuffer(GL_ARRAY_BUFFER, my_id);
-	glVertexPointer(3, GL_FLOAT, 0, NULL);
-	glDrawArrays(GL_TRIANGLES, 0, num_vertices);
-	glBindBuffer(GL_ARRAY_BUFFER, 0); //disabling bind buffer
-	glDisableClientState(GL_VERTEX_ARRAY);*/
 	
 	/*if (debug_draw == true)
 	{
 		BeginDebugDraw();
 		
+		//PlaneDirectDraw(base.transform);
 		
 		EndDebugDraw();
 
@@ -234,6 +229,9 @@ void ModuleRenderer3D::EnableLight()
 	
 	
 }
+
+
+
 
 void ModuleRenderer3D::DisableLight()
 {
