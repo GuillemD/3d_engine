@@ -172,7 +172,7 @@ void PPlane::InnerRender() const
 
 	glBegin(GL_LINES);
 
-	float d = 100.0f;
+	float d = 10.0f;
 
 	for (float i = -d; i <= d; i += 1.0f)
 	{

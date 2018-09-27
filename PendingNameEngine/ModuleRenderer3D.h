@@ -2,6 +2,7 @@
 #include "Module.h"
 #include "Globals.h"
 #include "Light.h"
+#include "glmath.h"
 
 
 #define MAX_LIGHTS 8
@@ -23,13 +24,14 @@ public:
 	void EnableLight();
 
 
-
 public:
 
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
-	float3x3 NormalMatrix;
-	float4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
+	//float3x3 NormalMatrix;
+	//float4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
+	mat3x3 NormalMatrix;
+	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 	bool debug_draw = true;
 	bool show_plane = true;
 

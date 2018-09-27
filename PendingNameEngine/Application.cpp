@@ -110,7 +110,7 @@ update_status Application::Update()
 
 	// We will only show 30 bars in our histogram
 
-	if (FPSBars.size() >= 30)
+	if (FPSBars.size() >= 100)
 	{
 		for (int a = 0; a <= FPSBars.size() - 2; a++)
 		{
@@ -118,7 +118,7 @@ update_status Application::Update()
 		}
 		FPSBars.pop_back();
 	}
-	if (MillisecondsBars.size() >= 30)
+	if (MillisecondsBars.size() >= 100)
 	{
 		for (int a = 0; a <= MillisecondsBars.size() - 2; a++)
 		{
