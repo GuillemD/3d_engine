@@ -131,13 +131,3 @@ bool ModuleInput::CleanUp()
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	return true;
 }
-
-void ModuleInput::ShowInputConfiguration()
-{
-	ImGui::TextColored(ImVec4(1, 1, 1, 1), "Mouse X: %d", App->input->mouse_x);
-	ImGui::TextColored(ImVec4(1, 1, 1, 1), "Mouse Y: %d", App->input->mouse_y);
-
-	ImGui::TextColored(ImVec4(1, 1, 1, 1), "Mouse motion on X axis: %d", App->input->GetMouseXMotion());
-	ImGui::TextColored(ImVec4(1, 1, 1, 1), "Mouse motion on Y axis: %d", App->input->GetMouseYMotion());
-
-}

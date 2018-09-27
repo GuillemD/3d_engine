@@ -1,7 +1,7 @@
 #pragma once
 #include "Module.h"
 #include "Globals.h"
-#include "ImGui/imgui.h"
+
 #define MAX_MOUSE_BUTTONS 5
 
 enum KEY_STATE
@@ -58,7 +58,6 @@ public:
 		return mouse_y_motion;
 	}
 
-	void ShowInputConfiguration();
 private:
 	KEY_STATE* keyboard;
 	KEY_STATE mouse_buttons[MAX_MOUSE_BUTTONS];

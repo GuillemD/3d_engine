@@ -5,9 +5,9 @@
 #include "Globals.h"
 #include "ImGui/imgui.h"
 #include "Hardware.h"
-#include "Panel.h"
 
-class Configuration:public Panel
+
+class Configuration
 {
 public:
 
