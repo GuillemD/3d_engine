@@ -4,8 +4,9 @@
 #include "ModuleRenderer3D.h"
 
 
-Configuration::Configuration()
+Configuration::Configuration(): Panel("Configuration")
 {
+
 }
 
 Configuration::~Configuration()
@@ -43,10 +44,16 @@ void Configuration::ShowElement()
 			if (ImGui::Checkbox("Texture2D", &App->renderer3D->texture)) App->renderer3D->update_texture();
 			if (ImGui::Checkbox("Smooth line", &App->renderer3D->line_smooth)) App->renderer3D->update_line_smooth();
 		}
+		if (ImGui::CollapsingHeader("Input"))
+		{
+			App->input->ShowInputConfiguration();
+		}
+
 		if (ImGui::CollapsingHeader("Hardware"))
 		{
 			ImGui::Text("CPUs: %d (Cache: %d kb)", hw.GetNumberCPU(), hw.GetCPUCache());
-			ImGui::Text("System RAM: %d", hw.GetRAM());
+			ImGui::Text("System RAM: ");
+			ImGui::TextColored(ImVec4(1, 1, 1, 1), "%i", SDL_GetSystemRAM());
 			
 			PrintCaps(hw.GetCaps());
 

@@ -321,9 +321,6 @@
     <ClInclude Include="About.h">
       <Filter>Sources\Modules\uiElements</Filter>
     </ClInclude>
-    <ClInclude Include="Configuration.h">
-      <Filter>Sources\Modules\uiElements</Filter>
-    </ClInclude>
     <ClInclude Include="Hardware.h">
       <Filter>Sources\Modules\uiElements</Filter>
     </ClInclude>
@@ -338,6 +335,9 @@
     </ClInclude>
     <ClInclude Include="Primitive.h">
       <Filter>Sources\Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Configuration.h">
+      <Filter>Sources\Panels</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -509,9 +509,6 @@
     <ClCompile Include="About.cpp">
       <Filter>Sources\Modules\uiElements</Filter>
     </ClCompile>
-    <ClCompile Include="Configuration.cpp">
-      <Filter>Sources\Modules\uiElements</Filter>
-    </ClCompile>
     <ClCompile Include="Hardware.cpp">
       <Filter>Sources\Modules\uiElements</Filter>
     </ClCompile>
@@ -526,6 +523,9 @@
     </ClCompile>
     <ClCompile Include="Primitive.cpp">
       <Filter>Sources\Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="Configuration.cpp">
+      <Filter>Sources\Panels</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
