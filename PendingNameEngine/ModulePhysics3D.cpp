@@ -20,7 +20,7 @@ ModulePhysics3D::~ModulePhysics3D()
 // Render not available yet----------------------------------
 bool ModulePhysics3D::Init()
 {
-	CONSOLELOG("Creating 3D Physics simulation");
+	LOG("Creating 3D Physics simulation");
 	bool ret = true;
 
 	return ret;
@@ -29,7 +29,7 @@ bool ModulePhysics3D::Init()
 // ---------------------------------------------------------
 bool ModulePhysics3D::Start()
 {
-	CONSOLELOG("Creating Physics environment");
+	LOG("Creating Physics environment");
 
 	
 
@@ -63,8 +63,8 @@ update_status ModulePhysics3D::PostUpdate(float dt)
 // Called before quitting
 bool ModulePhysics3D::CleanUp()
 {
-	CONSOLELOG("Destroying 3D Physics simulation");
-
+	LOG("Destroying 3D Physics simulation");
+	// Remove from the world all collision bodies
 	
 	return true;
 }
@@ -95,7 +95,7 @@ void ModulePhysics3D::CreateCapsule(float radius, LineSegment l)
 	ret.r = radius;
 	ret.l = l;
 	CapsulesArray.push_back(ret);
-	CONSOLELOG("Created Capsule");
+	LOG("Created Capsule");
 }
 
 void ModulePhysics3D::CreateCube(vec aabbmin, vec aabbmax)
@@ -104,7 +104,7 @@ void ModulePhysics3D::CreateCube(vec aabbmin, vec aabbmax)
 	ret.minPoint = aabbmin;
 	ret.maxPoint = aabbmax;
 	CubesArray.push_back(ret);
-	CONSOLELOG("Created cube");
+	LOG("Created cube");
 
 }
 
@@ -123,13 +123,13 @@ std::list<float2> ModulePhysics3D::GetSphereCollisionsList()
 			}
 			if (SpheresArray[object_one].Intersects(SpheresArray[object_two])) {
 				SphereCollisionsList.push_back({ (float)object_one, (float)object_two });
-				CONSOLELOG("Object %d intersects with Object %d", object_one, object_two);
+				LOG("Object %d intersects with Object %d", object_one, object_two);
 			}
 		}
 		object_two = 0;
 	}
 	if (SphereCollisionsList.size() == 0) {
-		CONSOLELOG("There are no Spheres colliding with each other.")
+		LOG("There are no Spheres colliding with each other.")
 	}
 	return SphereCollisionsList;
 }
@@ -149,13 +149,13 @@ std::list<float2> ModulePhysics3D::GetCubeCollisionsList()
 			}
 			if (CubesArray[object_one].Intersects(CubesArray[object_two])) {
 				CubeCollisionsList.push_back({ (float)object_one, (float)object_two });
-				CONSOLELOG("Object %d intersects with Object %d", object_one, object_two);
+				LOG("Object %d intersects with Object %d", object_one, object_two);
 			}
 		}
 		object_two = 0;
 	}
 	if (CubeCollisionsList.size() == 0) {
-		CONSOLELOG("There are no Cubes colliding with each other.")
+		LOG("There are no Cubes colliding with each other.")
 	}
 	return CubeCollisionsList;
 }
@@ -175,13 +175,13 @@ std::list<float2> ModulePhysics3D::GetCapsuleCollisionsList()
 			}
 			if (CapsulesArray[object_one].Intersects(CapsulesArray[object_two])) {
 				CapsuleCollisionsList.push_back({ (float)object_one, (float)object_two });
-				CONSOLELOG("Object %d intersects with Object %d.", object_one, object_two);
+				LOG("Object %d intersects with Object %d.", object_one, object_two);
 			}
 		}
 		object_two = 0;
 	}
 	if (CapsuleCollisionsList.size() == 0) {
-		CONSOLELOG("There are no Capsules colliding with each other.")
+		LOG("There are no Capsules colliding with each other.")
 	}
 	return CapsuleCollisionsList;
 }

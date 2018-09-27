@@ -12,7 +12,7 @@ ModuleUI::~ModuleUI()
 
 bool ModuleUI::Start()
 {
-	CONSOLELOG("Setting up UI");
+	LOG("Setting up UI");
 	bool ret = true;
 	ImGui_ImplSdl_Init(App->window->window);
 
@@ -59,7 +59,7 @@ void ModuleUI::DrawImGui() {
 
 bool ModuleUI::CleanUp()
 {
-	CONSOLELOG("Cleaning UI");
+	LOG("Cleaning UI");
 	ImGui_ImplSdl_Shutdown();
 	return true;
 }

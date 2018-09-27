@@ -15,7 +15,7 @@ ModuleSceneIntro::~ModuleSceneIntro()
 
 bool ModuleSceneIntro::Start()
 {
-	CONSOLELOG("Loading Intro assets");
+	LOG("Loading Intro assets");
 	bool ret = true;
 
 	App->camera->Move(float3(1.0f, 10.0f, 0.0f));
@@ -25,7 +25,7 @@ bool ModuleSceneIntro::Start()
 
 bool ModuleSceneIntro::CleanUp()
 {
-	CONSOLELOG("Unloading Intro scene");
+	LOG("Unloading Intro scene");
 	return true;
 }
 update_status ModuleSceneIntro::Update(float dt)
