@@ -22,6 +22,7 @@ bool ModuleSceneIntro::Start()
 	
 	VertexAndIndexCube.DefineVerticesAndIndicesForACube(vec(7.f, -1.f, -1.f), 2);
 	VertexArrayCube.DefineVerticesForACube(vec(3.f, -1.f, -1.f), 2);
+	Sphere.DefineVerticesForASphere(vec(0.f, 10.f, 0.f), 2, 16, 16);
 	App->camera->Move(float3(0.0f, 10.0f, 10.0f));
 	App->camera->LookAt(float3(0.0f, 3.0f, 0.0f));
 	
@@ -102,6 +103,9 @@ void ModuleSceneIntro::Draw() const
 	App->scene_intro->VertexArrayCube.DrawVAOCube();
 	//Vertex + index
 	App->scene_intro->VertexAndIndexCube.DrawIndexCube();
+
+	//Sphere
+	App->scene_intro->Sphere.DrawSphere();
 
 	glLineWidth(1.0f);
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "Globals.h"
+#include "Primitive.h"
 #include "MathGeoLib\MathGeoLib.h"
 #include "GLEW\include\glew.h"
 enum MESH_TYPE {
@@ -16,15 +17,19 @@ public:
 	Mesh();
 	~Mesh();
 
-	void DrawVAOCube();
-	void DrawIndexCube();
+	void DrawVAOCube()const;
+	void DrawIndexCube() const;
+	void DrawSphere() const;
+
+
 	void DefineVerticesAndIndicesForACube(vec _position, float size);
 	void DefineVerticesForACube(vec _position, float size);
 	void DefineVerticesForAPlane(vec _position);
 	void DefineVerticesForAnArrow(vec _position);
-	void DefineVerticesForASphere(float radius, uint rings, uint sectors);
+	void DefineVerticesForASphere(vec _position,float rad, uint secCount, uint stCount);
 
-public:
+
+private:
 	vec color;
 	MESH_TYPE type;
 
@@ -43,6 +48,10 @@ public:
 	uint id_vertices;
 	uint id_unique_vertices;
 	uint id_indices;
+
+	//Sphere
+	std::vector<float> sphere_vertices;
+	std::vector<uint> sphere_indices;
 
 };
 
