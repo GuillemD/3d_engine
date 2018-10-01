@@ -104,44 +104,44 @@ void Mesh::DefineVerticesAndIndicesForACube(vec _position, float size)
 		indices[5] = 3,
 
 		indices[6] = 1;
-		indices[7] = 3;
-		indices[8] = 5;
+		indices[7] = 5;
+		indices[8] = 3;
 
 		indices[9] = 3;
 		indices[10] = 5;
 		indices[11] = 7;
 
-		indices[12] = 1;
-		indices[13] = 0;
-		indices[14] = 4;
+		indices[12] = 5;
+		indices[13] = 4;
+		indices[14] = 7;
 
-		indices[15] = 1;
+		indices[15] = 7;
 		indices[16] = 4;
-		indices[17] = 5;
+		indices[17] = 6;
 
-		indices[18] = 7;
-		indices[19] = 5;
-		indices[20] = 4;
+		indices[18] = 4;
+		indices[19] = 0;
+		indices[20] = 6;
 
-		indices[21] = 7;
-		indices[22] = 4;
-		indices[23] = 6;
+		indices[21] = 6;
+		indices[22] = 0;
+		indices[23] = 2;
 
-		indices[24] = 3;
-		indices[25] = 7;
-		indices[26] = 2;
+		indices[24] = 2;
+		indices[25] = 3;
+		indices[26] = 6;
 
-		indices[27] = 2;
-		indices[28] = 7;
-		indices[29] = 6;
+		indices[27] = 6;
+		indices[28] = 3;
+		indices[29] = 7;
 
-		indices[30] = 6;
-		indices[31] = 4;
+		indices[30] = 4;
+		indices[31] = 5;
 		indices[32] = 0;
 
-		indices[33] = 6;
-		indices[34] = 0;
-		indices[35] = 2; 
+		indices[33] = 0;
+		indices[34] = 5;
+		indices[35] = 1; 
 	}
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_indices);

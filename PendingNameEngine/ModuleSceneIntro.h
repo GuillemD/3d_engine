@@ -20,4 +20,5 @@ public:
 public:
 	Mesh VertexAndIndexCube;
 	Mesh VertexArrayCube;
+	float angle = 0.0f;
 };
