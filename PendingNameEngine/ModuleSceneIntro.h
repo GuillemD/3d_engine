@@ -18,5 +18,6 @@ public:
 
 	void Draw() const;
 public:
+	Mesh VertexAndIndexCube;
 	Mesh VertexArrayCube;
 };

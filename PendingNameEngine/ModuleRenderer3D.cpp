@@ -147,14 +147,12 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 
 	App->scene_intro->Draw();
 	
-	if (debug_draw == true)
-	{
-		BeginDebugDraw();
+	//BeginDebugDraw();
 		
-		EndDebugDraw();
-	}
+	//EndDebugDraw();
 	
 	App->ui->DrawImGui();
+	
 	EnableLight();
 
 	SDL_GL_SwapWindow(App->window->window);
@@ -225,18 +223,17 @@ void ModuleRenderer3D::DisableLight()
 	GLfloat MaterialDiffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MaterialDiffuse);
 
-	glDisable(GL_DEPTH_TEST);
-	glDisable(GL_CULL_FACE);
-	glDisable(GL_LIGHTING);
-	glDisable(GL_COLOR_MATERIAL);
-	glDisable(GL_TEXTURE_2D);
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	//glDisable(GL_DEPTH_TEST);
+	//glDisable(GL_CULL_FACE);
+	//glDisable(GL_LIGHTING);
+	//glDisable(GL_COLOR_MATERIAL);
+	//glDisable(GL_TEXTURE_2D);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
 void ModuleRenderer3D::update_wireframe()
 {
 	if(wireframe)
-	
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	else
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);

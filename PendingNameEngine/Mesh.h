@@ -16,7 +16,9 @@ public:
 	Mesh();
 	~Mesh();
 
-	void Draw();
+	void DrawVAOCube();
+	void DrawIndexCube();
+	void DefineVerticesAndIndicesForACube(vec _position, float size);
 	void DefineVerticesForACube(vec _position, float size);
 	void DefineVerticesForAPlane(vec _position);
 	void DefineVerticesForAnArrow(vec _position);
@@ -30,14 +32,16 @@ public:
 	Quat rotation = Quat::identity;	
 	vec scale = vec(1.f, 1.f, 1.f);
 
-
 	vec* vertices;
+	vec* unique_vertices;
 	uint* indices;
 
 	uint num_vertices;
+	uint num_unique_vertices;
 	uint num_indices;
 
 	uint id_vertices;
+	uint id_unique_vertices;
 	uint id_indices;
 
 };

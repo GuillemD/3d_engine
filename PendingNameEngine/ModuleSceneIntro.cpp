@@ -20,7 +20,8 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 	
-	VertexArrayCube.DefineVerticesForACube(vec(-12.f, 0.f, -10.f), 10);
+	VertexAndIndexCube.DefineVerticesAndIndicesForACube(vec(-12.f, 0.f, -10.f), 10);
+	VertexArrayCube.DefineVerticesForACube(vec(14.f, 0.f, -10.f), 10);
 	App->camera->Move(float3(0.0f, 10.0f, 10.0f));
 	App->camera->LookAt(float3(0.0f, 3.0f, 0.0f));
 	
@@ -96,13 +97,13 @@ void ModuleSceneIntro::Draw() const
 	}
 	glEnd();
 	
-
-	//VertexArray
-
-	App->scene_intro->VertexArrayCube.Draw();
+	//vertex
+	App->scene_intro->VertexArrayCube.DrawVAOCube();
+	//Vertex + index
+	App->scene_intro->VertexAndIndexCube.DrawIndexCube();
 
 	glLineWidth(1.0f);
-	//geometry
+
 }
 update_status ModuleSceneIntro::Update(float dt)
 {
