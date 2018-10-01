@@ -5,7 +5,6 @@
 #include "GLEW\include\glew.h"
 enum MESH_TYPE {
 	CUBE_MESH = 0,
-	PLANE_MESH,
 	SPHERE_MESH,
 	ARROW_MESH,
 	CAPSULE_MESH,
@@ -24,7 +23,6 @@ public:
 
 	void DefineVerticesAndIndicesForACube(vec _position, float size);
 	void DefineVerticesForACube(vec _position, float size);
-	void DefineVerticesForAPlane(vec _position);
 	void DefineVerticesForAnArrow(vec _position);
 	void DefineVerticesForASphere(vec _position,float rad, uint secCount, uint stCount);
 
