@@ -17,8 +17,8 @@ void consolelog(const char file[], int line, const char* format, ...);
 
 #define DEGTORAD 0.0174532925199432957f
 #define RADTODEG 57.295779513082320876f
-#define HAVE_M_PI
-#define PI 3.14f
+#define HALF_PI  1.57079632679
+#define PI 3.14159265359
 
 typedef unsigned int uint;
 

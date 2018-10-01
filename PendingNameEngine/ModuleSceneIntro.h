@@ -2,7 +2,7 @@
 #include "Module.h"
 #include "Globals.h"
 #include "Primitive.h"
-
+#include "Mesh.h"
 struct PhysBody3D;
 
 
@@ -18,5 +18,5 @@ public:
 
 	void Draw() const;
 public:
-	
+	Mesh VertexArrayCube;
 };
