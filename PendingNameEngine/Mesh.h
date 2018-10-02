@@ -2,7 +2,7 @@
 #include "Globals.h"
 #include "Primitive.h"
 #include "MathGeoLib\MathGeoLib.h"
-#include "GLEW\include\glew.h"
+#include "OpenGL.h"
 enum MESH_TYPE {
 	CUBE_MESH = 0,
 	SPHERE_MESH,
