@@ -18,12 +18,14 @@ void About::ShowElement()
 			ImGui::Text("PendingName Engine made by Asier Arellano and Guillem Dominguez for academic purposes %s", App->GetVersion());
 			ImGui::Spacing();
 			ImGui::Separator();
-
-			ImGui::Text("SDL v2.0.4");
-			ImGui::Text("MathGeoLib v?");
-			ImGui::Text("PCG Minimal C Edition");
-			ImGui::Text("Parson v?");
-			ImGui::Text("ImGui v1.64");
+			SDL_version v_compiled;
+			SDL_VERSION(&v_compiled)
+			ImGui::Text("SDL %d.%d.%d", v_compiled.major, v_compiled.minor, v_compiled.patch);
+			ImGui::Text("OpenGL %s", glGetString(GL_VERSION));
+			ImGui::Text("ImGui %s", ImGui::GetVersion());
+			ImGui::Text("GLEW %s", glewGetString(GLEW_VERSION));
+			ImGui::Text("MathGeoLib 1.64");
+			ImGui::Text("PCG RNG Minimal C Edition");
 
 			ImGui::Separator();
 
