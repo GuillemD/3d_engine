@@ -40,6 +40,7 @@ void ModuleSceneIntro::Draw() const
 	glLineWidth(2.0f);
 	//DirectMode
 	glRotatef(angle, 0.0f, 1.0f, 0.0f);
+	glColor3f(1.0, 0.0, 0.0);
 	glBegin(GL_TRIANGLES);
 	{
 		//Front face
@@ -98,12 +99,14 @@ void ModuleSceneIntro::Draw() const
 	}
 	glEnd();
 	
-	
+	glColor3f(0.0, 1.0, 0.0);
 	//vertex
 	App->scene_intro->VertexArrayCube.DrawVAOCube();
-	//Vertex + index
-	App->scene_intro->VertexAndIndexCube.DrawIndexCube();
 
+	//Vertex + index
+	glColor3f(0.0, 0.0, 1.0);
+	App->scene_intro->VertexAndIndexCube.DrawIndexCube();
+	glColor3f(1.0, 1.0, 1.0);
 	//Sphere
 	App->scene_intro->Sphere.DrawSphere();	
 
