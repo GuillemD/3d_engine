@@ -17,9 +17,11 @@ public:
 	bool CleanUp();
 
 	void Draw() const;
+
 public:
 	Mesh VertexAndIndexCube;
 	Mesh VertexArrayCube;
 	Mesh Sphere;
+
 	float angle = 0.0f;
 };

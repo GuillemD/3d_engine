@@ -6,6 +6,7 @@
 enum MESH_TYPE {
 	CUBE_MESH = 0,
 	SPHERE_MESH,
+	CYLINDER_MESH,
 	ARROW_MESH,
 	CAPSULE_MESH,
 	FRUSTUM_MESH
@@ -25,6 +26,7 @@ public:
 	void DefineVerticesForACube(vec _position, float size);
 	void DefineVerticesForAnArrow(vec _position);
 	void DefineVerticesForASphere(vec _position,float rad, uint secCount, uint stCount);
+	//void DefineVerticesForACylinder(vec _position, float rad, float length, uint slices);
 
 
 private:

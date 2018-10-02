@@ -371,8 +371,8 @@ void Mesh::DefineVerticesForASphere(vec _position, float rad, uint secCount, uin
 			sectorAngle = j * sectorStep;
 
 			// vertex position
-			z = (position.z + xz) * cosf(sectorAngle);             // r * cos(u) * cos(v) + initial pos variation
-			x = (position.x + xz) * sinf(sectorAngle);             // r * cos(u) * sin(v) + initial pos variation
+			x = (position.x + xz) * cosf(sectorAngle);             // r * cos(u) * cos(v) + initial pos variation
+			z = (position.z + xz) * sinf(sectorAngle);             // r * cos(u) * sin(v) + initial pos variation
 			sphere_vertices.push_back(x);
 			sphere_vertices.push_back(y);
 			sphere_vertices.push_back(z);
