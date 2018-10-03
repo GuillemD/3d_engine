@@ -3,6 +3,8 @@
 #include "Globals.h"
 #include "Primitive.h"
 #include "Mesh.h"
+
+#include <list>
 struct PhysBody3D;
 
 
@@ -16,12 +18,12 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
-	void Draw() const;
+	void Draw() ;
 
 public:
-	Mesh VertexAndIndexCube;
-	Mesh VertexArrayCube;
-	Mesh Sphere;
+	std::list<Mesh*> scene_objects;
 
-	float angle = 0.0f;
+private:
+	Mesh cube;
+
 };

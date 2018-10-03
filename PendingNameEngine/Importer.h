@@ -1,9 +1,10 @@
 #ifndef __IMPORTER_H__
 #define __IMPORTER_H__
 
-#include "Globals.h"
+
 #include "Assimp.h"
 #include "OpenGL.h"
+
 
 class Importer 
 {
@@ -13,7 +14,11 @@ public:
 
 	bool Init();
 	bool CleanUp();
-	bool Import();
+	bool Import(const char* full_path);
+	void LoadMesh(const aiMesh* mesh);
+
+private:
+
 };
 
 #endif // !__IMPORTER_H__
