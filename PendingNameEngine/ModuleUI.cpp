@@ -54,8 +54,14 @@ update_status ModuleUI::PostUpdate(float dt)
 }
 void ModuleUI::DrawImGui() {
 	
+	
 	App->renderer3D->DisableLight();
-	ImGui::Render();
+	if (App->renderer3D->wireframe) {
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		ImGui::Render();
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	}
+	else ImGui::Render();
 }
 
 bool ModuleUI::CleanUp()

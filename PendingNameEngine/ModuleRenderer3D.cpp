@@ -143,6 +143,8 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 
 	App->scene_intro->Draw();
 
+
+	
 	App->ui->DrawImGui();
 	
 	EnableLight();
@@ -215,6 +217,8 @@ void ModuleRenderer3D::DisableLight()
 	GLfloat MaterialDiffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MaterialDiffuse);
 
+
+	
 	//glDisable(GL_DEPTH_TEST);
 	//glDisable(GL_CULL_FACE);
 	//glDisable(GL_LIGHTING);
