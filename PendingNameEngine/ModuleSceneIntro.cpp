@@ -2,10 +2,7 @@
 #include "Application.h"
 #include "ModuleSceneIntro.h"
 
-
-#include "GLEW/include/glew.h"
-#include "SDL/include/SDL_opengl.h"
-
+#include "OpenGL.h"
 
 
 ModuleSceneIntro::ModuleSceneIntro(bool start_enabled) : Module(start_enabled)
@@ -21,6 +18,7 @@ bool ModuleSceneIntro::Start()
 	bool ret = true;
 	//cube.DefineVerticesAndIndicesForACube(vec(0.f, 0.f, 0.f), 1);
 	//scene_objects.push_back(&cube);
+	
 	App->camera->Move(float3(0.0f, 10.0f, 10.0f));
 	App->camera->LookAt(float3(0.0f, 3.0f, 0.0f));
 	
@@ -43,7 +41,7 @@ void ModuleSceneIntro::Draw()
 
 update_status ModuleSceneIntro::Update(float dt)
 {
-
+	Draw();
 	return UPDATE_CONTINUE;
 }
 

@@ -2,22 +2,23 @@
 #define __IMPORTER_H__
 
 
+#include "Module.h"
 #include "Assimp.h"
 #include "OpenGL.h"
 
 
-class Importer 
+class Importer : public Module
 {
 public:
-	Importer();
-	virtual ~Importer();
+	Importer(bool start_enabled);
+	~Importer();
 
 	bool Init();
 	bool CleanUp();
-	bool Import(const char* full_path);
+
+	bool Import(const std::string &full_path);
 	void LoadMesh(const aiMesh* mesh);
 
-private:
 
 };
 

@@ -11,6 +11,7 @@
 #include "ModuleCamera3D.h"
 #include "ModulePhysics3D.h"
 #include "ModuleUI.h"
+#include "Importer.h"
 #include <list>
 
 class Configuration;
@@ -19,13 +20,15 @@ class Application
 {
 public:
 	ModuleWindow* window;
-	ModuleInput* input;
 	ModuleAudio* audio;
+	Importer* importer;
+	ModuleInput* input;
 	ModuleSceneIntro* scene_intro;
 	ModuleRenderer3D* renderer3D;
 	ModuleCamera3D* camera;
 	ModulePhysics3D* physics;
 	ModuleUI* ui;
+
 
 private:
 
