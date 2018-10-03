@@ -14,11 +14,15 @@ public:
 	// Destructor
 	virtual ~ModuleWindow();
 
-	bool Init();
+	bool Init(rapidjson::Document& document);
 	bool CleanUp();
 
 	void SetTitle(const char* title);
 	void ShowWindowConfiguration();
+
+	bool Save(rapidjson::Document& document, rapidjson::FileWriteStream& os);
+	bool Load(rapidjson::Document& document);
+
 
 	bool fullscreen = WIN_FULLSCREEN;
 	bool borderlessfullscreen = WIN_BORDERLESS;

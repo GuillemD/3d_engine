@@ -1,5 +1,8 @@
 #pragma once
-
+#include "Globals.h"
+#include "rapidjson/document.h"
+#include "rapidjson/prettywriter.h" 
+#include "rapidjson/filewritestream.h"
 class Application;
 
 class Module
@@ -15,7 +18,7 @@ public:
 	virtual ~Module()
 	{}
 
-	virtual bool Init() 
+	virtual bool Init(rapidjson::Document& document)
 	{
 		return true; 
 	}
@@ -45,5 +48,16 @@ public:
 		return true; 
 	}
 
+	virtual bool Save(rapidjson::Document& document, rapidjson::FileWriteStream& os)
+	{
+		rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+		rapidjson::Writer<rapidjson::FileWriteStream> writer(os);
+		return true;
+	}
+
+	virtual bool Load(rapidjson::Document& document)
+	{
+		return true;
+	}
 };
 extern Application* App;

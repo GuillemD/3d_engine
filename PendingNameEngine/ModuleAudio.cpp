@@ -12,7 +12,7 @@ ModuleAudio::~ModuleAudio()
 {}
 
 // Called before render is available
-bool ModuleAudio::Init()
+bool ModuleAudio::Init(rapidjson::Document& document)
 {
 	LOG("Loading Audio Mixer");
 	CONSOLELOG("Loading Audio Mixer");

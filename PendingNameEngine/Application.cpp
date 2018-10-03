@@ -47,16 +47,26 @@ bool Application::Init()
 	SetVersion("v0.1.1");
 	SetOrgName("UPC CITM");
 
+	rapidjson::Document document;
+	FILE* fp = fopen("config.json", "rb");
+	char readBuffer[65536];
+
+	rapidjson::FileReadStream is(fp, readBuffer, sizeof(readBuffer));
+
+	document.ParseStream(is);
+
 	// Call Init() in all modules
 
 	for (std::list<Module*>::iterator item = list_modules.begin(); item != list_modules.end(); item++) {
-		ret = (*item)->Init();
+		ret = (*item)->Init(document);
 	}
 
 	//After we call all Init() we call all Starts
 	for (std::list<Module*>::iterator item = list_modules.begin(); item != list_modules.end(); item++) {
 		ret = (*item)->Start();
 	}
+
+	fclose(fp);
 	ms_timer.Start();
 	MsSinceStart.Start();
 	return ret;
@@ -216,4 +226,50 @@ void Application::ShowApplicationCongfig()
 	sprintf_s(title, 30, "ms: %.1f", App->MillisecondsBars[App->MillisecondsBars.size() - 1]);
 	ImGui::PlotHistogram("", &App->MillisecondsBars[0], App->MillisecondsBars.size(), 0, title, 0.0f, 120.0f, ImVec2(310, 100));
 
+}
+
+bool Application::LoadConfig()
+{
+	bool ret = false;
+
+	rapidjson::Document document;
+	FILE* fp = fopen("config.json", "rb");
+	char readBuffer[65536];
+
+	rapidjson::FileReadStream is(fp, readBuffer, sizeof(readBuffer));
+
+	document.ParseStream(is);
+	fclose(fp);
+
+	for (std::list<Module*>::iterator item = list_modules.begin(); item != list_modules.end() && ret == UPDATE_CONTINUE; item++)
+	{
+		ret = (*item)->Load(document);
+	}
+
+	return ret;
+}
+
+bool Application::SaveConfig()
+{
+	bool ret = true;
+
+	rapidjson::Document document;
+	document.SetObject();
+	FILE* fp = fopen("config.json", "wb");
+	char writeBuffer[655360];
+
+	rapidjson::FileWriteStream os(fp, writeBuffer, sizeof(writeBuffer));
+
+	document.MemberBegin();
+	for (std::list<Module*>::iterator item = list_modules.begin(); item != list_modules.end() && ret == true; item++)
+	{
+		ret = (*item)->Save(document, os);
+	}
+	document.MemberEnd();
+	rapidjson::Writer<rapidjson::FileWriteStream> writer(os);
+	document.Accept(writer);
+
+	fclose(fp);
+
+	return ret;
 }

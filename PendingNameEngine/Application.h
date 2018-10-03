@@ -12,6 +12,10 @@
 #include "ModulePhysics3D.h"
 #include "ModuleUI.h"
 #include <list>
+#include "rapidjson\rapidjson.h"
+#include "rapidjson\document.h"
+#include "rapidjson\filereadstream.h"
+#include "rapidjson\filewritestream.h"
 
 class Configuration;
 
@@ -69,7 +73,8 @@ public:
 	void SetOrgName(const char* org);
 	void ShowApplicationCongfig();
 
-
+	bool SaveConfig();
+	bool LoadConfig();
 
 
 private:

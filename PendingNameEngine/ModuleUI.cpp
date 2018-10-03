@@ -186,6 +186,8 @@ void ModuleUI::CreateMainMenu()
 			if (ImGui::MenuItem("Show Random Number Generator")) {
 				ShowRNG = !ShowRNG;
 			}
+			if (ImGui::MenuItem("Save config"))
+				App->SaveConfig();
 
 			if (ImGui::MenuItem("Close Application")) {
 				closeApp = !closeApp;

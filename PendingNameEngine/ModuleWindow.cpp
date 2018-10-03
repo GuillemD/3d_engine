@@ -3,6 +3,8 @@
 #include "ModuleWindow.h"
 #include "ImGui/imgui.h"
 
+#include "rapidjson\document.h"
+
 ModuleWindow::ModuleWindow(bool start_enabled) : Module(start_enabled)
 {
 	window = NULL;
@@ -15,10 +17,16 @@ ModuleWindow::~ModuleWindow()
 }
 
 // Called before render is available
-bool ModuleWindow::Init()
+bool ModuleWindow::Init(rapidjson::Document& document)
 {
 	LOG("Init SDL window & surface");
 	bool ret = true;
+
+	rapidjson::Value& configwindow = document["window"];
+
+
+
+
 
 	if(SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
@@ -28,8 +36,9 @@ bool ModuleWindow::Init()
 	else
 	{
 		//Create window
-		width = SCREEN_WIDTH * SCREEN_SIZE;
-		height = SCREEN_HEIGHT * SCREEN_SIZE;
+		width = configwindow["width"].GetInt();
+		height = configwindow["height"].GetInt();
+		
 		flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
 
 		//Use OpenGL 3.1
@@ -139,4 +148,30 @@ void ModuleWindow::ShowWindowConfiguration()
 
 
 }
+
+bool ModuleWindow::Save(rapidjson::Document & document, rapidjson::FileWriteStream & os)
+{
+
+	rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+	
+	rapidjson::Value Obj(rapidjson::kObjectType);
+	Obj.AddMember("width", width, allocator);
+	Obj.AddMember("height", height, allocator);
+	
+	document.AddMember("window", Obj, allocator);
+
+	rapidjson::Writer<rapidjson::FileWriteStream> writer(os);
+
+
+	
+
+
+	return true;
+}
+
+bool ModuleWindow::Load(rapidjson::Document & document)
+{
+	return true;
+}
+
 
