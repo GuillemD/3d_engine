@@ -18,6 +18,9 @@ struct VertexData {
 	uint id_vertex = 0; // unique vertex in VRAM
 	uint num_vertex = 0;
 	vec* vertex = nullptr;
+	uint id_normals = 0; //texture in VRAM
+	uint num_normals = 0;
+	vec* normals = nullptr;
 };
 class Mesh
 {

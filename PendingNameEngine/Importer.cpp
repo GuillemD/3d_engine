@@ -100,6 +100,20 @@ void Importer::LoadMesh(const aiMesh * mesh)
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*my_mesh->data.num_index, my_mesh->data.index, GL_STATIC_DRAW);
 	CONSOLELOG("New Mesh with %d indices", my_mesh->data.num_index);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	
+	/*if (mesh->HasNormals())
+	{
+		my_mesh->data.num_normals = mesh->mNormals->Length();
+		my_mesh->data.normals = new vec[my_mesh->data.num_normals];
+		memcpy(my_mesh->data.normals, mesh->mNormals, sizeof(vec)*my_mesh->data.num_normals);
+
+	}
+	glGenBuffers(1, (GLuint*)&(my_mesh->data.id_normals));
+
+	glBindBuffer(GL_ARRAY_BUFFER, my_mesh->data.id_normals);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vec)*my_mesh->data.num_normals, my_mesh->data.normals, GL_STATIC_DRAW);
+	CONSOLELOG("New Mesh with %d normals", my_mesh->data.num_normals);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);*/
 
 	App->scene_intro->scene_objects.push_back(my_mesh);
 }
