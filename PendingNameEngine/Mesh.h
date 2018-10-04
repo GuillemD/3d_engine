@@ -11,24 +11,34 @@ enum MESH_TYPE {
 	CAPSULE_MESH,
 	FRUSTUM_MESH
 };
+struct VertexData {
+	uint id_index = 0; // index in VRAM
+	uint num_index = 0;
+	uint* index = nullptr;
+	uint id_vertex = 0; // unique vertex in VRAM
+	uint num_vertex = 0;
+	vec* vertex = nullptr;
+	uint id_normals = 0; //texture in VRAM
+	uint num_normals = 0;
+	vec* normals = nullptr;
+};
 class Mesh
 {
 public:
 	Mesh();
 	~Mesh();
 
-	void DrawVAOCube()const;
-	void DrawIndexCube() const;
+	void DrawMesh() const;
 	void DrawSphere() const;
 
 
 	void DefineVerticesAndIndicesForACube(vec _position, float size);
-	void DefineVerticesForACube(vec _position, float size);
 	void DefineVerticesForAnArrow(vec _position);
 	void DefineVerticesForASphere(vec _position,float rad, uint secCount, uint stCount);
 	//void DefineVerticesForACylinder(vec _position, float rad, float length, uint slices);
 
 
+	VertexData data;
 private:
 	vec color;
 	MESH_TYPE type;
@@ -37,17 +47,6 @@ private:
 	Quat rotation = Quat::identity;	
 	vec scale = vec(1.f, 1.f, 1.f);
 
-	vec* vertices;
-	vec* unique_vertices;
-	uint* indices;
-
-	uint num_vertices;
-	uint num_unique_vertices;
-	uint num_indices;
-
-	uint id_vertices;
-	uint id_unique_vertices;
-	uint id_indices;
 
 	//Sphere
 	std::vector<float> sphere_vertices;

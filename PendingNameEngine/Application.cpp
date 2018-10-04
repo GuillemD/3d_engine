@@ -7,11 +7,12 @@ Application::Application()
 	window = new ModuleWindow(this);
 	input = new ModuleInput(this);
 	audio = new ModuleAudio(true);
-	scene_intro = new ModuleSceneIntro(this);
+	importer = new Importer(this);
 	renderer3D = new ModuleRenderer3D(this);
 	camera = new ModuleCamera3D(this);
 	physics = new ModulePhysics3D(this);
 	ui = new ModuleUI(this);
+	scene_intro = new ModuleSceneIntro(this);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -20,11 +21,12 @@ Application::Application()
 	// Main Modules
 	AddModule(window);
 	AddModule(camera);
+	AddModule(importer);
 	AddModule(input);
 	AddModule(audio);
 	AddModule(physics);
 	AddModule(ui);
-	
+
 	// Scenes
 	AddModule(scene_intro);
 
@@ -44,7 +46,7 @@ bool Application::Init()
 	bool ret = true;
 
 	SetAppName("PendingNameEngine");
-	SetVersion("v0.1.1");
+	SetVersion("v0.1.3");
 	SetOrgName("UPC CITM");
 
 	rapidjson::Document document;

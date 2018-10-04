@@ -1,19 +1,25 @@
 #ifndef __IMPORTER_H__
 #define __IMPORTER_H__
 
-#include "Globals.h"
+
+#include "Module.h"
 #include "Assimp.h"
 #include "OpenGL.h"
 
-class Importer 
+
+class Importer : public Module
 {
 public:
-	Importer();
-	virtual ~Importer();
+	Importer(bool start_enabled);
+	~Importer();
 
 	bool Init();
 	bool CleanUp();
-	bool Import();
+
+	bool Import(const std::string &full_path);
+	void LoadMesh(const aiMesh* mesh);
+
+
 };
 
 #endif // !__IMPORTER_H__

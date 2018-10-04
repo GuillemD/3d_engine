@@ -141,7 +141,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		base.Render();
 	}
 
-	App->scene_intro->Draw();
+	//App->scene_intro->Draw();
 
 
 	

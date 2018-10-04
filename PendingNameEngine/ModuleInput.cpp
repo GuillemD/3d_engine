@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModuleInput.h"
 
+
 #define MAX_KEYS 300
 
 ModuleInput::ModuleInput(bool start_enabled) : Module(start_enabled)
@@ -93,6 +94,12 @@ update_status ModuleInput::PreUpdate(float dt)
 	{
 		switch(e.type)
 		{
+			case SDL_DROPFILE:
+			{
+				std::string file_path = e.drop.file;
+				App->importer->Import(file_path.c_str());
+
+			}
 			case SDL_MOUSEWHEEL:
 			mouse_z = e.wheel.y;
 			break;
@@ -114,6 +121,7 @@ update_status ModuleInput::PreUpdate(float dt)
 				if(e.window.event == SDL_WINDOWEVENT_RESIZED)
 					App->renderer3D->OnResize(e.window.data1, e.window.data2);
 			}
+			
 		}
 	}
 
