@@ -28,20 +28,17 @@ update_status ModuleUI::PreUpdate(float dt)
 
 update_status ModuleUI::Update(float dt)
 {
-	CreateMainMenu();
-
-	about.ShowElement();
-	confg.ShowElement();
-	if (ShowTestWindow) ShowDemoWindow();
-	if (ShowRNG) ShowRNGenerator();	
 	
 	/*if (ShowSphereCreatorPanel)ShowSphereCreator();
 	if (ShowCubeCreatorPanel)ShowCubeCreator();
 	if (ShowCapsuleCreatorPanel)ShowCapsuleCreator();*/
-
+	CreateMainMenu();
+	about.ShowElement();
+	confg.ShowElement();
+	insp.ShowElement();
+	if (ShowTestWindow) ShowDemoWindow();
+	if (ShowRNG) ShowRNGenerator();
 	if (closeApp) return UPDATE_STOP;
-
-
 	console.CreateConsole();
 
 	return UPDATE_CONTINUE;
@@ -188,7 +185,8 @@ void ModuleUI::CreateMainMenu()
 			}
 			if (ImGui::MenuItem("Save config"))
 				App->SaveConfig();
-
+			if (ImGui::MenuItem("Delete Meshes"))
+				App->scene_intro->scene_objects.clear();
 			if (ImGui::MenuItem("Close Application")) {
 				closeApp = !closeApp;
 			}

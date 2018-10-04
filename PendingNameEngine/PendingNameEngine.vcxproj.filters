@@ -471,6 +471,7 @@
     <ClInclude Include="rapidjson\msinttypes\stdint.h">
       <Filter>Sources\Libraries\rapidjson\msinttypes</Filter>
     </ClInclude>
+    <ClInclude Include="Inspector.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -665,6 +666,7 @@
     <ClCompile Include="Importer.cpp">
       <Filter>Sources\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="Inspector.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MathGeoLib\Math\float2.inl">

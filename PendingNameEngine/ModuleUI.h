@@ -11,6 +11,8 @@
 #include "Console.h"
 #include "About.h"
 #include "Configuration.h"
+#include "Inspector.h"
+
 class ModuleUI : public Module
 {
 public:
@@ -25,6 +27,7 @@ public:
 	Console console;
 	About about;
 	Configuration confg;
+	Inspector insp;
 	bool CleanUp();
 
 	void DrawImGui();
