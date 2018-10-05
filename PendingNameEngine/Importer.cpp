@@ -47,6 +47,7 @@ bool Importer::Import(const std::string &full_path)
 		for (uint i = 0; i < scene->mNumMeshes; i++)
 		{
 			const aiMesh* mesh = scene->mMeshes[i];
+			
 			LoadMesh(mesh);
 		}
 		aiReleaseImport(scene);
@@ -96,6 +97,7 @@ void Importer::LoadMesh(const aiMesh * mesh)
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 	
+	
 
 	if (mesh->HasFaces())
 	{
@@ -119,7 +121,6 @@ void Importer::LoadMesh(const aiMesh * mesh)
 				CONSOLELOG("%d indices", my_mesh->data.num_index);
 				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 			}
-				
 		}
 	}
 	
