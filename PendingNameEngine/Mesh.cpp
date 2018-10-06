@@ -1,5 +1,6 @@
 #include "Mesh.h"
 #include "Application.h"
+#include "Assimp.h"
 
 
 
@@ -19,8 +20,8 @@ void Mesh::DrawMesh() const
 	glEnableClientState(GL_VERTEX_ARRAY);	
 	glBindBuffer(GL_ARRAY_BUFFER, data.id_vertex);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
-	//glBindBuffer(GL_ARRAY_BUFFER, data.id_normals);
-	//glVertexPointer(3, GL_FLOAT, 0, NULL);
+	glBindBuffer(GL_ARRAY_BUFFER, data.id_normals);
+	glNormalPointer(3, 0, NULL);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, data.id_index);
 	glDrawElements(GL_TRIANGLES, data.num_index, GL_UNSIGNED_INT, NULL);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -39,9 +40,11 @@ void Mesh::DrawSphere() const
 
 }
 
-void Mesh::DefineVerticesAndIndicesForACube(vec _position, float size) 
+void Mesh::DefineVerticesAndIndicesForACube(vec _position, float size, vec _color) 
 {
 	position = _position;
+
+	data.color = _color;
 
 	glGenBuffers(1, (GLuint*) &(data.id_vertex));
 	glGenBuffers(1, (GLuint*) &(data.id_index));
@@ -154,7 +157,7 @@ void Mesh::DefineVerticesAndIndicesForACube(vec _position, float size)
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-	CONSOLELOG("VERTEX+INDICES CUBE LOADED BUFFER_ID: %d", data.id_vertex);
+	CONSOLELOG("CUBE LOADED BUFFER_ID: %d", data.id_vertex);
 }
 
 
@@ -219,5 +222,4 @@ void Mesh::DefineVerticesForASphere(vec _position, float rad, uint secCount, uin
 	}
 
 }
-
 

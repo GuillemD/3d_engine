@@ -47,6 +47,7 @@ bool Importer::Import(const std::string &full_path)
 		for (uint i = 0; i < scene->mNumMeshes; i++)
 		{
 			const aiMesh* mesh = scene->mMeshes[i];
+			
 			LoadMesh(mesh);
 		}
 		aiReleaseImport(scene);
@@ -64,18 +65,39 @@ bool Importer::Import(const std::string &full_path)
 void Importer::LoadMesh(const aiMesh * mesh)
 {
 	Mesh* my_mesh = new Mesh();
+	bool correct_num_faces = false;
 	
-	my_mesh->data.num_vertex = mesh->mNumVertices;
-	my_mesh->data.vertex = new vec[my_mesh->data.num_vertex];
-	memcpy(my_mesh->data.vertex, mesh->mVertices, sizeof(vec)*my_mesh->data.num_vertex);
-	LOG("New Mesh with %d vertices", my_mesh->data.num_vertex);
-	CONSOLELOG("New Mesh with %d vertices", my_mesh->data.num_vertex);
+	if (mesh->HasPositions())
+	{
+		my_mesh->data.num_vertex = mesh->mNumVertices;
+		my_mesh->data.vertex = new vec[my_mesh->data.num_vertex];
+		memcpy(my_mesh->data.vertex, mesh->mVertices, sizeof(vec)*my_mesh->data.num_vertex);
+		LOG("New Mesh with: %d vertices", my_mesh->data.num_vertex);
+		CONSOLELOG("New Mesh with: %d vertices", my_mesh->data.num_vertex);
 
-	glGenBuffers(1, (GLuint*) &(my_mesh->data.id_vertex));
+		glGenBuffers(1, (GLuint*) &(my_mesh->data.id_vertex));
 
-	glBindBuffer(GL_ARRAY_BUFFER, my_mesh->data.id_vertex);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vec)*my_mesh->data.num_vertex, my_mesh->data.vertex, GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ARRAY_BUFFER, my_mesh->data.id_vertex);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(vec)*my_mesh->data.num_vertex, my_mesh->data.vertex, GL_STATIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
+
+	if (mesh->HasNormals())
+	{
+		my_mesh->data.num_normals = mesh->mNumVertices;
+		my_mesh->data.normals = new vec[my_mesh->data.num_normals];
+		memcpy(my_mesh->data.normals, mesh->mNormals, sizeof(vec)*my_mesh->data.num_normals);
+		LOG("%d normals", my_mesh->data.num_normals);
+		CONSOLELOG("%d normals", my_mesh->data.num_normals);
+
+		glGenBuffers(1, (GLuint*)&(my_mesh->data.id_normals));
+
+		glBindBuffer(GL_ARRAY_BUFFER, my_mesh->data.id_normals);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(vec)*my_mesh->data.num_normals, my_mesh->data.normals, GL_STATIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
+	
+	
 
 	if (mesh->HasFaces())
 	{
@@ -90,30 +112,20 @@ void Importer::LoadMesh(const aiMesh * mesh)
 			else
 			{
 				memcpy(&my_mesh->data.index[i * 3], mesh->mFaces[i].mIndices, sizeof(uint)*3);
+				correct_num_faces = true;
+
+				glGenBuffers(1, (GLuint*) &(my_mesh->data.id_index));
+
+				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_mesh->data.id_index);
+				glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*my_mesh->data.num_index, my_mesh->data.index, GL_STATIC_DRAW);
+				CONSOLELOG("%d indices", my_mesh->data.num_index);
+				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 			}
-				
 		}
 	}
-	glGenBuffers(1, (GLuint*) &(my_mesh->data.id_index));
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_mesh->data.id_index);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*my_mesh->data.num_index, my_mesh->data.index, GL_STATIC_DRAW);
-	CONSOLELOG("New Mesh with %d indices", my_mesh->data.num_index);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	
-	/*if (mesh->HasNormals())
-	{
-		my_mesh->data.num_normals = mesh->mNormals->Length();
-		my_mesh->data.normals = new vec[my_mesh->data.num_normals];
-		memcpy(my_mesh->data.normals, mesh->mNormals, sizeof(vec)*my_mesh->data.num_normals);
-
-	}
-	glGenBuffers(1, (GLuint*)&(my_mesh->data.id_normals));
-
-	glBindBuffer(GL_ARRAY_BUFFER, my_mesh->data.id_normals);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vec)*my_mesh->data.num_normals, my_mesh->data.normals, GL_STATIC_DRAW);
-	CONSOLELOG("New Mesh with %d normals", my_mesh->data.num_normals);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);*/
-
-	App->scene_intro->scene_objects.push_back(my_mesh);
+	if (correct_num_faces && mesh->HasNormals() && mesh->HasPositions())
+		App->scene_intro->scene_objects.push_back(my_mesh);
+	else
+		LOG("Error Loading Mesh");
 }

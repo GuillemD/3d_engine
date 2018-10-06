@@ -15,12 +15,17 @@ struct VertexData {
 	uint id_index = 0; // index in VRAM
 	uint num_index = 0;
 	uint* index = nullptr;
+
 	uint id_vertex = 0; // unique vertex in VRAM
 	uint num_vertex = 0;
 	vec* vertex = nullptr;
+
 	uint id_normals = 0; //texture in VRAM
 	uint num_normals = 0;
 	vec* normals = nullptr;
+
+	vec color;
+
 };
 class Mesh
 {
@@ -32,7 +37,7 @@ public:
 	void DrawSphere() const;
 
 
-	void DefineVerticesAndIndicesForACube(vec _position, float size);
+	void DefineVerticesAndIndicesForACube(vec _position, float size, vec _color);
 	void DefineVerticesForAnArrow(vec _position);
 	void DefineVerticesForASphere(vec _position,float rad, uint secCount, uint stCount);
 	//void DefineVerticesForACylinder(vec _position, float rad, float length, uint slices);
@@ -40,7 +45,7 @@ public:
 
 	VertexData data;
 private:
-	vec color;
+
 	MESH_TYPE type;
 
 	vec position = vec(0.f, 0.f, 0.f);
