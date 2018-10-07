@@ -471,6 +471,9 @@
     <ClInclude Include="rapidjson\msinttypes\stdint.h">
       <Filter>Sources\Libraries\rapidjson\msinttypes</Filter>
     </ClInclude>
+    <ClInclude Include="TextureLoader.h">
+      <Filter>Sources\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -663,6 +666,9 @@
       <Filter>Sources\Containers</Filter>
     </ClCompile>
     <ClCompile Include="Importer.cpp">
+      <Filter>Sources\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureLoader.cpp">
       <Filter>Sources\Tools</Filter>
     </ClCompile>
   </ItemGroup>

@@ -6,6 +6,7 @@
 #include "ModuleWindow.h"
 #include "ModuleInput.h"
 #include "ModuleAudio.h"
+#include "TextureLoader.h"
 #include "ModuleSceneIntro.h"
 #include "ModuleRenderer3D.h"
 #include "ModuleCamera3D.h"
@@ -26,6 +27,7 @@ public:
 	ModuleWindow* window;
 	ModuleAudio* audio;
 	Importer* importer;
+	TextureLoader* texture;
 	ModuleInput* input;
 	ModuleSceneIntro* scene_intro;
 	ModuleRenderer3D* renderer3D;

@@ -26,6 +26,7 @@ void About::ShowElement()
 			ImGui::Text("GLEW %s", glewGetString(GLEW_VERSION));
 			ImGui::Text("MathGeoLib 1.64");
 			ImGui::Text("PCG RNG Minimal C Edition");
+			ImGui::Text("DevIL %d", App->texture->getILversion());
 
 			ImGui::Separator();
 
