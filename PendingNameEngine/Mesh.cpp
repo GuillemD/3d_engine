@@ -48,13 +48,13 @@ void Mesh::DrawVertexNormals()
 	uint normal_length = 3;
 
 	glLineWidth(2.0f);
-	glColor3f(0, 0.5f, 1);
+	glColor3f(0, 0, 1);
 
 	glBegin(GL_LINES);
 	for (int i = 0; i < data.num_vertex ; i++)
 	{
 		glVertex3f(data.vertex->x, data.vertex->y, data.vertex->z);
-		glVertex3f(-data.normals->x * normal_length + data.vertex->x, -data.normals->y * normal_length + data.vertex->y, -data.normals->z * normal_length + data.vertex->z);
+		glVertex3f(-data.normals->x + data.vertex->x, -data.normals->y + data.vertex->y, -data.normals->z + data.vertex->z);
 	}
 	glEnd();
 
