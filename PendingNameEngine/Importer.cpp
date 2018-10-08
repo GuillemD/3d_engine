@@ -114,14 +114,15 @@ void Importer::LoadMesh(const aiMesh * mesh)
 				memcpy(&my_mesh->data.index[i * 3], mesh->mFaces[i].mIndices, sizeof(uint)*3);
 				correct_num_faces = true;
 
-				glGenBuffers(1, (GLuint*) &(my_mesh->data.id_index));
-
-				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_mesh->data.id_index);
-				glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*my_mesh->data.num_index, my_mesh->data.index, GL_STATIC_DRAW);
-				CONSOLELOG("%d indices", my_mesh->data.num_index);
-				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+				
 			}
 		}
+		glGenBuffers(1, (GLuint*) &(my_mesh->data.id_index));
+
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_mesh->data.id_index);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*my_mesh->data.num_index, my_mesh->data.index, GL_STATIC_DRAW);
+		CONSOLELOG("%d indices", my_mesh->data.num_index);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 	
 	if (correct_num_faces && mesh->HasNormals() && mesh->HasPositions())

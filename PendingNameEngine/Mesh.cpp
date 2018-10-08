@@ -14,7 +14,7 @@ Mesh::~Mesh()
 }
 
 
-void Mesh::DrawMesh() const 
+void Mesh::DrawMesh() 
 {
 
 	glEnableClientState(GL_VERTEX_ARRAY);	
@@ -27,6 +27,9 @@ void Mesh::DrawMesh() const
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glDisableClientState(GL_VERTEX_ARRAY);
+	
+	if (App->renderer3D->v_normals_active)
+		DrawVertexNormals();
 }
 
 void Mesh::DrawSphere() const
@@ -37,6 +40,26 @@ void Mesh::DrawSphere() const
 	glDrawElements(GL_TRIANGLES, (uint)sphere_indices.size(), GL_UNSIGNED_INT, sphere_indices.data());
 
 	glDisableClientState(GL_VERTEX_ARRAY);
+
+}
+
+void Mesh::DrawVertexNormals()
+{
+	uint normal_length = 3;
+
+	glLineWidth(2.0f);
+	glColor3f(0, 0.5f, 1);
+
+	glBegin(GL_LINES);
+	for (int i = 0; i < data.num_vertex ; i++)
+	{
+		glVertex3f(data.vertex->x, data.vertex->y, data.vertex->z);
+		glVertex3f(-data.normals->x * normal_length + data.vertex->x, -data.normals->y * normal_length + data.vertex->y, -data.normals->z * normal_length + data.vertex->z);
+	}
+	glEnd();
+
+	glColor3f(1, 1, 1);
+	glLineWidth(1.0f);
 
 }
 

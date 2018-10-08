@@ -3,7 +3,6 @@
 #include "ModuleWindow.h"
 #include "ModuleRenderer3D.h"
 
-
 Configuration::Configuration(): Panel("Configuration")
 {
 
@@ -34,17 +33,19 @@ void Configuration::ShowElement()
 			}
 			if (ImGui::CollapsingHeader("Renderer"))
 			{
+				ImGui::Columns(3, NULL, false);
 				if (ImGui::Checkbox("Wireframe", &App->renderer3D->wireframe)) App->renderer3D->update_wireframe();
-				ImGui::SameLine();
 				if (ImGui::Checkbox("Depth test", &App->renderer3D->depth_test)) App->renderer3D->update_depth_test();
-				ImGui::SameLine();
 				if (ImGui::Checkbox("Cull face", &App->renderer3D->cullface)) App->renderer3D->update_cullface();
+				ImGui::NextColumn();
 				if (ImGui::Checkbox("Lighting", &App->renderer3D->lighting)) App->renderer3D->update_lighting();
-				ImGui::SameLine();
 				if (ImGui::Checkbox("Color Material", &App->renderer3D->color_material)) App->renderer3D->update_color_material();
-				ImGui::SameLine();
 				if (ImGui::Checkbox("Texture2D", &App->renderer3D->texture)) App->renderer3D->update_texture();
+				ImGui::NextColumn();
 				if (ImGui::Checkbox("Smooth line", &App->renderer3D->line_smooth)) App->renderer3D->update_line_smooth();
+				if (ImGui::Checkbox("Vertex Normals", &App->renderer3D->v_normals_active));
+				ImGui::Columns(1, NULL, false);
+				
 			}
 			if (ImGui::CollapsingHeader("Input"))
 			{

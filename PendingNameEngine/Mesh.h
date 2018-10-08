@@ -33,17 +33,20 @@ public:
 	Mesh();
 	~Mesh();
 
-	void DrawMesh() const;
+	void DrawMesh();
 	void DrawSphere() const;
+
+	void DrawVertexNormals();
 
 
 	void DefineVerticesAndIndicesForACube(vec _position, float size, vec _color);
-	void DefineVerticesForAnArrow(vec _position);
+	//void DefineVerticesForAnArrow(vec _position);
 	void DefineVerticesForASphere(vec _position,float rad, uint secCount, uint stCount);
 	//void DefineVerticesForACylinder(vec _position, float rad, float length, uint slices);
 
 
 	VertexData data;
+	
 private:
 
 	MESH_TYPE type;
@@ -56,6 +59,8 @@ private:
 	//Sphere
 	std::vector<float> sphere_vertices;
 	std::vector<uint> sphere_indices;
+
+	
 
 };
 
