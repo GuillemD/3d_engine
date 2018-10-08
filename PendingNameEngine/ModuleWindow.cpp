@@ -114,10 +114,11 @@ void ModuleWindow::ShowWindowConfiguration()
 	if (ImGui::SliderInt("Height", &height, 600, 1080)) {
 		SDL_SetWindowSize(window, width, height);
 	}
-	
 	if (ImGui::SliderInt("Width", &width, 600, 1920)) {
 		SDL_SetWindowSize(window, width, height);
 	}
+	
+	
 
 	if (ImGui::Checkbox("Fullscreen",&fullscreen)){
 		if (fullscreen) {
