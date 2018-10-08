@@ -24,10 +24,6 @@ bool ModuleWindow::Init(rapidjson::Document& document)
 
 	rapidjson::Value& configwindow = document["window"];
 
-
-
-
-
 	if(SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
 		LOG("SDL_VIDEO could not initialize! SDL_Error: %s\n", SDL_GetError());
@@ -53,22 +49,22 @@ bool ModuleWindow::Init(rapidjson::Document& document)
 
 		if(fullscreen)
 		{
-			flags |= SDL_WINDOW_FULLSCREEN;
+			flags += SDL_WINDOW_FULLSCREEN;
 		}
 
 		if(resizable)
 		{
-			flags |= SDL_WINDOW_RESIZABLE;
+			flags += SDL_WINDOW_RESIZABLE;
 		}
 
 		if(borderlessfullscreen)
 		{
-			flags |= SDL_WINDOW_BORDERLESS;
+			flags += SDL_WINDOW_BORDERLESS;
 		}
 
 		if(fullscreendesktop)
 		{
-			flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
+			flags += SDL_WINDOW_FULLSCREEN_DESKTOP;
 		}
 
 		window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
@@ -109,13 +105,31 @@ void ModuleWindow::SetTitle(const char* title)
 	SDL_SetWindowTitle(window, title);
 }
 
+void ModuleWindow::SetWindowSize(int x, int y)
+{
+	SDL_SetWindowSize(window, x, y);
+	width = x;
+	height = y;
+	if (!fullscreen)
+	{
+		App->renderer3D->OnResize(width, height);
+	}
+
+}
+
 void ModuleWindow::ShowWindowConfiguration()
 {
+	bool mod = false;
 	if (ImGui::SliderInt("Height", &height, 600, 1080)) {
-		SDL_SetWindowSize(window, width, height);
+		mod = true;
 	}
 	if (ImGui::SliderInt("Width", &width, 600, 1920)) {
-		SDL_SetWindowSize(window, width, height);
+		mod = true;
+	}
+	if (mod)
+	{
+		SetWindowSize(width, height);
+		mod = !mod;
 	}
 	
 	

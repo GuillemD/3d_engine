@@ -18,6 +18,7 @@ public:
 	bool CleanUp();
 
 	void SetTitle(const char* title);
+	void SetWindowSize(int x, int y);
 	void ShowWindowConfiguration();
 
 	bool Save(rapidjson::Document& document, rapidjson::FileWriteStream& os);
