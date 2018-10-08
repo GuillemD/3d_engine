@@ -19,8 +19,8 @@ bool ModuleSceneIntro::Start()
 	//cube.DefineVerticesAndIndicesForACube(vec(0.f, 0.f, 0.f), 1);
 	//scene_objects.push_back(&cube);
 	
-	App->camera->Move(float3(0.0f, 10.0f, 10.0f));
-	App->camera->LookAt(float3(0.0f, 3.0f, 0.0f));
+	App->camera->Move(vec3(0.0f, 10.0f, 10.0f));
+	App->camera->LookAt(vec3(0.0f, 3.0f, 0.0f));
 	
 	return ret;
 }
