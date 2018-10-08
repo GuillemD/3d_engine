@@ -49,9 +49,6 @@
     <Filter Include="Sources\Libraries\ImGui">
       <UniqueIdentifier>{2e3baae4-7a5e-45c1-8305-6cca44097a26}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\Modules\uiElements">
-      <UniqueIdentifier>{f0b78027-fa9e-4ea6-9241-145ef87833ed}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Sources\Panels">
       <UniqueIdentifier>{9ac8daec-f69c-411a-ae68-03cfa2dfb8ba}</UniqueIdentifier>
     </Filter>
@@ -330,12 +327,6 @@
     <ClInclude Include="PCG\pcg_basic.h">
       <Filter>Sources\Libraries\PCG</Filter>
     </ClInclude>
-    <ClInclude Include="About.h">
-      <Filter>Sources\Modules\uiElements</Filter>
-    </ClInclude>
-    <ClInclude Include="Hardware.h">
-      <Filter>Sources\Modules\uiElements</Filter>
-    </ClInclude>
     <ClInclude Include="Console.h">
       <Filter>Sources\Panels</Filter>
     </ClInclude>
@@ -475,6 +466,12 @@
       <Filter>Sources\Tools</Filter>
     </ClInclude>
     <ClInclude Include="Inspector.h" />
+    <ClInclude Include="About.h">
+      <Filter>Sources\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="Hardware.h">
+      <Filter>Sources\Panels</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -642,12 +639,6 @@
     <ClCompile Include="PCG\pcg_basic.c">
       <Filter>Sources\Libraries\PCG</Filter>
     </ClCompile>
-    <ClCompile Include="About.cpp">
-      <Filter>Sources\Modules\uiElements</Filter>
-    </ClCompile>
-    <ClCompile Include="Hardware.cpp">
-      <Filter>Sources\Modules\uiElements</Filter>
-    </ClCompile>
     <ClCompile Include="Console.cpp">
       <Filter>Sources\Panels</Filter>
     </ClCompile>
@@ -673,6 +664,12 @@
       <Filter>Sources\Tools</Filter>
     </ClCompile>
     <ClCompile Include="Inspector.cpp" />
+    <ClCompile Include="About.cpp">
+      <Filter>Sources\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="Hardware.cpp">
+      <Filter>Sources\Panels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="MathGeoLib\Math\float2.inl">
