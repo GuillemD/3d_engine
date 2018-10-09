@@ -126,17 +126,17 @@ void Importer::LoadMesh(const aiMesh * mesh)
 	}
 	
 	if (mesh->HasTextureCoords(0)) {
-		my_mesh->data.num_texture = mesh->mNumVertices;
-		my_mesh->data.TexCoords = new float[my_mesh->data.num_texture * 3];
-		memcpy(my_mesh->data.TexCoords, mesh->mTextureCoords[0], sizeof(float)*my_mesh->data.num_texture * 3);
+		my_mesh->data.num_texture_coords = mesh->mNumVertices;
+		my_mesh->data.TexCoords = new float[my_mesh->data.num_texture_coords * 2];
+		memcpy(my_mesh->data.TexCoords, mesh->mTextureCoords[0], sizeof(float)*my_mesh->data.num_texture_coords * 2);
 
 
-		glGenBuffers(1, (GLuint*)&my_mesh->data.id_index);
-		glBindBuffer(GL_ARRAY_BUFFER, (GLuint)my_mesh->data.id_texture);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(uint) * my_mesh->data.num_texture* 3, my_mesh->data.TexCoords, GL_STATIC_DRAW);
+		glGenBuffers(1, (GLuint*)&my_mesh->data.id_texture);
+		glBindBuffer(GL_ARRAY_BUFFER, my_mesh->data.id_texture);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(uint) * my_mesh->data.num_texture_coords* 2, my_mesh->data.TexCoords, GL_STATIC_DRAW);
 
 
-		CONSOLELOG("%d texture coords", my_mesh->data.num_texture);
+		CONSOLELOG("%d texture coords", my_mesh->data.num_texture_coords);
 	}
 	else
 	{

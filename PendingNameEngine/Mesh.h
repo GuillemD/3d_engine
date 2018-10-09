@@ -24,9 +24,9 @@ struct VertexData {
 	uint num_normals = 0;
 	vec* normals = nullptr;
 
-	float* TexCoords;
+	float* TexCoords = nullptr;
 	uint id_texture = 0;
-	uint num_texture = 0;
+	uint num_texture_coords = 0;
 
 	uint texture_width = 0;
 	uint texture_heigth = 0;
