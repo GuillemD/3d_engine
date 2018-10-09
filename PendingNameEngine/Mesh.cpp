@@ -28,10 +28,10 @@ void Mesh::DrawMesh()
 	{
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glBindBuffer(GL_ARRAY_BUFFER, data.id_texture);
-		glTexCoordPointer(3, GL_FLOAT, 0, NULL);
+		glTexCoordPointer(2, GL_FLOAT, 0, NULL);
 	}
 	
-	glBindTexture(GL_TEXTURE_2D, (GLuint)data.id_texture);
+	glBindTexture(GL_TEXTURE_2D, data.id_texture);
 
 
 	

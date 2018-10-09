@@ -114,7 +114,6 @@ void Importer::LoadMesh(const aiMesh * mesh)
 				memcpy(&my_mesh->data.index[i * 3], mesh->mFaces[i].mIndices, sizeof(uint)*3);
 				correct_num_faces = true;
 
-				
 			}
 		}
 		glGenBuffers(1, (GLuint*) &(my_mesh->data.id_index));
