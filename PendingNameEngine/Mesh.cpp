@@ -17,12 +17,14 @@ Mesh::~Mesh()
 void Mesh::DrawMesh() 
 {
 
-	glEnableClientState(GL_VERTEX_ARRAY);	
+	glEnableClientState(GL_VERTEX_ARRAY);
+
 	glBindBuffer(GL_ARRAY_BUFFER, data.id_vertex);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
-	glBindBuffer(GL_ARRAY_BUFFER, data.id_normals);
-	glNormalPointer(3, 0, NULL);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, data.id_index);
+
+	
+
 	
 	if (data.num_texture != 0)
 	{
@@ -30,9 +32,8 @@ void Mesh::DrawMesh()
 		glBindBuffer(GL_ARRAY_BUFFER, data.id_texture);
 		glTexCoordPointer(3, GL_FLOAT, 0, NULL);
 	}
-	//Bind Indices
 	
-		glBindTexture(GL_TEXTURE_2D, data.id_texture);
+	glBindTexture(GL_TEXTURE_2D, (GLuint)data.id_texture);
 
 
 	
@@ -42,8 +43,11 @@ void Mesh::DrawMesh()
 	
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+
 	glDisableClientState(GL_VERTEX_ARRAY);
-	
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	
 	//Bind Indices
 

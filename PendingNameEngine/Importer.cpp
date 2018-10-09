@@ -125,7 +125,7 @@ void Importer::LoadMesh(const aiMesh * mesh)
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 	
-	if (mesh->HasTextureCoords(1)) {
+	if (mesh->HasTextureCoords(0)) {
 		my_mesh->data.num_texture = mesh->mNumVertices;
 		my_mesh->data.TexCoords = new float[my_mesh->data.num_texture * 3];
 		memcpy(my_mesh->data.TexCoords, mesh->mTextureCoords[0], sizeof(float)*my_mesh->data.num_texture * 3);
@@ -136,10 +136,13 @@ void Importer::LoadMesh(const aiMesh * mesh)
 		glBufferData(GL_ARRAY_BUFFER, sizeof(uint) * my_mesh->data.num_texture* 3, my_mesh->data.TexCoords, GL_STATIC_DRAW);
 
 
-
+		CONSOLELOG("%d texture coords", my_mesh->data.num_texture);
 	}
-
-	if (correct_num_faces && mesh->HasNormals() && mesh->HasPositions())
+	else
+	{
+		CONSOLELOG("Mesh has no Texture Coords");
+	}
+	if (correct_num_faces && mesh->HasNormals() && mesh->HasPositions() && mesh->HasTextureCoords(0))
 		App->scene_intro->scene_objects.push_back(my_mesh);
 	else
 		LOG("Error Loading Mesh");

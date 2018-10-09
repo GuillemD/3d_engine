@@ -69,6 +69,10 @@ bool TextureLoader::Import(const std::string & full_path)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,ilGetInteger(IL_IMAGE_WIDTH) , ilGetInteger(IL_IMAGE_HEIGHT),
 			0, GL_RGB, GL_UNSIGNED_BYTE, ilGetData());
+
+
+		CONSOLELOG("%d", ilGetInteger(IL_IMAGE_WIDTH));
+		CONSOLELOG("%d", ilGetInteger(IL_IMAGE_HEIGHT));
 	}
 	CONSOLELOG("Png %s loaded correctly", full_path.c_str());
 	return false;

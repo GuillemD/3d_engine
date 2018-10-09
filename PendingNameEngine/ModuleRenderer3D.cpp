@@ -140,6 +140,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		base.Render();
 	}
 
+	glEnable(GL_TEXTURE_2D);
 	//App->scene_intro->Draw();
 
 
