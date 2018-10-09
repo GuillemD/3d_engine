@@ -23,11 +23,33 @@ void Mesh::DrawMesh()
 	glBindBuffer(GL_ARRAY_BUFFER, data.id_normals);
 	glNormalPointer(3, 0, NULL);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, data.id_index);
+	
+	if (data.num_texture != 0)
+	{
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		glBindBuffer(GL_ARRAY_BUFFER, data.id_texture);
+		glTexCoordPointer(3, GL_FLOAT, 0, NULL);
+	}
+	//Bind Indices
+	
+		glBindTexture(GL_TEXTURE_2D, data.id_texture);
+
+
+	
 	glDrawElements(GL_TRIANGLES, data.num_index, GL_UNSIGNED_INT, NULL);
+	
+	
+	
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glDisableClientState(GL_VERTEX_ARRAY);
 	
+	
+	//Bind Indices
+
+
+	
+
 	if (App->renderer3D->v_normals_active)
 		DrawVertexNormals();
 }

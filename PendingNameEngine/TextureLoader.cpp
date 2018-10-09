@@ -41,6 +41,36 @@ bool TextureLoader::CleanUp()
 
 bool TextureLoader::Import(const std::string & full_path)
 {
+
+	CONSOLELOG("Importing png %s", full_path.c_str());
+	ILuint images;
+	ilGenImages(1,&images);
+	ilBindImage(images);
+
+	ILboolean imageloaded=ilLoadImage(full_path.c_str());
+	GLuint textures;
+	
+	if (imageloaded) {
+		ILinfo info;
+		iluGetImageInfo(&info);
+
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+		glGenTextures(1, &textures);
+		glBindTexture(GL_TEXTURE_2D, textures);
+
+		for (std::list<Mesh*>::iterator it = App->scene_intro->scene_objects.begin(); it != App->scene_intro->scene_objects.end(); it++)
+		{
+			(*it)->data.id_texture=textures;
+		}
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,ilGetInteger(IL_IMAGE_WIDTH) , ilGetInteger(IL_IMAGE_HEIGHT),
+			0, GL_RGB, GL_UNSIGNED_BYTE, ilGetData());
+	}
+	CONSOLELOG("Png %s loaded correctly", full_path.c_str());
 	return false;
 }
 

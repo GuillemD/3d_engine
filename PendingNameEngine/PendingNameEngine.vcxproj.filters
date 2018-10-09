@@ -64,6 +64,9 @@
     <Filter Include="Sources\Libraries\rapidjson\msinttypes">
       <UniqueIdentifier>{aadd47e7-d15f-4ccc-84a7-3ddd6b78194a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Libraries\Devil">
+      <UniqueIdentifier>{619fc20e-96c0-42b2-9eb1-59f41f7b50bd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -333,9 +336,6 @@
     <ClInclude Include="Panel.h">
       <Filter>Sources\Panels</Filter>
     </ClInclude>
-    <ClInclude Include="Primitive.h">
-      <Filter>Sources\Containers</Filter>
-    </ClInclude>
     <ClInclude Include="Configuration.h">
       <Filter>Sources\Panels</Filter>
     </ClInclude>
@@ -473,6 +473,33 @@
     </ClInclude>
     <ClInclude Include="Inspector.h">
       <Filter>Sources\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="DevIL\include\config.h">
+      <Filter>Sources\Libraries\Devil</Filter>
+    </ClInclude>
+    <ClInclude Include="DevIL\include\devil_internal_exports.h">
+      <Filter>Sources\Libraries\Devil</Filter>
+    </ClInclude>
+    <ClInclude Include="DevIL\include\il.h">
+      <Filter>Sources\Libraries\Devil</Filter>
+    </ClInclude>
+    <ClInclude Include="DevIL\include\il_wrap.h">
+      <Filter>Sources\Libraries\Devil</Filter>
+    </ClInclude>
+    <ClInclude Include="DevIL\include\ilu.h">
+      <Filter>Sources\Libraries\Devil</Filter>
+    </ClInclude>
+    <ClInclude Include="DevIL\include\ilu_region.h">
+      <Filter>Sources\Libraries\Devil</Filter>
+    </ClInclude>
+    <ClInclude Include="DevIL\include\ilut.h">
+      <Filter>Sources\Libraries\Devil</Filter>
+    </ClInclude>
+    <ClInclude Include="DevIL\include\ilut_config.h">
+      <Filter>Sources\Libraries\Devil</Filter>
+    </ClInclude>
+    <ClInclude Include="Primitive.h">
+      <Filter>Sources</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -647,9 +674,6 @@
     <ClCompile Include="Panel.cpp">
       <Filter>Sources\Panels</Filter>
     </ClCompile>
-    <ClCompile Include="Primitive.cpp">
-      <Filter>Sources\Containers</Filter>
-    </ClCompile>
     <ClCompile Include="Configuration.cpp">
       <Filter>Sources\Panels</Filter>
     </ClCompile>
@@ -674,6 +698,9 @@
     <ClCompile Include="Inspector.cpp">
       <Filter>Sources\Panels</Filter>
     </ClCompile>
+    <ClCompile Include="Primitive.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="MathGeoLib\Math\float2.inl">
@@ -687,6 +714,9 @@
     </None>
     <None Include="MathGeoLib\Geometry\QuadTree.inl">
       <Filter>Sources\Libraries\MathGeoLib\Geometry</Filter>
+    </None>
+    <None Include="DevIL\include\config.h.win">
+      <Filter>Sources\Libraries\Devil</Filter>
     </None>
   </ItemGroup>
 </Project>

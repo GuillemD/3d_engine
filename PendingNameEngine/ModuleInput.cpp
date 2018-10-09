@@ -97,8 +97,23 @@ update_status ModuleInput::PreUpdate(float dt)
 			case SDL_DROPFILE:
 			{
 				std::string file_path = e.drop.file;
-				App->importer->Import(file_path.c_str());
+				std::string::size_type idx;
+				
+				idx = file_path.rfind('.');
+				if (idx != std::string::npos)
+				{
+					std::string extension = file_path.substr(idx + 1);
 
+					if (extension == "fbx" || extension == "FBX") {
+						App->importer->Import(file_path.c_str());
+					}
+					if (extension == "png" || extension == "PNG") {
+						App->texture->Import(file_path.c_str());
+					}
+
+				}
+
+				
 			}
 			case SDL_MOUSEWHEEL:
 			mouse_z = e.wheel.y;

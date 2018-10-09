@@ -24,6 +24,13 @@ struct VertexData {
 	uint num_normals = 0;
 	vec* normals = nullptr;
 
+	float* TexCoords;
+	uint id_texture = 0;
+	uint num_texture = 0;
+
+	uint texture_width = 0;
+	uint texture_heigth = 0;
+
 	vec color;
 
 };
@@ -44,6 +51,8 @@ public:
 	void DefineVerticesForASphere(vec _position,float rad, uint secCount, uint stCount);
 	//void DefineVerticesForACylinder(vec _position, float rad, float length, uint slices);
 
+
+	
 
 	VertexData data;
 	
