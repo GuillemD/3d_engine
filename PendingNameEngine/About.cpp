@@ -1,5 +1,6 @@
 #include "About.h"
 #include "Application.h"
+#include "Assimp/include/version.h"
 
 About::About()
 {
@@ -27,6 +28,7 @@ void About::ShowElement()
 			ImGui::Text("MathGeoLib 1.64");
 			ImGui::Text("PCG RNG Minimal C Edition");
 			ImGui::Text("DevIL %d", App->texture->getILversion());
+			ImGui::Text("Assimp %d.%d.%d", aiGetVersionMajor(), aiGetVersionMinor(), aiGetVersionRevision());
 
 			ImGui::Separator();
 
