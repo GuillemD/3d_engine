@@ -12,6 +12,8 @@ ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(st
 
 	Position = vec3(0.0f, 0.0f, 5.0f);
 	Reference = vec3(0.0f, 0.0f, 0.0f);
+
+	Sensitivity = 0.25f;
 }
 
 ModuleCamera3D::~ModuleCamera3D()
@@ -67,12 +69,10 @@ update_status ModuleCamera3D::Update(float dt)
 
 		// Mouse motion ----------------
 
-		if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+		if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT || (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && App->input->GetMouseButton(SDL_BUTTON_LEFT)))
 		{
-			int dx = -App->input->GetMouseXMotion();
-			int dy = -App->input->GetMouseYMotion();
-
-			float Sensitivity = 0.25f;
+			float dx = -(float)App->input->GetMouseXMotion() *  dt;
+			float dy = -(float)App->input->GetMouseYMotion() *  dt;			
 
 			Position -= Reference;
 
@@ -101,12 +101,6 @@ update_status ModuleCamera3D::Update(float dt)
 
 			Position = Reference + Z * length(Position);
 		}
-		if (App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && App->input->GetMouseButton(SDL_BUTTON_LEFT))
-		{
-
-		}
-	
-	
 
 	// Recalculate matrix -------------
 	CalculateViewMatrix();
