@@ -57,18 +57,12 @@ public:
 	//void DefineVerticesForACylinder(vec _position, float rad, float length, uint slices);
 
 
-	
-
 	VertexData data;
 	transf t;
 	
 private:
 
 	MESH_TYPE type;
-
-	vec position = vec(0.f, 0.f, 0.f);
-	Quat rotation = Quat::identity;	
-	vec scale = vec(1.f, 1.f, 1.f);
 
 
 	//Sphere
