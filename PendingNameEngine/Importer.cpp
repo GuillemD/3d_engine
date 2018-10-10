@@ -48,7 +48,8 @@ bool Importer::Import(const std::string &full_path)
 		{
 			const aiMesh* mesh = scene->mMeshes[i];
 			
-			LoadMesh(mesh);
+			LoadMesh(scene,mesh);
+
 		}
 		aiReleaseImport(scene);
 	}
@@ -62,7 +63,7 @@ bool Importer::Import(const std::string &full_path)
 	return ret;
 }
 
-void Importer::LoadMesh(const aiMesh * mesh)
+void Importer::LoadMesh(const aiScene* _scene, const aiMesh * mesh)
 {
 	Mesh* my_mesh = new Mesh();
 	bool correct_num_faces = false;
@@ -96,8 +97,6 @@ void Importer::LoadMesh(const aiMesh * mesh)
 		glBufferData(GL_ARRAY_BUFFER, sizeof(vec)*my_mesh->data.num_normals, my_mesh->data.normals, GL_STATIC_DRAW);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
-	
-	
 
 	if (mesh->HasFaces())
 	{
@@ -123,6 +122,7 @@ void Importer::LoadMesh(const aiMesh * mesh)
 		CONSOLELOG("%d indices", my_mesh->data.num_index);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
+
 	
 	if (mesh->HasTextureCoords(0)) {
 		my_mesh->data.num_texture_coords = mesh->mNumVertices;
@@ -141,6 +141,23 @@ void Importer::LoadMesh(const aiMesh * mesh)
 	{
 		CONSOLELOG("Mesh has no Texture Coords");
 	}
+
+
+	//POSITION-SCALING-ROTATION
+	aiVector3D translation;
+	aiVector3D scaling;
+	aiQuaternion rotation;
+
+	_scene->mRootNode->mTransformation.Decompose(scaling, rotation, translation);
+
+	my_mesh->t.pos = { translation.x, translation.y, translation.z };
+	CONSOLELOG("Mesh position { %f,%f,%f }", my_mesh->t.pos.x, my_mesh->t.pos.y, my_mesh->t.pos.z);
+	my_mesh->t.scale = { scaling.x, scaling.y, scaling.z };
+	CONSOLELOG("Mesh scale { %f,%f,%f }", my_mesh->t.scale.x, my_mesh->t.scale.y, my_mesh->t.scale.z);
+	my_mesh->t.rot = { rotation.x, rotation.y, rotation.z, rotation.w };
+	CONSOLELOG("Mesh rotation quaternion { %f,%f,%f,%f }", my_mesh->t.rot.x, my_mesh->t.rot.y, my_mesh->t.rot.z, my_mesh->t.rot.w);
+
+	//DECIDE TO LOAD OR NOT
 	if (correct_num_faces && mesh->HasNormals() && mesh->HasPositions() && mesh->HasTextureCoords(0))
 		App->scene_intro->scene_objects.push_back(my_mesh);
 	else

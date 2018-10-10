@@ -7,6 +7,7 @@
 #include "OpenGL.h"
 
 
+
 class Importer : public Module
 {
 public:
@@ -17,7 +18,7 @@ public:
 	bool CleanUp();
 
 	bool Import(const std::string &full_path);
-	void LoadMesh(const aiMesh* mesh);
+	void LoadMesh(const aiScene* _scene, const aiMesh* mesh);
 
 
 };

@@ -34,6 +34,11 @@ struct VertexData {
 	vec color;
 
 };
+struct transf {
+	float3 pos;
+	float3 scale;
+	Quat rot;
+};
 class Mesh
 {
 public:
@@ -55,6 +60,7 @@ public:
 	
 
 	VertexData data;
+	transf t;
 	
 private:
 
