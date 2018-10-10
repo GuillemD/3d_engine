@@ -108,7 +108,7 @@ update_status ModuleInput::PreUpdate(float dt)
 						App->scene_intro->scene_objects.clear();
 						App->importer->Import(file_path.c_str());
 					}
-					if (extension == "png" || extension == "PNG") {
+					if (extension == "png" || extension == "PNG" || extension == "dds" || extension == "DDS") {
 						App->texture->Import(file_path.c_str());
 					}
 
