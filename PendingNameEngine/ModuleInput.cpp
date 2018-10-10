@@ -97,6 +97,7 @@ update_status ModuleInput::PreUpdate(float dt)
 			case SDL_DROPFILE:
 			{
 				std::string file_path = e.drop.file;
+
 				std::string::size_type idx;
 				
 				idx = file_path.rfind('.');
@@ -107,16 +108,16 @@ update_status ModuleInput::PreUpdate(float dt)
 					if (extension == "fbx" || extension == "FBX") {
 						App->scene_intro->scene_objects.clear();
 						App->importer->Import(file_path.c_str());
+						SDL_free(e.drop.file);
 					}
 					else if (extension == "png" || extension == "PNG" || extension == "dds" || extension == "DDS") {
 						App->texture->Import(file_path.c_str());
+						SDL_free(e.drop.file);
 					}
 					else {
 						CONSOLELOG("Unrecognised file format.")
 					}
 				}
-
-				
 			}
 			case SDL_MOUSEWHEEL:
 			mouse_z = e.wheel.y;
