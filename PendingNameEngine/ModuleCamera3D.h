@@ -29,5 +29,6 @@ public:
 
 	vec3 X, Y, Z, Position, Reference;
 	float Sensitivity;
+	bool can_focus = false;
 
 };

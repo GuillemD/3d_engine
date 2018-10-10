@@ -124,9 +124,16 @@ void Importer::LoadMesh(const aiMesh * mesh)
 		CONSOLELOG("%d indices", my_mesh->data.num_index);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
+
+	AABB debug_box(float3::zero, float3::zero);
+	debug_box.Enclose((float3*)mesh->mVertices, mesh->mNumVertices);
+	my_mesh->outside_box = debug_box;
 	
 	if (correct_num_faces && mesh->HasNormals() && mesh->HasPositions())
+	{
 		App->scene_intro->scene_objects.push_back(my_mesh);
+		App->camera->Focus(my_mesh->outside_box);
+	}
 	else
 		LOG("Error Loading Mesh");
 }
