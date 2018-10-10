@@ -108,10 +108,10 @@ update_status ModuleCamera3D::Update(float dt)
 				Position.x = 0.0f; Position.y = 10.0f; Position.z = 10.0f;
 				LookAt(vec3(0.0f, 3.0f, 0.0f));
 			}
-			/*else
+			else
 			{
 				Focus(App->scene_intro->scene_objects.front()->outside_box);
-			}*/
+			}
 		}
 
 	// Recalculate matrix -------------
@@ -163,22 +163,30 @@ void ModuleCamera3D::Move(const vec3 &Movement)
 
 void ModuleCamera3D::Focus(AABB & box)
 {
-	Position.x = box.maxPoint.x;
-	Position.y = box.maxPoint.y + 20;
-	Position.z = box.maxPoint.z;
+	AABB box_focus(float3::zero, float3::zero);
 
-	vec3 focus_position;
+	if (box.minPoint.x < box_focus.minPoint.x) box_focus.minPoint.x = box.minPoint.x;
+	if (box.minPoint.y < box_focus.minPoint.y) box_focus.minPoint.y = box.minPoint.y;
+	if (box.minPoint.z < box_focus.minPoint.z) box_focus.minPoint.z = box.minPoint.z;
+	if (box.maxPoint.x > box_focus.maxPoint.x) box_focus.maxPoint.x = box.maxPoint.x;
+	if (box.maxPoint.y > box_focus.maxPoint.y) box_focus.maxPoint.y = box.maxPoint.y;
+	if (box.maxPoint.z > box_focus.maxPoint.z) box_focus.maxPoint.z = box.maxPoint.z;
 
-	focus_position.x = box.CenterPoint().x;
-	focus_position.y = box.CenterPoint().y;
-	focus_position.z = box.CenterPoint().z;
+	float3 center = box_focus.CenterPoint();
+	vec3 target = { center.x, center.y, center.z }; //convert to be able to LookAt
 
-	Z = normalize(Position - focus_position);
-	X = normalize(cross(vec3(0.0f, 1.0f, 0.0f), Z));
-	Y = cross(Z, X);
+	//float radius = Distance(box_focus.minPoint.x, center.x);
+	Sphere tmp = box_focus.MinimalEnclosingSphere();
+	float radius = tmp.r;
 
-	CalculateViewMatrix();
+	float fov = DegToRad(60);
+
+	float camDistance = (radius * 2.0) / Tan(fov / 2.0);
 	
+	Position = vec3(target - Position) * camDistance;
+
+	LookAt(target);
+
 }
 
 // -----------------------------------------------------------------
