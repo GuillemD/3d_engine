@@ -98,6 +98,7 @@ update_status ModuleInput::PreUpdate(float dt)
 			{
 				std::string file_path = e.drop.file;
 				App->importer->Import(file_path.c_str());
+				SDL_free(e.drop.file);
 
 			}
 			case SDL_MOUSEWHEEL:
