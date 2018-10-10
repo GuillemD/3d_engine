@@ -54,13 +54,24 @@ void ModuleUI::DrawImGui() {
 	
 	
 	App->renderer3D->DisableLight();
-
+	bool auxwireframe = App->renderer3D->wireframe;
+	bool auxcolor = App->renderer3D->color_material;
 	
-	if (App->renderer3D->wireframe) {
-		
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		ImGui::Render();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	if (App->renderer3D->wireframe || !auxcolor) {
+		if (App->renderer3D->wireframe) {
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		}
+		if (!App->renderer3D->color_material) {
+			glEnable(GL_COLOR_MATERIAL);
+		}
+		ImGui::Render();    
+
+		if (auxwireframe) {
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		}
+		if (!auxcolor) {
+			glDisable(GL_COLOR_MATERIAL);
+		}
 	}
 	else ImGui::Render();
 }
