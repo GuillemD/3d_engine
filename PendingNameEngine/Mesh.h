@@ -44,7 +44,7 @@ public:
 	void DefineVerticesForASphere(vec _position,float rad, uint secCount, uint stCount);
 	//void DefineVerticesForACylinder(vec _position, float rad, float length, uint slices);
 
-
+	AABB outside_box;
 	VertexData data;
 	
 private:

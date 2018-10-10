@@ -101,6 +101,18 @@ update_status ModuleCamera3D::Update(float dt)
 
 			Position = Reference + Z * length(Position);
 		}
+		if (App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT)
+		{
+			if (App->scene_intro->scene_objects.empty())
+			{
+				Position.x = 0.0f; Position.y = 10.0f; Position.z = 10.0f;
+				LookAt(vec3(0.0f, 3.0f, 0.0f));
+			}
+			/*else
+			{
+				Focus(App->scene_intro->scene_objects.front()->outside_box);
+			}*/
+		}
 
 	// Recalculate matrix -------------
 	CalculateViewMatrix();
@@ -147,6 +159,26 @@ void ModuleCamera3D::Move(const vec3 &Movement)
 	Reference += Movement;
 
 	CalculateViewMatrix();
+}
+
+void ModuleCamera3D::Focus(AABB & box)
+{
+	Position.x = box.maxPoint.x;
+	Position.y = box.maxPoint.y + 20;
+	Position.z = box.maxPoint.z;
+
+	vec3 focus_position;
+
+	focus_position.x = box.CenterPoint().x;
+	focus_position.y = box.CenterPoint().y;
+	focus_position.z = box.CenterPoint().z;
+
+	Z = normalize(Position - focus_position);
+	X = normalize(cross(vec3(0.0f, 1.0f, 0.0f), Z));
+	Y = cross(Z, X);
+
+	CalculateViewMatrix();
+	
 }
 
 // -----------------------------------------------------------------
