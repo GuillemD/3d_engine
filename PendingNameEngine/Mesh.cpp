@@ -86,7 +86,7 @@ void Mesh::DrawVertexNormals()
 
 void Mesh::DefineVerticesAndIndicesForACube(vec _position, float size, vec _color) 
 {
-	position = _position;
+	t.pos = _position;
 
 	data.color = _color;
 
@@ -98,44 +98,44 @@ void Mesh::DefineVerticesAndIndicesForACube(vec _position, float size, vec _colo
 	data.vertex = new vec[data.num_vertex];
 	{
 		//Front bottom left
-		data.vertex[0].x = position.x;
-		data.vertex[0].y = position.y;
-		data.vertex[0].z = position.z;
+		data.vertex[0].x = t.pos.x;
+		data.vertex[0].y = t.pos.y;
+		data.vertex[0].z = t.pos.z;
 
 		//Front bottom Right
-		data.vertex[1].x = position.x+size;
-		data.vertex[1].y = position.y;
-		data.vertex[1].z = position.z;
+		data.vertex[1].x = t.pos.x+size;
+		data.vertex[1].y = t.pos.y;
+		data.vertex[1].z = t.pos.z;
 
 		//Front top left
-		data.vertex[2].x = position.x;
-		data.vertex[2].y = position.y+size;
-		data.vertex[2].z = position.z;
+		data.vertex[2].x = t.pos.x;
+		data.vertex[2].y = t.pos.y+size;
+		data.vertex[2].z = t.pos.z;
 
 		//Front top Rigth
-		data.vertex[3].x = position.x+size;
-		data.vertex[3].y = position.y+size;
-		data.vertex[3].z = position.z;
+		data.vertex[3].x = t.pos.x+size;
+		data.vertex[3].y = t.pos.y+size;
+		data.vertex[3].z = t.pos.z;
 
 		//Back bottom left
-		data.vertex[4].x = position.x;
-		data.vertex[4].y = position.y;
-		data.vertex[4].z = position.z+size;
+		data.vertex[4].x = t.pos.x;
+		data.vertex[4].y = t.pos.y;
+		data.vertex[4].z = t.pos.z+size;
 
 		//Back bottom Rigth
-		data.vertex[5].x = position.x + size;
-		data.vertex[5].y = position.y;
-		data.vertex[5].z = position.z + size;
+		data.vertex[5].x = t.pos.x + size;
+		data.vertex[5].y = t.pos.y;
+		data.vertex[5].z = t.pos.z + size;
 
 		//Back top left
-		data.vertex[6].x = position.x;
-		data.vertex[6].y = position.y + size;
-		data.vertex[6].z = position.z + size;
+		data.vertex[6].x = t.pos.x;
+		data.vertex[6].y = t.pos.y + size;
+		data.vertex[6].z = t.pos.z + size;
 
 		//Back top Right
-		data.vertex[7].x = position.x + size;
-		data.vertex[7].y = position.y + size;
-		data.vertex[7].z = position.z + size;
+		data.vertex[7].x = t.pos.x + size;
+		data.vertex[7].y = t.pos.y + size;
+		data.vertex[7].z = t.pos.z + size;
 
 	}
 
@@ -208,7 +208,7 @@ void Mesh::DefineVerticesAndIndicesForACube(vec _position, float size, vec _colo
 void Mesh::DefineVerticesForASphere(vec _position, float rad, uint secCount, uint stCount)
 {
 	type = SPHERE_MESH;
-	position = _position;
+	t.pos = _position;
 
 	float x, y, z, xz;                              // vertex position
 
@@ -220,7 +220,7 @@ void Mesh::DefineVerticesForASphere(vec _position, float rad, uint secCount, uin
 	{
 		stackAngle = PI / 2 - i * stackStep;				  // starting from pi/2 to -pi/2
 		xz = rad * cosf(stackAngle);						 // r * cos(u)
-		y = position.y + (rad * sinf(stackAngle));            // r * sin(u) + initial pos variation
+		y = t.pos.y + (rad * sinf(stackAngle));            // r * sin(u) + initial pos variation
 
 		// add (sectorCount+1) vertices per stack
 		// the first and last vertices have same position and normal, but different tex coods
@@ -229,8 +229,8 @@ void Mesh::DefineVerticesForASphere(vec _position, float rad, uint secCount, uin
 			sectorAngle = j * sectorStep;
 
 			// vertex position
-			x = position.x + (xz * cosf(sectorAngle));             // r * cos(u) * cos(v) + initial pos variation
-			z = position.z + (xz * sinf(sectorAngle));             // r * cos(u) * sin(v) + initial pos variation
+			x = t.pos.x + (xz * cosf(sectorAngle));             // r * cos(u) * cos(v) + initial pos variation
+			z = t.pos.z + (xz * sinf(sectorAngle));             // r * cos(u) * sin(v) + initial pos variation
 			sphere_vertices.push_back(x);
 			sphere_vertices.push_back(y);
 			sphere_vertices.push_back(z);
