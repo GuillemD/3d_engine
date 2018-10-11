@@ -44,16 +44,25 @@ bool TextureLoader::Import(const std::string & full_path)
 
 	CONSOLELOG("Importing png %s", full_path.c_str());
 	ILuint images;
-	ilGenImages(1,&images);
+	ilGenImages(1, &images);
 	ilBindImage(images);
 
 	ILboolean imageloaded=ilLoadImage(full_path.c_str());
 	GLuint textures;
 	
+
+
 	if (imageloaded) {
 		ILinfo info;
 		iluGetImageInfo(&info);
 
+		if (info.Origin == IL_ORIGIN_UPPER_LEFT)
+		{
+			iluFlipImage();
+		}
+
+		ILboolean converted = ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
+		
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 		glGenTextures(1, &textures);
 		glBindTexture(GL_TEXTURE_2D, textures);
@@ -67,7 +76,7 @@ bool TextureLoader::Import(const std::string & full_path)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,ilGetInteger(IL_IMAGE_WIDTH) , ilGetInteger(IL_IMAGE_HEIGHT),
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,info.Width , info.Height,
 			0, GL_RGB, GL_UNSIGNED_BYTE, ilGetData());
 
 

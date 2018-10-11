@@ -127,7 +127,14 @@ void Importer::LoadMesh(const aiScene* _scene, const aiMesh * mesh)
 	if (mesh->HasTextureCoords(0)) {
 		my_mesh->data.num_texture_coords = mesh->mNumVertices;
 		my_mesh->data.TexCoords = new float[my_mesh->data.num_texture_coords * 2];
-		memcpy(my_mesh->data.TexCoords, mesh->mTextureCoords[0], sizeof(float)*my_mesh->data.num_texture_coords * 2);
+		uint j = 0;
+		for (uint q = 0; q < my_mesh->data.num_texture_coords*2; q += 2)
+		{
+			my_mesh->data.TexCoords[q] = mesh->mTextureCoords[0][j].x;
+			my_mesh->data.TexCoords[q+1] = mesh->mTextureCoords[0][j].y;
+
+		}
+		//memcpy(my_mesh->data.TexCoords, mesh->mTextureCoords[0], sizeof(float)*my_mesh->data.num_texture_coords * 2);
 
 
 		glGenBuffers(1, (GLuint*)&my_mesh->data.id_texture);
@@ -169,6 +176,7 @@ void Importer::LoadMesh(const aiScene* _scene, const aiMesh * mesh)
 		App->camera->can_focus = true;
 		App->camera->Focus(my_mesh->outside_box);
 		App->camera->can_focus = false;
+		
 	}
 	else
 		LOG("Error Loading Mesh");
