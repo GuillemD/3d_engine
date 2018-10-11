@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "Globals.h"
 
+#include <list>
 
 class TextureLoader : public Module
 {
@@ -15,6 +16,7 @@ public:
 	bool CleanUp();
 
 	uint LoadTexFromPath(const std::string &full_path);
+	void SwapTexture(const std::string &new_path);
 
 	int getILversion() const;
 

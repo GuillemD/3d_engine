@@ -9,6 +9,7 @@
 #pragma comment( lib, "DevIL/libx86/ILU.lib" )
 #pragma comment( lib, "DevIL/libx86/ILUT.lib" )
 
+
 TextureLoader::TextureLoader(bool start_enabled)
 {
 	ilInit();
@@ -36,6 +37,7 @@ bool TextureLoader::CleanUp()
 {
 	bool ret = true;
 	LOG("Cleaning textures up");
+	aiDetachAllLogStreams();
 	ilShutDown();
 	return ret;
 }
@@ -97,6 +99,16 @@ uint TextureLoader::LoadTexFromPath(const std::string & full_path)
 	CONSOLELOG("Texture %s loaded correctly", full_path.c_str());
 
 	return texture_id;
+}
+
+void TextureLoader::SwapTexture(const std::string & new_path)
+{
+	GLuint new_id = LoadTexFromPath(new_path);
+	
+	for (std::list<Mesh*>::iterator it = App->scene_intro->scene_objects.begin(); it != App->scene_intro->scene_objects.end(); it++)
+	{
+		(*it)->id_texture = new_id;
+	}
 }
 
 

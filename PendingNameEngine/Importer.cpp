@@ -51,7 +51,7 @@ bool Importer::Import(const std::string &full_path)
 		{
 			const aiMesh* mesh = scene->mMeshes[i];
 			
-			LoadMesh(scene,mesh);
+			LoadMesh(scene,mesh, full_path);
 
 		}
 		aiReleaseImport(scene);
@@ -66,7 +66,7 @@ bool Importer::Import(const std::string &full_path)
 	return ret;
 }
 
-void Importer::LoadMesh(const aiScene* _scene, const aiMesh * mesh)
+void Importer::LoadMesh(const aiScene* _scene, const aiMesh * mesh, const std::string &path)
 {
 	Mesh* my_mesh = new Mesh();
 	bool correct_num_faces = false;
@@ -122,7 +122,16 @@ void Importer::LoadMesh(const aiScene* _scene, const aiMesh * mesh)
 		memcpy(my_mesh->data.TexCoords, mesh->mTextureCoords[0], sizeof(float)*my_mesh->data.num_texture_coords);
 
 		CONSOLELOG("   - %d texture coords", my_mesh->data.num_texture_coords);
-		my_mesh->id_texture = (GLuint)App->texture->LoadTexFromPath("../Assets/Baker_House.png");
+		if (initial_tex)
+		{
+			my_mesh->id_texture = (GLuint)App->texture->LoadTexFromPath(path.c_str());
+			initial_tex = false;
+		}
+		else
+		{
+			App->texture->SwapTexture(path.c_str());
+		}
+	
 	}
 	else
 	{
