@@ -99,11 +99,11 @@ bool ModuleRenderer3D::Init(rapidjson::Document& document)
 			ret = false;
 		}
 		
-		glEnable(GL_CULL_FACE);
+		glEnable(GL_DEPTH_TEST);
 		EnableLight();
 		glEnable(GL_TEXTURE_2D);
 		glEnable(GL_COLOR_MATERIAL);
-		glEnable(GL_LIGHTING);
+
 	}
 
 	// Projection matrix for
@@ -140,11 +140,6 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		base.Render();
 	}
 
-	glEnable(GL_TEXTURE_2D);
-	//App->scene_intro->Draw();
-
-
-	
 	App->ui->DrawImGui();
 	
 	EnableLight();
@@ -217,14 +212,6 @@ void ModuleRenderer3D::DisableLight()
 	GLfloat MaterialDiffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, MaterialDiffuse);
 
-
-	
-	//glDisable(GL_DEPTH_TEST);
-	//glDisable(GL_CULL_FACE);
-	//glDisable(GL_LIGHTING);
-	//glDisable(GL_COLOR_MATERIAL);
-	//glDisable(GL_TEXTURE_2D);
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
 void ModuleRenderer3D::update_wireframe()

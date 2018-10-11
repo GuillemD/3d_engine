@@ -37,11 +37,11 @@ public:
 
 	//attributes
 	bool wireframe = false;
-	bool depth_test = false;
-	bool cullface = true;
+	bool depth_test = true;
+	bool cullface = false;
 	bool texture = true;
 	bool color_material = true;
-	bool lighting = true;
+	bool lighting = false;
 	bool line_smooth = false;
 	bool v_normals_active = false;
 	//swap-checkers
