@@ -5,6 +5,8 @@
 #include "Mesh.h"
 
 
+void CallLog(const char* str, char* userData);
+
 Importer::Importer(bool start_enabled) : Module(start_enabled)
 {
 }
@@ -20,6 +22,7 @@ bool Importer::Init()
 
 	struct aiLogStream stream;
 	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
+	stream.callback = CallLog;
 	aiAttachLogStream(&stream);
 
 	return ret;
@@ -180,4 +183,9 @@ void Importer::LoadMesh(const aiScene* _scene, const aiMesh * mesh)
 	}
 	else
 		LOG("Error Loading Mesh");
+}
+
+void CallLog(const char * str, char * userData)
+{
+	CONSOLELOG("%s", str);
 }
