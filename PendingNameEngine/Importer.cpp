@@ -119,10 +119,14 @@ void Importer::LoadMesh(const aiScene* _scene, const aiMesh * mesh)
 	if (mesh->HasTextureCoords(0)) {
 		my_mesh->data.num_texture_coords = my_mesh->data.num_index * 2;
 		my_mesh->data.TexCoords = new float[my_mesh->data.num_texture_coords];
-		memcpy(my_mesh->data.TexCoords, mesh->mTextureCoords[0], sizeof(float)*my_mesh->data.num_texture_coords);
+		
+			memcpy(my_mesh->data.TexCoords, mesh->mTextureCoords[0], sizeof(float)*my_mesh->data.num_texture_coords);
+			CONSOLELOG("   - %d texture coords", my_mesh->data.num_texture_coords);
+			my_mesh->id_texture = (GLuint)App->texture->LoadTexFromPath("../Assets/Baker_House.png");
+		
+		
 
-		CONSOLELOG("   - %d texture coords", my_mesh->data.num_texture_coords);
-		my_mesh->id_texture = (GLuint)App->texture->LoadTexFromPath("../Assets/Baker_House.png");
+		
 	}
 	else
 	{

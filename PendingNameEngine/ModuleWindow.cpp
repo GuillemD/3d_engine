@@ -32,9 +32,18 @@ bool ModuleWindow::Init(rapidjson::Document& document)
 	else
 	{
 		//Create window
-		width = configwindow["width"].GetInt();
-		height = configwindow["height"].GetInt();
 		
+		SDL_GetCurrentDisplayMode(0, &DM);
+		auto Width = DM.w;
+		auto Height = DM.h;
+		maxwidth = Width;
+		maxheight = Height;
+
+		width = Width-100;
+		height = Height-100;
+
+
+
 		flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
 
 		//Use OpenGL 3.1
@@ -66,9 +75,8 @@ bool ModuleWindow::Init(rapidjson::Document& document)
 		{
 			flags += SDL_WINDOW_FULLSCREEN_DESKTOP;
 		}
-
 		window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
-
+		
 		if(window == nullptr)
 		{
 			LOG("Window could not be created! SDL_Error: %s\n", SDL_GetError());
@@ -80,6 +88,9 @@ bool ModuleWindow::Init(rapidjson::Document& document)
 			screen_surface = SDL_GetWindowSurface(window);
 		}
 	}
+
+
+	
 
 	return ret;
 }
@@ -120,10 +131,10 @@ void ModuleWindow::SetWindowSize(int x, int y)
 void ModuleWindow::ShowWindowConfiguration()
 {
 	bool mod = false;
-	if (ImGui::SliderInt("Height", &height, 600, 1080)) {
+	if (ImGui::SliderInt("Height", &height, 600, maxwidth)) {
 		mod = true;
 	}
-	if (ImGui::SliderInt("Width", &width, 600, 1920)) {
+	if (ImGui::SliderInt("Width", &width, 600, maxheight)) {
 		mod = true;
 	}
 	if (mod)
@@ -153,8 +164,9 @@ void ModuleWindow::ShowWindowConfiguration()
 	}
 
 	if (ImGui::Checkbox("Fullscreen Desktop", &fullscreendesktop)) {
-		if (borderlessfullscreen) {
+		if (fullscreendesktop) {
 			SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+			
 		}
 		else {
 			SDL_SetWindowFullscreen(window, 0);

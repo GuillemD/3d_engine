@@ -22,7 +22,7 @@ bool ModuleSceneIntro::Start()
 	//App->texture->LoadTexture("../Assets/Baker_House.png");
 	App->camera->Move(vec3(0.0f, 10.0f, 10.0f));
 	App->camera->LookAt(vec3(0.0f, 3.0f, 0.0f));
-	
+	App->renderer3D->OnResize(App->window->width, App->window->height);
 	return ret;
 }
 
