@@ -25,8 +25,16 @@ void Inspector::ShowElement()
 		ImGui::Separator();
 		ImGui::Text("Position: { %.2f, %.2f, %.2f }", (*it)->t.pos.x, (*it)->t.pos.y, (*it)->t.pos.z);
 		ImGui::Text("Scaling: { %.2f, %.2f, %.2f }", (*it)->t.scale.x, (*it)->t.scale.y, (*it)->t.scale.z);
-		ImGui::Text("Rotation: { %.2f, %.2f, %.2f, %.2f }", (*it)->t.rot.x, (*it)->t.rot.y, (*it)->t.rot.z, (*it)->t.rot.w);
+		ImGui::Text("Rotation: { %.2f, %.2f, %.2f }", (*it)->t.rot.x, (*it)->t.rot.y, (*it)->t.rot.z);
+		ImGui::Separator();
+		
+		
+		ImTextureID tex = (uint*)(*it)->id_texture;
+		ImVec2 size = ImGui::GetWindowSize();
+		size.y = size.x;
+		ImGui::Image(tex, size);
 		i++;
 	}
 	ImGui::End();
+	
 }

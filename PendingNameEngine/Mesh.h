@@ -25,21 +25,19 @@ struct VertexData {
 	vec* normals = nullptr;
 
 	float* TexCoords = nullptr;
-	uint id_texture = 0;
+	uint id_texture_coords = 0;
 	uint num_texture_coords = 0;
 
 	uint texture_width = 0;
 	uint texture_heigth = 0;
 
-	float* color;
-	uint id_color;
-	uint num_colors;
+	void ResetIds();
 
 };
 struct transf {
 	float3 pos;
 	float3 scale;
-	Quat rot;
+	float3 rot;
 };
 class Mesh
 {
@@ -50,25 +48,21 @@ public:
 	void DrawMesh();
 	void DrawSphere() const;
 
-	void DrawVertexNormals();
-
-
-	void DefineVerticesAndIndicesForACube(vec _position, float size, vec _color);
-	//void DefineVerticesForAnArrow(vec _position);
+	void DefineVerticesAndIndicesForACube(vec _position, float size);
 	void DefineVerticesForASphere(vec _position,float rad, uint secCount, uint stCount);
-	//void DefineVerticesForACylinder(vec _position, float rad, float length, uint slices);
 
 	AABB outside_box;
 	VertexData data;
 	transf t;
+	uint id_texture;;
 
-	void SetMeshName(std::string _name);
+
+	void GenerateVRAMBuffers();
+	void UnloadVRAMBuffers();
 	
 private:
 
 	MESH_TYPE type;
-	std::string name;
-
 
 	//Sphere
 	std::vector<float> sphere_vertices;

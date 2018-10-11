@@ -111,7 +111,7 @@ update_status ModuleInput::PreUpdate(float dt)
 						SDL_free(e.drop.file);
 					}
 					else if (extension == "png" || extension == "PNG" || extension == "dds" || extension == "DDS") {
-						App->texture->Import(file_path.c_str());
+						App->texture->LoadTexFromPath(file_path.c_str());
 						SDL_free(e.drop.file);
 					}
 					else {

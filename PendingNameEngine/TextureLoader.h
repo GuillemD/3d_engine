@@ -14,8 +14,8 @@ public:
 	bool Init();
 	bool CleanUp();
 
-	bool Import(const std::string &full_path);
-	void LoadTexture();
+	uint LoadTexFromPath(const std::string &full_path);
+
 	int getILversion() const;
 
 };

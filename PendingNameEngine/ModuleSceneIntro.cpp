@@ -19,7 +19,7 @@ bool ModuleSceneIntro::Start()
 	//cube.DefineVerticesAndIndicesForACube(vec(0.f, 0.f, 0.f), 1);
 	//scene_objects.push_back(&cube);
 	App->importer->Import("../Assets/BakerHouse.fbx");
-	App->texture->Import("../Assets/Baker_House.png");
+	//App->texture->LoadTexture("../Assets/Baker_House.png");
 	App->camera->Move(vec3(0.0f, 10.0f, 10.0f));
 	App->camera->LookAt(vec3(0.0f, 3.0f, 0.0f));
 	

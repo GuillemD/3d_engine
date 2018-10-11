@@ -14,7 +14,7 @@ public:
 	Importer(bool start_enabled);
 	~Importer();
 
-	bool Init();
+	bool Init(rapidjson::Document& document);
 	bool CleanUp();
 
 	bool Import(const std::string &full_path);

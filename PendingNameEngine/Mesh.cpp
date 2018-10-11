@@ -1,6 +1,7 @@
 #include "Mesh.h"
 #include "Application.h"
 #include "Assimp.h"
+#include "Globals.h"
 
 
 
@@ -11,6 +12,7 @@ Mesh::Mesh()
 
 Mesh::~Mesh()
 {
+	UnloadVRAMBuffers();
 }
 
 
@@ -19,19 +21,18 @@ void Mesh::DrawMesh()
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 
+	GenerateVRAMBuffers();
+
+	
 	glBindBuffer(GL_ARRAY_BUFFER, data.id_vertex);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, data.id_index);
-
-
-	if (data.num_texture_coords != 0)
-	{
-		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		glBindBuffer(GL_ARRAY_BUFFER, data.id_texture);
-		glTexCoordPointer(2, GL_FLOAT, 0, NULL);
-	}
 	
-	glBindTexture(GL_TEXTURE_2D, data.id_texture);
+	glBindTexture(GL_TEXTURE_2D, id_texture);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glBindBuffer(GL_ARRAY_BUFFER, data.id_texture_coords);
+	glTexCoordPointer(3, GL_FLOAT, 0, NULL);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, data.id_index);
 
 
 	
@@ -44,13 +45,9 @@ void Mesh::DrawMesh()
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 
-	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_VERTEX_ARRAY);	
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	
-	//Bind Indices
 
-	if (App->renderer3D->v_normals_active)
-		DrawVertexNormals();
 }
 
 void Mesh::DrawSphere() const
@@ -64,7 +61,7 @@ void Mesh::DrawSphere() const
 
 }
 
-void Mesh::DrawVertexNormals()
+/*void Mesh::DrawVertexNormals()
 {
 	uint normal_length = 3;
 
@@ -82,13 +79,11 @@ void Mesh::DrawVertexNormals()
 	glColor3f(1, 1, 1);
 	glLineWidth(1.0f);
 
-}
+}*/
 
-void Mesh::DefineVerticesAndIndicesForACube(vec _position, float size, vec _color) 
+void Mesh::DefineVerticesAndIndicesForACube(vec _position, float size) 
 {
 	t.pos = _position;
-
-	data.color = _color;
 
 	glGenBuffers(1, (GLuint*) &(data.id_vertex));
 	glGenBuffers(1, (GLuint*) &(data.id_index));
@@ -267,8 +262,68 @@ void Mesh::DefineVerticesForASphere(vec _position, float rad, uint secCount, uin
 
 }
 
-void Mesh::SetMeshName(std::string _name)
+
+void Mesh::GenerateVRAMBuffers()
 {
-	name = _name;
+	//vertex
+	glGenBuffers(1, (GLuint*) &(data.id_vertex));
+
+	glBindBuffer(GL_ARRAY_BUFFER, data.id_vertex);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vec)*data.num_vertex, data.vertex, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	//index
+	glGenBuffers(1, (GLuint*) &(data.id_index));
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, data.id_index);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * data.num_index, data.index, GL_STATIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	//normals
+	if (data.normals)
+	{
+
+		glGenBuffers(1, (GLuint*)&(data.id_normals));
+
+		glBindBuffer(GL_ARRAY_BUFFER, data.id_normals);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(vec)*data.num_normals, data.normals, GL_STATIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}	
+	//tex coords
+	if (data.TexCoords != nullptr)
+	{
+		
+		glGenBuffers(1, (GLuint*)&data.id_texture_coords);
+
+		glBindBuffer(GL_ARRAY_BUFFER, data.id_texture_coords);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * data.num_texture_coords, data.TexCoords, GL_STATIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
+
 }
 
+void Mesh::UnloadVRAMBuffers()
+{
+	//delete buffers
+	glDeleteBuffers(1, &data.id_vertex);
+	glDeleteBuffers(1, &data.id_index);
+	glDeleteBuffers(1, &data.id_normals);
+	glDeleteBuffers(1, &data.id_texture_coords);
+
+	data.ResetIds();
+
+	if(data.vertex != nullptr) RELEASE_ARRAY(data.vertex);
+	if (data.index != nullptr) RELEASE_ARRAY(data.index);
+	if (data.normals != nullptr) RELEASE_ARRAY(data.normals);
+	if (data.TexCoords != nullptr) RELEASE_ARRAY(data.TexCoords);
+
+	glDeleteTextures(1, &id_texture);
+
+}
+
+void VertexData::ResetIds()
+{
+	id_vertex = 0;
+	id_index = 0;
+	id_normals = 0;
+	id_texture_coords = 0;
+}

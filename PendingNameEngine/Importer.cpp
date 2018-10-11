@@ -5,7 +5,7 @@
 #include "Mesh.h"
 
 
-void CallLog(const char* str, char* userData);
+void AssimpToConsoleLog(const char* str, char* userData);
 
 Importer::Importer(bool start_enabled) : Module(start_enabled)
 {
@@ -15,14 +15,14 @@ Importer::~Importer()
 {
 }
 
-bool Importer::Init()
+bool Importer::Init(rapidjson::Document& document)
 {
 	LOG("Init Importer");
 	bool ret = true;
 
 	struct aiLogStream stream;
 	stream = aiGetPredefinedLogStream(aiDefaultLogStream_DEBUGGER, nullptr);
-	stream.callback = CallLog;
+	stream.callback = AssimpToConsoleLog;
 	aiAttachLogStream(&stream);
 
 	return ret;
@@ -59,7 +59,7 @@ bool Importer::Import(const std::string &full_path)
 	else
 	{
 		LOG("Error loading scene %s", full_path);
-		CONSOLELOG("ERROR! %s", full_path);
+		CONSOLELOG("Error loading scene %s", full_path);
 	}
 		
 
@@ -70,29 +70,23 @@ void Importer::LoadMesh(const aiScene* _scene, const aiMesh * mesh)
 {
 	Mesh* my_mesh = new Mesh();
 	bool correct_num_faces = false;
-	std::string mesh_name = (std::string)_scene->mRootNode->mName.C_Str();
-	my_mesh->SetMeshName(mesh_name);
+
 	
 	if (mesh->HasPositions())
 	{
 		my_mesh->data.num_vertex = mesh->mNumVertices;
 		my_mesh->data.vertex = new vec[my_mesh->data.num_vertex];
 		memcpy(my_mesh->data.vertex, mesh->mVertices, sizeof(vec)*my_mesh->data.num_vertex);
-		LOG("New Mesh with: %d vertices", my_mesh->data.num_vertex);
-		CONSOLELOG("New Mesh ""%s"" with: %d vertices", _scene->mRootNode->mName.C_Str(), my_mesh->data.num_vertex);
+		CONSOLELOG("New Mesh with:");
+		CONSOLELOG("   - %d vertices", my_mesh->data.num_vertex);
 
-		glGenBuffers(1, (GLuint*) &(my_mesh->data.id_vertex));
-
-		glBindBuffer(GL_ARRAY_BUFFER, my_mesh->data.id_vertex);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vec)*my_mesh->data.num_vertex, my_mesh->data.vertex, GL_STATIC_DRAW);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 
 	if (mesh->HasFaces())
 	{
 		my_mesh->data.num_index = mesh->mNumFaces * 3;
 		my_mesh->data.index = new uint[my_mesh->data.num_index];
-		CONSOLELOG("%d indices", my_mesh->data.num_index);
+		CONSOLELOG("   - %d indices", my_mesh->data.num_index);
 		for (uint i = 0; i < mesh->mNumFaces; ++i)
 		{
 			if (mesh->mFaces[i].mNumIndices != 3)
@@ -106,13 +100,8 @@ void Importer::LoadMesh(const aiScene* _scene, const aiMesh * mesh)
 
 			}
 		}
-		CONSOLELOG("%d triangles", my_mesh->data.num_index / 3);
-		glGenBuffers(1, (GLuint*) &(my_mesh->data.id_index));
-
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_mesh->data.id_index);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*my_mesh->data.num_index, my_mesh->data.index, GL_STATIC_DRAW);
-
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		CONSOLELOG("   - %d triangles", my_mesh->data.num_index / 3);
+		
 	}
 
 
@@ -121,60 +110,40 @@ void Importer::LoadMesh(const aiScene* _scene, const aiMesh * mesh)
 		my_mesh->data.num_normals = mesh->mNumVertices * 3;
 		my_mesh->data.normals = new vec[my_mesh->data.num_normals];
 		memcpy(my_mesh->data.normals, mesh->mNormals, sizeof(float)*my_mesh->data.num_normals);
-		LOG("%d normals", my_mesh->data.num_normals);
-		CONSOLELOG("%d normals", my_mesh->data.num_normals);
 
-		glGenBuffers(1, (GLuint*)&(my_mesh->data.id_normals));
+		CONSOLELOG("   - %d normals", my_mesh->data.num_normals);
+	
+	}
 
-		glBindBuffer(GL_ARRAY_BUFFER, my_mesh->data.id_normals);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vec)*my_mesh->data.num_normals, my_mesh->data.normals, GL_STATIC_DRAW);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-	}
-	if (mesh->HasVertexColors(0))
-	{
-		my_mesh->data.num_colors = mesh->mNumVertices * 4;
-		my_mesh->data.color = new float[my_mesh->data.num_colors];
-		memcpy(my_mesh->data.color, mesh->mColors[0], sizeof(float)*my_mesh->data.num_colors);
-	}
 
 	if (mesh->HasTextureCoords(0)) {
-		my_mesh->data.num_texture_coords = mesh->mNumVertices;
-		my_mesh->data.TexCoords = new float[my_mesh->data.num_texture_coords * 2];
-		uint j = 0;
-		for (uint q = 0; q < my_mesh->data.num_texture_coords*2; q += 2)
-		{
-			my_mesh->data.TexCoords[q] = mesh->mTextureCoords[0][j].x;
-			my_mesh->data.TexCoords[q+1] = mesh->mTextureCoords[0][j].y;
+		my_mesh->data.num_texture_coords = my_mesh->data.num_index * 2;
+		my_mesh->data.TexCoords = new float[my_mesh->data.num_texture_coords];
+		memcpy(my_mesh->data.TexCoords, mesh->mTextureCoords[0], sizeof(float)*my_mesh->data.num_texture_coords);
 
-		}
-		//memcpy(my_mesh->data.TexCoords, mesh->mTextureCoords[0], sizeof(float)*my_mesh->data.num_texture_coords * 2);
-
-
-		glGenBuffers(1, (GLuint*)&my_mesh->data.id_texture);
-		glBindBuffer(GL_ARRAY_BUFFER, my_mesh->data.id_texture);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(uint) * my_mesh->data.num_texture_coords* 2, my_mesh->data.TexCoords, GL_STATIC_DRAW);
-
-
-		CONSOLELOG("%d texture coords", my_mesh->data.num_texture_coords);
+		CONSOLELOG("   - %d texture coords", my_mesh->data.num_texture_coords);
+		my_mesh->id_texture = (GLuint)App->texture->LoadTexFromPath("../Assets/Baker_House.png");
 	}
 	else
 	{
-		CONSOLELOG("Mesh has no Texture Coords");
+		CONSOLELOG("Warning, mesh has no Texture Coords.");
 	}
 
 	//POSITION-SCALING-ROTATION
 	aiVector3D translation;
 	aiVector3D scaling;
-	aiQuaternion rotation;
+	aiQuaternion quat_rot;
 
-	_scene->mRootNode->mTransformation.Decompose(scaling, rotation, translation);
+	_scene->mRootNode->mTransformation.Decompose(scaling, quat_rot, translation);
+
+	math::Quat math_quat(quat_rot.x, quat_rot.y, quat_rot.z, quat_rot.w); // to be able to pass to EULER
 
 	my_mesh->t.pos = { translation.x, translation.y, translation.z };
-	CONSOLELOG("Mesh position { %f,%f,%f }", my_mesh->t.pos.x, my_mesh->t.pos.y, my_mesh->t.pos.z);
+	CONSOLELOG("Mesh position { %f,%f,%f }",  my_mesh->t.pos.x, my_mesh->t.pos.y, my_mesh->t.pos.z);
 	my_mesh->t.scale = { scaling.x, scaling.y, scaling.z };
-	CONSOLELOG("Mesh scale { %f,%f,%f }", my_mesh->t.scale.x, my_mesh->t.scale.y, my_mesh->t.scale.z);
-	my_mesh->t.rot = { rotation.x, rotation.y, rotation.z, rotation.w };
-	CONSOLELOG("Mesh rotation quaternion { %f,%f,%f,%f }", my_mesh->t.rot.x, my_mesh->t.rot.y, my_mesh->t.rot.z, my_mesh->t.rot.w);
+	CONSOLELOG("Mesh  scale { %f,%f,%f }",  my_mesh->t.scale.x, my_mesh->t.scale.y, my_mesh->t.scale.z);
+	my_mesh->t.rot = math::RadToDeg(math_quat.ToEulerXYZ());
+	CONSOLELOG("Mesh rotation { %f,%f,%f }",  my_mesh->t.rot.x, my_mesh->t.rot.y, my_mesh->t.rot.z);
 
 	//DEBUG BOX
 	AABB debug_box(float3::zero, float3::zero);
@@ -195,7 +164,7 @@ void Importer::LoadMesh(const aiScene* _scene, const aiMesh * mesh)
 		LOG("Error Loading Mesh");
 }
 
-void CallLog(const char * str, char * userData)
+void AssimpToConsoleLog(const char * str, char * userData)
 {
 	CONSOLELOG("%s", str);
 }
