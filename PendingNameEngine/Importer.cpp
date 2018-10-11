@@ -156,14 +156,19 @@ void Importer::LoadMesh(const aiScene* _scene, const aiMesh * mesh)
 	my_mesh->t.rot = { rotation.x, rotation.y, rotation.z, rotation.w };
 	CONSOLELOG("Mesh rotation quaternion { %f,%f,%f,%f }", my_mesh->t.rot.x, my_mesh->t.rot.y, my_mesh->t.rot.z, my_mesh->t.rot.w);
 
+	//DEBUG BOX
 	AABB debug_box(float3::zero, float3::zero);
+	//debug_box.MinimalEnclosingAABB((float3*)mesh->mVertices, mesh->mNumVertices);
 	debug_box.Enclose((float3*)mesh->mVertices, mesh->mNumVertices);
 	my_mesh->outside_box = debug_box;
+
 	//DECIDE TO LOAD OR NOT
 	if (correct_num_faces && mesh->HasNormals() && mesh->HasPositions())
 	{
 		App->scene_intro->scene_objects.push_back(my_mesh);
+		App->camera->can_focus = true;
 		App->camera->Focus(my_mesh->outside_box);
+		App->camera->can_focus = false;
 	}
 	else
 		LOG("Error Loading Mesh");
