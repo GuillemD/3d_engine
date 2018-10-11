@@ -31,7 +31,9 @@ struct VertexData {
 	uint texture_width = 0;
 	uint texture_heigth = 0;
 
-	vec color;
+	float* color;
+	uint id_color;
+	uint num_colors;
 
 };
 struct transf {
@@ -59,10 +61,13 @@ public:
 	AABB outside_box;
 	VertexData data;
 	transf t;
+
+	void SetMeshName(std::string _name);
 	
 private:
 
 	MESH_TYPE type;
+	std::string name;
 
 
 	//Sphere

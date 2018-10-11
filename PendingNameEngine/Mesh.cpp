@@ -267,3 +267,8 @@ void Mesh::DefineVerticesForASphere(vec _position, float rad, uint secCount, uin
 
 }
 
+void Mesh::SetMeshName(std::string _name)
+{
+	name = _name;
+}
+

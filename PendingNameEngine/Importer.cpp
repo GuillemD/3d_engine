@@ -67,6 +67,8 @@ void Importer::LoadMesh(const aiScene* _scene, const aiMesh * mesh)
 {
 	Mesh* my_mesh = new Mesh();
 	bool correct_num_faces = false;
+	std::string mesh_name = (std::string)_scene->mRootNode->mName.C_Str();
+	my_mesh->SetMeshName(mesh_name);
 	
 	if (mesh->HasPositions())
 	{
@@ -74,7 +76,7 @@ void Importer::LoadMesh(const aiScene* _scene, const aiMesh * mesh)
 		my_mesh->data.vertex = new vec[my_mesh->data.num_vertex];
 		memcpy(my_mesh->data.vertex, mesh->mVertices, sizeof(vec)*my_mesh->data.num_vertex);
 		LOG("New Mesh with: %d vertices", my_mesh->data.num_vertex);
-		CONSOLELOG("New Mesh with: %d vertices", my_mesh->data.num_vertex);
+		CONSOLELOG("New Mesh ""%s"" with: %d vertices", _scene->mRootNode->mName.C_Str(), my_mesh->data.num_vertex);
 
 		glGenBuffers(1, (GLuint*) &(my_mesh->data.id_vertex));
 
@@ -83,11 +85,39 @@ void Importer::LoadMesh(const aiScene* _scene, const aiMesh * mesh)
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 
+	if (mesh->HasFaces())
+	{
+		my_mesh->data.num_index = mesh->mNumFaces * 3;
+		my_mesh->data.index = new uint[my_mesh->data.num_index];
+		CONSOLELOG("%d indices", my_mesh->data.num_index);
+		for (uint i = 0; i < mesh->mNumFaces; ++i)
+		{
+			if (mesh->mFaces[i].mNumIndices != 3)
+			{
+				CONSOLELOG("WARNING, geometry face with != 3 indices!");
+			}
+			else
+			{
+				memcpy(&my_mesh->data.index[i * 3], mesh->mFaces[i].mIndices, sizeof(uint) * 3);
+				correct_num_faces = true;
+
+			}
+		}
+		CONSOLELOG("%d triangles", my_mesh->data.num_index / 3);
+		glGenBuffers(1, (GLuint*) &(my_mesh->data.id_index));
+
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_mesh->data.id_index);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*my_mesh->data.num_index, my_mesh->data.index, GL_STATIC_DRAW);
+
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	}
+
+
 	if (mesh->HasNormals())
 	{
-		my_mesh->data.num_normals = mesh->mNumVertices;
+		my_mesh->data.num_normals = mesh->mNumVertices * 3;
 		my_mesh->data.normals = new vec[my_mesh->data.num_normals];
-		memcpy(my_mesh->data.normals, mesh->mNormals, sizeof(vec)*my_mesh->data.num_normals);
+		memcpy(my_mesh->data.normals, mesh->mNormals, sizeof(float)*my_mesh->data.num_normals);
 		LOG("%d normals", my_mesh->data.num_normals);
 		CONSOLELOG("%d normals", my_mesh->data.num_normals);
 
@@ -97,33 +127,13 @@ void Importer::LoadMesh(const aiScene* _scene, const aiMesh * mesh)
 		glBufferData(GL_ARRAY_BUFFER, sizeof(vec)*my_mesh->data.num_normals, my_mesh->data.normals, GL_STATIC_DRAW);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
-
-	if (mesh->HasFaces())
+	if (mesh->HasVertexColors(0))
 	{
-		my_mesh->data.num_index = mesh->mNumFaces * 3;
-		my_mesh->data.index = new uint[my_mesh->data.num_index]; 
-		for (uint i = 0; i < mesh->mNumFaces; ++i)
-		{
-			if (mesh->mFaces[i].mNumIndices != 3)
-			{
-				CONSOLELOG("WARNING, geometry face with != 3 indices!");
-			}	
-			else
-			{
-				memcpy(&my_mesh->data.index[i * 3], mesh->mFaces[i].mIndices, sizeof(uint)*3);
-				correct_num_faces = true;
-
-			}
-		}
-		glGenBuffers(1, (GLuint*) &(my_mesh->data.id_index));
-
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_mesh->data.id_index);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint)*my_mesh->data.num_index, my_mesh->data.index, GL_STATIC_DRAW);
-		CONSOLELOG("%d indices", my_mesh->data.num_index);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		my_mesh->data.num_colors = mesh->mNumVertices * 4;
+		my_mesh->data.color = new float[my_mesh->data.num_colors];
+		memcpy(my_mesh->data.color, mesh->mColors[0], sizeof(float)*my_mesh->data.num_colors);
 	}
 
-	
 	if (mesh->HasTextureCoords(0)) {
 		my_mesh->data.num_texture_coords = mesh->mNumVertices;
 		my_mesh->data.TexCoords = new float[my_mesh->data.num_texture_coords * 2];
