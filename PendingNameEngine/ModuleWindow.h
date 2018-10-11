@@ -36,6 +36,10 @@ public:
 	Uint32 flags;
 	int width;
 	int height;
+	SDL_DisplayMode DM;
+
+	int maxwidth;
+	int maxheight;
 
 	//The surface contained by the window
 	SDL_Surface* screen_surface;

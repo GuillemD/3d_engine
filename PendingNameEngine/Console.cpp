@@ -13,6 +13,8 @@ Console::~Console()
 }
 
 void Console::ConsoleLog(const char* log_text) {
+
+	ScrollToBottom = true;
 	text.append(log_text);
 }
 
@@ -29,6 +31,12 @@ void Console::CreateConsole()
 		CONSOLELOG("Console cleared correctly.");
 	}
 	ImGui::TextUnformatted(text.begin());
-	
+
+
+
+	if (ScrollToBottom)
+		ImGui::SetScrollHere(1.0f);
+	ScrollToBottom = false;
+
 	ImGui::End();
 }

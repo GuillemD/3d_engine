@@ -13,6 +13,7 @@ public:
 	void ConsoleLog(const char* log_text);
 	void EmptyConsole();
 	void CreateConsole();
+	bool ScrollToBottom = false;
 private:
 	ImGuiTextBuffer text;
 };
