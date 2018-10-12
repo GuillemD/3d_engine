@@ -5,8 +5,6 @@
 #include "Mesh.h"
 
 #include <list>
-struct PhysBody3D;
-
 
 class ModuleSceneIntro : public Module
 {

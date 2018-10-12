@@ -81,6 +81,12 @@ void Importer::LoadMesh(const aiScene* _scene, const aiMesh * mesh, const std::s
 		CONSOLELOG("   - %d vertices", my_mesh->data.num_vertex);
 
 	}
+	//vertex
+	glGenBuffers(1, (GLuint*) &(my_mesh->data.id_vertex));
+
+	glBindBuffer(GL_ARRAY_BUFFER, my_mesh->data.id_vertex);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vec)*my_mesh->data.num_vertex, my_mesh->data.vertex, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	if (mesh->HasFaces())
 	{
@@ -103,6 +109,12 @@ void Importer::LoadMesh(const aiScene* _scene, const aiMesh * mesh, const std::s
 		CONSOLELOG("   - %d triangles", my_mesh->data.num_index / 3);
 		
 	}
+	//index
+	glGenBuffers(1, (GLuint*) &(my_mesh->data.id_index));
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_mesh->data.id_index);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * my_mesh->data.num_index, my_mesh->data.index, GL_STATIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 
 	if (mesh->HasNormals())
@@ -114,15 +126,20 @@ void Importer::LoadMesh(const aiScene* _scene, const aiMesh * mesh, const std::s
 		CONSOLELOG("   - %d normals", my_mesh->data.num_normals);
 	
 	}
+	glGenBuffers(1, (GLuint*)&(my_mesh->data.id_normals));
+
+	glBindBuffer(GL_ARRAY_BUFFER, my_mesh->data.id_normals);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vec)*my_mesh->data.num_normals, my_mesh->data.normals, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 
 	if (mesh->HasTextureCoords(0)) {
 		my_mesh->data.num_texture_coords = my_mesh->data.num_index * 2;
 		my_mesh->data.TexCoords = new float[my_mesh->data.num_texture_coords];
 		
-			memcpy(my_mesh->data.TexCoords, mesh->mTextureCoords[0], sizeof(float)*my_mesh->data.num_texture_coords);
+		memcpy(my_mesh->data.TexCoords, mesh->mTextureCoords[0], sizeof(float)*my_mesh->data.num_texture_coords);
 
-			CONSOLELOG("   - %d texture coords", my_mesh->data.num_texture_coords);
+		CONSOLELOG("   - %d texture coords", my_mesh->data.num_texture_coords);
 		if (initial_tex)
 		{
 			my_mesh->id_texture = (GLuint)App->texture->LoadTexFromPath(path.c_str());
@@ -137,6 +154,11 @@ void Importer::LoadMesh(const aiScene* _scene, const aiMesh * mesh, const std::s
 	{
 		CONSOLELOG("Warning, mesh has no Texture Coords.");
 	}
+	glGenBuffers(1, (GLuint*)&my_mesh->data.id_texture_coords);
+
+	glBindBuffer(GL_ARRAY_BUFFER, my_mesh->data.id_texture_coords);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * my_mesh->data.num_texture_coords, my_mesh->data.TexCoords, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	//POSITION-SCALING-ROTATION
 	aiVector3D translation;

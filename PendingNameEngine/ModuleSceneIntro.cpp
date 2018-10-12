@@ -42,7 +42,6 @@ void ModuleSceneIntro::Draw()
 
 update_status ModuleSceneIntro::Update(float dt)
 {
-	Draw();
 	return UPDATE_CONTINUE;
 }
 

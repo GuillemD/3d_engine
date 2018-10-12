@@ -21,8 +21,6 @@ void Mesh::DrawMesh()
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 
-	GenerateVRAMBuffers();
-
 	
 	glBindBuffer(GL_ARRAY_BUFFER, data.id_vertex);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
@@ -35,9 +33,7 @@ void Mesh::DrawMesh()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, data.id_index);
 
 
-	
 	glDrawElements(GL_TRIANGLES, data.num_index, GL_UNSIGNED_INT, NULL);
-	
 	
 	
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -262,44 +258,6 @@ void Mesh::DefineVerticesForASphere(vec _position, float rad, uint secCount, uin
 
 }
 
-
-void Mesh::GenerateVRAMBuffers()
-{
-	//vertex
-	glGenBuffers(1, (GLuint*) &(data.id_vertex));
-
-	glBindBuffer(GL_ARRAY_BUFFER, data.id_vertex);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vec)*data.num_vertex, data.vertex, GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	//index
-	glGenBuffers(1, (GLuint*) &(data.id_index));
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, data.id_index);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * data.num_index, data.index, GL_STATIC_DRAW);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-	//normals
-	if (data.normals)
-	{
-
-		glGenBuffers(1, (GLuint*)&(data.id_normals));
-
-		glBindBuffer(GL_ARRAY_BUFFER, data.id_normals);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vec)*data.num_normals, data.normals, GL_STATIC_DRAW);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-	}	
-	//tex coords
-	if (data.TexCoords != nullptr)
-	{
-		
-		glGenBuffers(1, (GLuint*)&data.id_texture_coords);
-
-		glBindBuffer(GL_ARRAY_BUFFER, data.id_texture_coords);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(float) * data.num_texture_coords, data.TexCoords, GL_STATIC_DRAW);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-	}
-
-}
 
 void Mesh::UnloadVRAMBuffers()
 {

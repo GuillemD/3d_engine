@@ -56,8 +56,6 @@ public:
 	transf t;
 	uint id_texture;;
 
-
-	void GenerateVRAMBuffers();
 	void UnloadVRAMBuffers();
 	
 private:
