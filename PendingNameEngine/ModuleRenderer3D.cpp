@@ -140,7 +140,7 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 		base.Render();
 	}
 
-	App->scene_intro->Draw();
+	App->scene_loader->Draw();
 	App->ui->DrawImGui();
 	
 	EnableLight();

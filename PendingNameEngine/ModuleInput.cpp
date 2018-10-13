@@ -106,7 +106,7 @@ update_status ModuleInput::PreUpdate(float dt)
 					std::string extension = file_path.substr(idx + 1);
 
 					if (extension == "fbx" || extension == "FBX") {
-						App->scene_intro->scene_objects.clear();
+						App->scene_loader->scene_objects.clear();
 						App->importer->Import(file_path.c_str());
 						SDL_free(e.drop.file);
 					}

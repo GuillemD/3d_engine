@@ -201,7 +201,7 @@ void ModuleUI::CreateMainMenu()
 			if (ImGui::MenuItem("Save config"))
 				App->SaveConfig();
 			if (ImGui::MenuItem("Delete Meshes"))
-				App->scene_intro->scene_objects.clear();
+				App->scene_loader->scene_objects.clear();
 			if (ImGui::MenuItem("Close Application")) {
 				closeApp = !closeApp;
 			}

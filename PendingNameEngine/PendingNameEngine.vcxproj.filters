@@ -99,9 +99,6 @@
     <ClInclude Include="Light.h">
       <Filter>Sources\Helpers</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleSceneIntro.h">
-      <Filter>Sources\Modules\Game</Filter>
-    </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>Sources\Tools</Filter>
     </ClInclude>
@@ -501,6 +498,9 @@
     <ClInclude Include="Primitive.h">
       <Filter>Sources</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleSceneLoader.h">
+      <Filter>Sources\Modules\Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -535,9 +535,6 @@
     </ClCompile>
     <ClCompile Include="Light.cpp">
       <Filter>Sources\Helpers</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleSceneIntro.cpp">
-      <Filter>Sources\Modules\Game</Filter>
     </ClCompile>
     <ClCompile Include="ModulePhysics3D.cpp">
       <Filter>Sources\Modules</Filter>
@@ -700,6 +697,9 @@
     </ClCompile>
     <ClCompile Include="Primitive.cpp">
       <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleSceneLoader.cpp">
+      <Filter>Sources\Modules\Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

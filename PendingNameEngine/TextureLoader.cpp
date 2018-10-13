@@ -105,7 +105,7 @@ void TextureLoader::SwapTexture(const std::string & new_path)
 {
 	GLuint new_id = LoadTexFromPath(new_path);
 	
-	for (std::list<Mesh*>::iterator it = App->scene_intro->scene_objects.begin(); it != App->scene_intro->scene_objects.end(); it++)
+	for (std::list<Mesh*>::iterator it = App->scene_loader->scene_objects.begin(); it != App->scene_loader->scene_objects.end(); it++)
 	{
 		(*it)->id_texture = new_id;
 	}

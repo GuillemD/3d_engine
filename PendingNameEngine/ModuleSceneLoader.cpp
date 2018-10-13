@@ -1,18 +1,18 @@
 #include "Globals.h"
 #include "Application.h"
-#include "ModuleSceneIntro.h"
+#include "ModuleSceneLoader.h"
 
 #include "OpenGL.h"
 
 
-ModuleSceneIntro::ModuleSceneIntro(bool start_enabled) : Module(start_enabled)
+ModuleSceneLoader::ModuleSceneLoader(bool start_enabled) : Module(start_enabled)
 {
 }
 
-ModuleSceneIntro::~ModuleSceneIntro()
+ModuleSceneLoader::~ModuleSceneLoader()
 {}
 
-bool ModuleSceneIntro::Start()
+bool ModuleSceneLoader::Start()
 {
 	LOG("Loading Intro assets");
 	bool ret = true;
@@ -26,12 +26,12 @@ bool ModuleSceneIntro::Start()
 	return ret;
 }
 
-bool ModuleSceneIntro::CleanUp()
+bool ModuleSceneLoader::CleanUp()
 {
 	LOG("Unloading Intro scene");
 	return true;
 }
-void ModuleSceneIntro::Draw() 
+void ModuleSceneLoader::Draw()
 {
 	for (std::list<Mesh*>::iterator it = scene_objects.begin(); it != scene_objects.end(); it++)
 	{
@@ -40,7 +40,7 @@ void ModuleSceneIntro::Draw()
 
 }
 
-update_status ModuleSceneIntro::Update(float dt)
+update_status ModuleSceneLoader::Update(float dt)
 {
 	return UPDATE_CONTINUE;
 }

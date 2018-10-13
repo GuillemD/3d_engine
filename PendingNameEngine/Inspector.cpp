@@ -15,7 +15,7 @@ void Inspector::ShowElement()
 {
 	ImGui::Begin("Inspector");
 	int i = 1;
-	for (std::list<Mesh*>::iterator it = App->scene_intro->scene_objects.begin(); it != App->scene_intro->scene_objects.end(); it++)
+	for (std::list<Mesh*>::iterator it = App->scene_loader->scene_objects.begin(); it != App->scene_loader->scene_objects.end(); it++)
 	{
 		
 		ImGui::Text("Mesh %d: ", i);

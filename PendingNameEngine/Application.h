@@ -7,7 +7,7 @@
 #include "ModuleInput.h"
 #include "ModuleAudio.h"
 #include "TextureLoader.h"
-#include "ModuleSceneIntro.h"
+#include "ModuleSceneLoader.h"
 #include "ModuleRenderer3D.h"
 #include "ModuleCamera3D.h"
 #include "ModulePhysics3D.h"
@@ -29,7 +29,7 @@ public:
 	Importer* importer;
 	TextureLoader* texture;
 	ModuleInput* input;
-	ModuleSceneIntro* scene_intro;
+	ModuleSceneLoader* scene_loader;
 	ModuleRenderer3D* renderer3D;
 	ModuleCamera3D* camera;
 	ModulePhysics3D* physics;

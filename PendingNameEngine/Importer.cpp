@@ -185,7 +185,7 @@ void Importer::LoadMesh(const aiScene* _scene, const aiMesh * mesh, const std::s
 	//DECIDE TO LOAD OR NOT
 	if (correct_num_faces && mesh->HasNormals() && mesh->HasPositions())
 	{
-		App->scene_intro->scene_objects.push_back(my_mesh);
+		App->scene_loader->scene_objects.push_back(my_mesh);
 		App->camera->can_focus = true;
 		App->camera->Focus(my_mesh->outside_box);
 		App->camera->can_focus = false;

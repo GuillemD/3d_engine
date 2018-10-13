@@ -6,11 +6,11 @@
 
 #include <list>
 
-class ModuleSceneIntro : public Module
+class ModuleSceneLoader : public Module
 {
 public:
-	ModuleSceneIntro(bool start_enabled = true);
-	~ModuleSceneIntro();
+	ModuleSceneLoader(bool start_enabled = true);
+	~ModuleSceneLoader();
 
 	bool Start();
 	update_status Update(float dt);
