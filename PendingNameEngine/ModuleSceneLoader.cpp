@@ -18,12 +18,12 @@ bool ModuleSceneLoader::Start()
 	bool ret = true;
 	//cube.DefineVerticesAndIndicesForACube(vec(0.f, 0.f, 0.f), 1);
 	//scene_objects.push_back(&cube);
-	App->importer->Import("../Assets/BakerHouse.fbx");
-	App->texture->LoadTexFromPath("../Assets/Baker_House.png");
+	App->importer->Import("./Assets/BakerHouse.fbx");
+	App->texture->LoadTexFromPath("./Assets/Baker_House.png");
 	App->camera->Move(vec3(0.0f, 10.0f, 10.0f));
 	App->camera->LookAt(vec3(0.0f, 3.0f, 0.0f));
 	App->renderer3D->OnResize(App->window->width, App->window->height);
-	return ret;
+	return ret; 
 }
 
 bool ModuleSceneLoader::CleanUp()
