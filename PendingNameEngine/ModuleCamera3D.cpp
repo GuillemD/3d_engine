@@ -195,16 +195,16 @@ void ModuleCamera3D::Focus(AABB& box)
 		vec3 target = { cam_pos.x, cam_pos.y, cam_pos.z }; //convert to be able to LookAt
 
 
-		cam_pos.x += box.Diagonal().Length() + box.HalfDiagonal().Length();
-		cam_pos.z -= box.Diagonal().Length() + box.HalfDiagonal().Length();
-		cam_pos.y += box.Diagonal().Length() + box.HalfDiagonal().Length();
+		cam_pos.x += box.Diagonal().x + box.HalfDiagonal().x;
+		cam_pos.z -= box.Diagonal().y + box.HalfDiagonal().y;
+		cam_pos.y += box.Diagonal().z + box.HalfDiagonal().z;
 
 
 		Position.x = cam_pos.x;
 		Position.y = cam_pos.y;
 		Position.z = cam_pos.z;
 
-		LookAt({ 0.f,0.f,0.f });
+		LookAt(target);
 		can_focus = false;
 	}
 	
