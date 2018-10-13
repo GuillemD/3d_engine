@@ -9,7 +9,6 @@
 #include "ModuleSceneLoader.h"
 #include "ModuleRenderer3D.h"
 #include "ModuleCamera3D.h"
-#include "ModulePhysics3D.h"
 #include "ModuleUI.h"
 #include "Importer.h"
 #include <list>
@@ -30,7 +29,6 @@ public:
 	ModuleSceneLoader* scene_loader;
 	ModuleRenderer3D* renderer3D;
 	ModuleCamera3D* camera;
-	ModulePhysics3D* physics;
 	ModuleUI* ui;
 
 

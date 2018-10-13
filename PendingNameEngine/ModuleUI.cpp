@@ -84,67 +84,6 @@ bool ModuleUI::CleanUp()
 }
 
 
-/*void ModuleUI::ShowCubeCreator() {
-	if (ImGui::Begin("Cube Creator Panel")) {
-		ImGui::Text("AABB Min Positions");
-		ImGui::InputFloat("MinX Positon", &tmpvec.x, 0.05f, 0, 3);
-		ImGui::InputFloat("MinY Position", &tmpvec.y, 0.05f, 0, 3);
-		ImGui::InputFloat("MinZ Position", &tmpvec.z, 0.05f, 0, 3);
-
-		ImGui::Text("AABB Max Positions");
-		ImGui::InputFloat("MaxX Positon", &tmpvec2.x, 0.05f, 0, 3);
-		ImGui::InputFloat("MaxY Position", &tmpvec2.y, 0.05f, 0, 3);
-		ImGui::InputFloat("MaxZ Position", &tmpvec2.z, 0.05f, 0, 3);
-
-		if (ImGui::Button("Create Cube")) {
-			App->physics->CreateCube(tmpvec, tmpvec2);
-		}
-	}
-	ImGui::End();
-}
-
-void ModuleUI::ShowSphereCreator()
-{
-	if (ImGui::Begin("Sphere Creator Panel")) {
-
-		ImGui::InputFloat("Radius", &tmpfloat, 0.05f, 0, 3);
-		ImGui::InputFloat("X Positon", &tmpvec.x, 0.05f, 0, 3);
-		ImGui::InputFloat("Y Position", &tmpvec.y, 0.05f, 0, 3);
-		ImGui::InputFloat("Z Position", &tmpvec.z, 0.05f, 0, 3);
-
-		if (ImGui::Button("Create Sphere")) {
-			App->physics->CreateSphere(tmpvec, tmpfloat);
-		}
-	}
-	ImGui::End();
-}
-
-void ModuleUI::ShowCapsuleCreator()
-{
-	if (ImGui::Begin("Capsule Creator Panel")) {
-
-		ImGui::Text("Radius");
-		ImGui::InputFloat("Radius", &tmpfloat, 0.05f, 0, 3);
-
-		ImGui::Text("LineSegment Begin Positions");
-		ImGui::InputFloat("BeginX Positon", &tmpvec.x, 0.05f, 0, 3);
-		ImGui::InputFloat("BeginY Position", &tmpvec.y, 0.05f, 0, 3);
-		ImGui::InputFloat("BeginZ Position", &tmpvec.z, 0.05f, 0, 3);
-
-		ImGui::Text("LineSegment End Positions");
-		ImGui::InputFloat("EndX Positon", &tmpvec2.x, 0.05f, 0, 3);
-		ImGui::InputFloat("EndY Position", &tmpvec2.y, 0.05f, 0, 3);
-		ImGui::InputFloat("EndZ Position", &tmpvec2.z, 0.05f, 0, 3);
-
-
-		if (ImGui::Button("Create Capsule")) {
-			App->physics->CreateCapsule(tmpfloat, LineSegment(tmpvec,tmpvec2));
-		}
-
-	}
-	ImGui::End();
-}*/
-
 void ModuleUI::ShowDemoWindow()
 {
 	ImGui::ShowTestWindow();

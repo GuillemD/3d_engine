@@ -10,7 +10,6 @@ Application::Application()
 	texture = new TextureLoader(this);
 	renderer3D = new ModuleRenderer3D(this);
 	camera = new ModuleCamera3D(this);
-	physics = new ModulePhysics3D(this);
 	ui = new ModuleUI(this);
 	scene_loader = new ModuleSceneLoader(this);
 
@@ -24,7 +23,6 @@ Application::Application()
 	AddModule(importer);
 	AddModule(texture);
 	AddModule(input);
-	AddModule(physics);
 	AddModule(ui);
 
 	// Scenes
