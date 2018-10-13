@@ -25,18 +25,23 @@ void Console::EmptyConsole()
 
 void Console::CreateConsole()
 {
-	ImGui::Begin("Console");
-	if(ImGui::Button("Clear Console")) {
-		EmptyConsole();
-		CONSOLELOG("Console cleared correctly.");
+	if (active)
+	{
+		ImGui::Begin("Console");
+		if (ImGui::MenuItem("Clear Console")) {
+			EmptyConsole();
+			CONSOLELOG("Console cleared correctly.");
+			
+		}
+		ImGui::TextUnformatted(text.begin());
+
+
+
+		if (ScrollToBottom)
+			ImGui::SetScrollHere(1.0f);
+		ScrollToBottom = false;
+
+		ImGui::End();
 	}
-	ImGui::TextUnformatted(text.begin());
-
-
-
-	if (ScrollToBottom)
-		ImGui::SetScrollHere(1.0f);
-	ScrollToBottom = false;
-
-	ImGui::End();
+	
 }
