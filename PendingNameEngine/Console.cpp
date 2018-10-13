@@ -28,11 +28,12 @@ void Console::CreateConsole()
 	if (active)
 	{
 		ImGui::Begin("Console");
-		if (ImGui::MenuItem("Clear Console")) {
+		if (ImGui::Button("Clear Console")) {
 			EmptyConsole();
 			CONSOLELOG("Console cleared correctly.");
 			
 		}
+		ImGui::Separator();
 		ImGui::TextUnformatted(text.begin());
 
 

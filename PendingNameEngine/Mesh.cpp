@@ -21,26 +21,31 @@ void Mesh::DrawMesh()
 
 	glEnableClientState(GL_VERTEX_ARRAY);
 
+	if (data.vertex != nullptr)
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, data.id_vertex);
+		glVertexPointer(3, GL_FLOAT, 0, NULL);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, data.id_index);
+
+		
+		if (data.num_texture_coords != 0)
+		{
+			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+			glBindBuffer(GL_ARRAY_BUFFER, data.id_texture_coords);
+			glTexCoordPointer(3, GL_FLOAT, 0, NULL);
+		}
+		
+		glBindTexture(GL_TEXTURE_2D, id_texture);
+
+
+		glDrawElements(GL_TRIANGLES, data.num_index, GL_UNSIGNED_INT, NULL);
+	}
 	
-	glBindBuffer(GL_ARRAY_BUFFER, data.id_vertex);
-	glVertexPointer(3, GL_FLOAT, 0, NULL);
-	
-	glBindTexture(GL_TEXTURE_2D, id_texture);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glBindBuffer(GL_ARRAY_BUFFER, data.id_texture_coords);
-	glTexCoordPointer(3, GL_FLOAT, 0, NULL);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, data.id_index);
-
-
-	glDrawElements(GL_TRIANGLES, data.num_index, GL_UNSIGNED_INT, NULL);
 	
 	
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindTexture(GL_TEXTURE_2D, 0);
-
-
 	glDisableClientState(GL_VERTEX_ARRAY);	
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
@@ -57,25 +62,6 @@ void Mesh::DrawSphere() const
 
 }
 
-/*void Mesh::DrawVertexNormals()
-{
-	uint normal_length = 3;
-
-	glLineWidth(2.0f);
-	glColor3f(0, 0, 1);
-
-	glBegin(GL_LINES);
-	for (int i = 0; i < data.num_vertex ; i++)
-	{
-		glVertex3f(data.vertex->x, data.vertex->y, data.vertex->z);
-		glVertex3f(-data.normals->x + data.vertex->x, -data.normals->y + data.vertex->y, -data.normals->z + data.vertex->z);
-	}
-	glEnd();
-
-	glColor3f(1, 1, 1);
-	glLineWidth(1.0f);
-
-}*/
 
 void Mesh::DefineVerticesAndIndicesForACube(vec _position, float size) 
 {

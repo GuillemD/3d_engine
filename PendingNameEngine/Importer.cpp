@@ -134,10 +134,10 @@ void Importer::LoadMesh(const aiScene* _scene, const aiMesh * mesh, const std::s
 
 
 	if (mesh->HasTextureCoords(0)) {
-		my_mesh->data.num_texture_coords = my_mesh->data.num_index * 3;
-		my_mesh->data.TexCoords = new float[my_mesh->data.num_texture_coords];
+		my_mesh->data.num_texture_coords = mesh->mNumVertices;
+		my_mesh->data.TexCoords = new float[my_mesh->data.num_texture_coords * 3];
 		
-		memcpy(my_mesh->data.TexCoords, mesh->mTextureCoords[0], sizeof(float)*my_mesh->data.num_texture_coords);
+		memcpy(my_mesh->data.TexCoords, mesh->mTextureCoords[0], sizeof(float)*my_mesh->data.num_texture_coords*3);
 
 		CONSOLELOG("   - %d texture coords", my_mesh->data.num_texture_coords);
 		if (initial_tex)
@@ -157,7 +157,7 @@ void Importer::LoadMesh(const aiScene* _scene, const aiMesh * mesh, const std::s
 	glGenBuffers(1, (GLuint*)&my_mesh->data.id_texture_coords);
 
 	glBindBuffer(GL_ARRAY_BUFFER, my_mesh->data.id_texture_coords);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * my_mesh->data.num_texture_coords, my_mesh->data.TexCoords, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(uint) * my_mesh->data.num_texture_coords * 3, my_mesh->data.TexCoords, GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	//POSITION-SCALING-ROTATION
