@@ -51,14 +51,13 @@ bool Importer::Import(const std::string &full_path)
 		{
 			const aiMesh* mesh = scene->mMeshes[i];
 			
-			LoadMesh(scene,mesh, full_path);
+			LoadMesh(scene,mesh);
 
 		}
 		aiReleaseImport(scene);
 	}
 	else
 	{
-		LOG("Error loading scene %s", full_path);
 		CONSOLELOG("Error loading scene %s", full_path);
 	}
 		
@@ -66,7 +65,7 @@ bool Importer::Import(const std::string &full_path)
 	return ret;
 }
 
-void Importer::LoadMesh(const aiScene* _scene, const aiMesh * mesh, const std::string &path)
+void Importer::LoadMesh(const aiScene* _scene, const aiMesh * mesh)
 {
 	Mesh* my_mesh = new Mesh();
 	bool correct_num_faces = false;
@@ -140,15 +139,18 @@ void Importer::LoadMesh(const aiScene* _scene, const aiMesh * mesh, const std::s
 		memcpy(my_mesh->data.TexCoords, mesh->mTextureCoords[0], sizeof(float)*my_mesh->data.num_texture_coords*3);
 
 		CONSOLELOG("   - %d texture coords", my_mesh->data.num_texture_coords);
-		if (initial_tex)
+
+		if (App->texture->current != nullptr)
 		{
-			my_mesh->id_texture = (GLuint)App->texture->LoadTexFromPath(path.c_str());
-			initial_tex = false;
+				
+			my_mesh->id_texture = (GLuint)App->texture->LoadTexFromPath(App->texture->current);
+				
 		}
 		else
 		{
-			App->texture->SwapTexture(path.c_str());
+			CONSOLELOG("Texture path is null.");
 		}
+					
 	}
 	else
 	{

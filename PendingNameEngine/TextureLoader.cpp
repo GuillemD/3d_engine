@@ -42,16 +42,19 @@ bool TextureLoader::CleanUp()
 	return ret;
 }
 
-uint TextureLoader::LoadTexFromPath(const std::string & full_path)
+uint TextureLoader::LoadTexFromPath(const char* full_path)
 {
 
-	CONSOLELOG("Importing texture %s", full_path.c_str());
+	CONSOLELOG("Importing texture %s", full_path);
+	
 	ILuint image_id;
 	ilGenImages(1, &image_id);
 	ilBindImage(image_id);
-	GLuint texture_id;
+	GLuint tex_id;
+	ILenum error;
+	ILboolean imageloaded = true;
 
-	ILboolean imageloaded = ilLoadImage(full_path.c_str());
+	imageloaded = ilLoadImage(full_path);
 
 	if (imageloaded) {
 		ILinfo info;
@@ -65,50 +68,62 @@ uint TextureLoader::LoadTexFromPath(const std::string & full_path)
 		ILboolean converted = ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
 		if (!converted)
 		{
-			CONSOLELOG("DevIL failed to convert image %s. Error: %s", full_path.c_str(), iluErrorString(ilGetError()));
+			CONSOLELOG("DevIL failed to convert image %s. Error: %s", full_path, iluErrorString(ilGetError()));
+			exit(-1);
 		}
 		int width = ilGetInteger(IL_IMAGE_WIDTH);
 		int height = ilGetInteger(IL_IMAGE_HEIGHT);
-		int format = ilGetInteger(IL_IMAGE_FORMAT);
-		
+				
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-		glGenTextures(1, &texture_id);
-		glBindTexture(GL_TEXTURE_2D, texture_id);
+
+		glGenTextures(1, &tex_id);
+
+		glBindTexture(GL_TEXTURE_2D, tex_id);
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width , height,
-			0, format, GL_UNSIGNED_BYTE, ilGetData());
+			0, ilGetInteger(IL_IMAGE_FORMAT), GL_UNSIGNED_BYTE, ilGetData());
 
 
 		CONSOLELOG("Image width: %d", ilGetInteger(IL_IMAGE_WIDTH));
 		CONSOLELOG("Image height: %d", ilGetInteger(IL_IMAGE_HEIGHT));
 
-		
+
+		CONSOLELOG("Texture %s loaded correctly", full_path);
 	}
 	else
 	{
-		texture_id = 0;
-		CONSOLELOG("DevIL: Unable to load image correctly. Texture_id set to %d", texture_id);
-		return texture_id;
+		tex_id = 0;
+		error = ilGetError();
+		CONSOLELOG("DevIL: Unable to load image correctly. Error: %s. Texture_id set to %d", iluErrorString(error), tex_id);
+		return tex_id;
 	}
-	ilDeleteImages(1, &image_id);
-	CONSOLELOG("Texture %s loaded correctly", full_path.c_str());
 
-	return texture_id;
+	return tex_id;
 }
 
-void TextureLoader::SwapTexture(const std::string & new_path)
+void TextureLoader::SwapTexture(const char* new_path)
 {
-	GLuint new_id = LoadTexFromPath(new_path);
-	
-	for (std::list<Mesh*>::iterator it = App->scene_loader->scene_objects.begin(); it != App->scene_loader->scene_objects.end(); it++)
+	if (current != new_path)
 	{
-		(*it)->id_texture = new_id;
+		GLuint new_id = LoadTexFromPath(new_path);
+
+		for (std::list<Mesh*>::iterator it = App->scene_loader->scene_objects.begin(); it != App->scene_loader->scene_objects.end(); it++)
+		{
+			(*it)->id_texture = new_id;
+		}
+
+		current = new_path;
 	}
+	else {
+		CONSOLELOG("Texture already in use");
+	}
+	
 }
 
 

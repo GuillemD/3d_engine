@@ -15,10 +15,14 @@ public:
 	bool Init();
 	bool CleanUp();
 
-	uint LoadTexFromPath(const std::string &full_path);
-	void SwapTexture(const std::string &new_path);
+	uint LoadTexFromPath(const char* full_path);
+	void SwapTexture(const char* new_path);
 
 	int getILversion() const;
+
+	const char* current = "";
+	const char* new_path = "";
+	
 
 };
 #endif // !__TEXTURE_LOADER_H__
