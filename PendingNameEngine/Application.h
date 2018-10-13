@@ -5,7 +5,6 @@
 #include "Module.h"
 #include "ModuleWindow.h"
 #include "ModuleInput.h"
-#include "ModuleAudio.h"
 #include "TextureLoader.h"
 #include "ModuleSceneLoader.h"
 #include "ModuleRenderer3D.h"
@@ -25,7 +24,6 @@ class Application
 {
 public:
 	ModuleWindow* window;
-	ModuleAudio* audio;
 	Importer* importer;
 	TextureLoader* texture;
 	ModuleInput* input;

@@ -6,7 +6,6 @@ Application::Application()
 {
 	window = new ModuleWindow(this);
 	input = new ModuleInput(this);
-	audio = new ModuleAudio(true);
 	importer = new Importer(this);
 	texture = new TextureLoader(this);
 	renderer3D = new ModuleRenderer3D(this);
@@ -25,7 +24,6 @@ Application::Application()
 	AddModule(importer);
 	AddModule(texture);
 	AddModule(input);
-	AddModule(audio);
 	AddModule(physics);
 	AddModule(ui);
 
