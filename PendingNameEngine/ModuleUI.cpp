@@ -29,15 +29,11 @@ update_status ModuleUI::PreUpdate(float dt)
 update_status ModuleUI::Update(float dt)
 {
 	
-	/*if (ShowSphereCreatorPanel)ShowSphereCreator();
-	if (ShowCubeCreatorPanel)ShowCubeCreator();
-	if (ShowCapsuleCreatorPanel)ShowCapsuleCreator();*/
 	CreateMainMenu();
 	about.ShowElement();
 	confg.ShowElement();
 	insp.ShowElement();
 	if (ShowTestWindow) ShowDemoWindow();
-	if (ShowRNG) ShowRNGenerator();
 	if (closeApp) return UPDATE_STOP;
 	console.CreateConsole();
 
@@ -50,8 +46,6 @@ update_status ModuleUI::PostUpdate(float dt)
 	return UPDATE_CONTINUE;
 }
 void ModuleUI::DrawImGui() {
-	
-	
 	
 	App->renderer3D->DisableLight();
 	bool auxwireframe = App->renderer3D->wireframe;
@@ -90,57 +84,49 @@ void ModuleUI::ShowDemoWindow()
 }
 void ModuleUI::ShowRNGenerator()
 {
-	if (ImGui::Begin("Random Number Generator using PCG"))
-	{
-		ImGui::InputInt("Insert first int", &input_min);
-		ImGui::InputInt("Insert second int", &input_max);
 
-		if (input_min == input_max)
+	ImGui::InputInt("Insert first int", &input_min);
+	ImGui::InputInt("Insert second int", &input_max);
+
+	if (input_min == input_max)
+	{
+		rand_bounded_int = input_max = input_min;
+	}
+	else
+	{
+		if (input_min > input_max)
 		{
-			rand_bounded_int = input_max = input_min;
+						
+			if (ImGui::Button("Generate Random Between given ints"))
+			{
+				Swap<int>(input_min, input_max);
+				rand_bounded_int = (" %i", (int)pcg32_boundedrand_r(&rng1, input_max) + input_min);
+			}
+			ImGui::Text("%i", rand_bounded_int);
 		}
 		else
 		{
-			if (input_min > input_max)
+			if (ImGui::Button("Generate Random Between given ints"))
 			{
-							
-				if (ImGui::Button("Generate Random Between given ints"))
-				{
-					Swap<int>(input_min, input_max);
-					rand_bounded_int = (" %i", (int)pcg32_boundedrand_r(&rng1, input_max) + input_min);
-				}
-				ImGui::Text("%i", rand_bounded_int);
+				rand_bounded_int = (" %i", (int)pcg32_boundedrand_r(&rng1, input_max) + input_min);
 			}
-			else
-			{
-				if (ImGui::Button("Generate Random Between given ints"))
-				{
-					rand_bounded_int = (" %i", (int)pcg32_boundedrand_r(&rng1, input_max) + input_min);
-				}
-				ImGui::Text("%i", rand_bounded_int);
-			}
+			ImGui::Text("%i", rand_bounded_int);
 		}
-
-		if (ImGui::Button("Generate Float between 0.0 and 1.0"))
-		{
-			rand_float = ldexp(pcg32_random_r(&rng1), -32);
-		}
-		ImGui::Text("%f", rand_float);
-		ImGui::End();
 	}
+
+	if (ImGui::Button("Generate Float between 0.0 and 1.0"))
+	{
+		rand_float = ldexp(pcg32_random_r(&rng1), -32);
+	}
+	ImGui::Text("%f", rand_float);
+
 }
 void ModuleUI::CreateMainMenu()
 {
 	if (ImGui::BeginMainMenuBar()) {
 		if (ImGui::BeginMenu("Menu")) {
-
-			if (ImGui::MenuItem("Show Random Number Generator")) {
-				ShowRNG = !ShowRNG;
-			}
 			if (ImGui::MenuItem("Save config"))
 				App->SaveConfig();
-			if (ImGui::MenuItem("Delete Meshes"))
-				App->scene_loader->scene_objects.clear();
 			if (ImGui::MenuItem("Close Application")) {
 				closeApp = !closeApp;
 			}
@@ -148,21 +134,51 @@ void ModuleUI::CreateMainMenu()
 
 		}
 		if (ImGui::BeginMenu("Options")) {
-			if (ImGui::MenuItem("Show Configuration"))
+			if (ImGui::BeginMenu("Show Panels"))
 			{
-				if (confg.active) {}
-				else
-				{
-					confg.active = true;
-				}
-				
+				if (ImGui::Checkbox("Configuration", &confg.active));
+				if (ImGui::Checkbox("Inspector", &insp.active));
+				if (ImGui::Checkbox("Console", &console.active));
+
+				ImGui::EndMenu();
 			}
+			if (ImGui::MenuItem("Hide all panels"))
+			{
+				if (confg.active == true) confg.active = false;
+				if (insp.active == true) insp.active = false;
+				if (console.active == true) console.active = false;
+				if (about.active == true) about.active = false;
+
+			}
+			if (ImGui::MenuItem("Delete Meshes"))
+				App->scene_loader->scene_objects.clear();
+			ImGui::Separator();
+			if (ImGui::BeginMenu("Miscelaneous"))
+			{
+				if (ImGui::BeginMenu("ImGui Demo Window"))
+				{
+					if (ImGui::Button("Show"))
+					{
+						if (!ShowTestWindow)ShowTestWindow = true;
+					}
+					ImGui::SameLine();
+					if (ImGui::Button("Hide"))
+					{
+						if (ShowTestWindow) ShowTestWindow = false;
+					}
+					ImGui::EndMenu();
+				}
+				if (ImGui::BeginMenu("RNG"))
+				{
+					ShowRNGenerator();
+					ImGui::EndMenu();
+				}
+				ImGui::EndMenu();
+			}
+			
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Help")) {
-			if (ImGui::MenuItem("ImGui Demo Window")) {
-				ShowTestWindow = !ShowTestWindow;
-			}
 			if (ImGui::MenuItem("Engine documentation")) {
 				App->OpenBrowser("https://github.com/GuillemD/PendingNameEngine-3D/wiki");
 			}

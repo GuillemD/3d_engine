@@ -37,11 +37,6 @@ private:
 	//Checkers
 	bool closeApp = false;
 	bool ShowTestWindow = false;
-	bool ShowRNG = false;
-	
-	/*bool ShowCubeCreatorPanel = false;
-	bool ShowSphereCreatorPanel = false;
-	bool ShowCapsuleCreatorPanel = false;*/
 
 	float tmpfloat = 0.0f;
 
@@ -49,10 +44,6 @@ private:
 	vec tmpvec2 = vec(0.0f, 0.0f, 0.0f);
 
 private:
-	//Functions
-	/*void ModuleUI::ShowCubeCreator();
-	void ModuleUI::ShowSphereCreator();
-	void ModuleUI::ShowCapsuleCreator();*/
 
 	void ModuleUI::ShowDemoWindow();
 	void ModuleUI::ShowRNGenerator();

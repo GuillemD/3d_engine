@@ -14,8 +14,9 @@ public:
 	
 	void ShowElement();
 	void SwitchActive();
-private:
 	bool active = false;
+
+	
 };
 
 

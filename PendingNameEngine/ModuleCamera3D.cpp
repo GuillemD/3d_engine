@@ -40,96 +40,99 @@ bool ModuleCamera3D::CleanUp()
 update_status ModuleCamera3D::Update(float dt)
 {
 
-		vec3 newPos(0, 0, 0);
-		float speed = 20.0f * dt;
-		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
-			speed = 60.0f * dt;
+	if (ImGui::IsMouseHoveringAnyWindow())
+		return UPDATE_CONTINUE;
 
-		if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+	vec3 newPos(0, 0, 0);
+	float speed = 20.0f * dt;
+	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
+		speed = 60.0f * dt;
+
+	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+	{
+		if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) newPos.y += speed; //UP
+		if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) newPos.y -= speed; //DOWN
+
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed; //FORWARD
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed; //BACKWARD
+
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed; //LEFT
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed; //RIGHT
+
+
+		Position += newPos;
+		Reference += newPos;
+		can_focus = true;
+	}
+
+	if (App->input->GetMouseZ() > 0)
+	{
+		newPos -= Z * speed; //ZOOM IN
+
+		can_focus = true;
+		Position += newPos;
+		Reference += newPos;
+
+	}
+	if (App->input->GetMouseZ() < 0) {
+		newPos += Z * speed; can_focus = true;//ZOOM OUT
+		Position += newPos;
+		Reference += newPos;
+
+	}
+
+	
+	// Mouse motion ----------------
+
+	if ((App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && App->input->GetMouseButton(SDL_BUTTON_LEFT))) //orbit around center
+	{
+		int dx = -App->input->GetMouseXMotion();
+		int dy = -App->input->GetMouseYMotion();
+
+		Position -= Reference;
+
+		if (dx != 0)
 		{
-			if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) newPos.y += speed; //UP
-			if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) newPos.y -= speed; //DOWN
+			float DeltaX = (float)dx * Sensitivity;
 
-			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) newPos -= Z * speed; //FORWARD
-			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) newPos += Z * speed; //BACKWARD
-
-			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) newPos -= X * speed; //LEFT
-			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) newPos += X * speed; //RIGHT
-
-
-			Position += newPos;
-			Reference += newPos;
-			can_focus = true;
+			X = rotate(X, DeltaX, vec3(0.0f, 1.0f, 0.0f));
+			Y = rotate(Y, DeltaX, vec3(0.0f, 1.0f, 0.0f));
+			Z = rotate(Z, DeltaX, vec3(0.0f, 1.0f, 0.0f));
 		}
 
-		if (App->input->GetMouseZ() > 0)
+		if (dy != 0)
 		{
-			newPos -= Z * speed; //ZOOM IN
+			float DeltaY = (float)dy * Sensitivity;
 
-			can_focus = true;
-			Position += newPos;
-			Reference += newPos;
+			Y = rotate(Y, DeltaY, X);
+			Z = rotate(Z, DeltaY, X);
 
-		}
-		if (App->input->GetMouseZ() < 0) {
-			newPos += Z * speed; can_focus = true;//ZOOM OUT
-			Position += newPos;
-			Reference += newPos;
-
-		}
-
-		
-		// Mouse motion ----------------
-
-		if ((App->input->GetKey(SDL_SCANCODE_LALT) == KEY_REPEAT && App->input->GetMouseButton(SDL_BUTTON_LEFT))) //orbit around center
-		{
-			int dx = -App->input->GetMouseXMotion();
-			int dy = -App->input->GetMouseYMotion();
-
-			Position -= Reference;
-
-			if (dx != 0)
+			if (Y.y < 0.0f)
 			{
-				float DeltaX = (float)dx * Sensitivity;
-
-				X = rotate(X, DeltaX, vec3(0.0f, 1.0f, 0.0f));
-				Y = rotate(Y, DeltaX, vec3(0.0f, 1.0f, 0.0f));
-				Z = rotate(Z, DeltaX, vec3(0.0f, 1.0f, 0.0f));
-			}
-
-			if (dy != 0)
-			{
-				float DeltaY = (float)dy * Sensitivity;
-
-				Y = rotate(Y, DeltaY, X);
-				Z = rotate(Z, DeltaY, X);
-
-				if (Y.y < 0.0f)
-				{
-					Z = vec3(0.0f, Z.y > 0.0f ? 1.0f : -1.0f, 0.0f);
-					Y = cross(Z, X);
-				}
-			}
-
-			Position = Reference + Z * length(Position);
-			LookAt({ 0,0,0 });
-		}
-		if (App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT)
-		{
-			if (App->scene_loader->scene_objects.empty())
-			{
-				Position.x = 0.0f; Position.y = 10.0f; Position.z = 10.0f;
-				LookAt(vec3(0.0f, 3.0f, 0.0f));
-			}
-			else
-			{
-				if(can_focus)
-				{
-					Focus(App->scene_loader->scene_objects.front()->outside_box);
-				}
-				
+				Z = vec3(0.0f, Z.y > 0.0f ? 1.0f : -1.0f, 0.0f);
+				Y = cross(Z, X);
 			}
 		}
+
+		Position = Reference + Z * length(Position);
+		LookAt({ 0,0,0 });
+	}
+	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT)
+	{
+		if (App->scene_loader->scene_objects.empty())
+		{
+			Position.x = 0.0f; Position.y = 10.0f; Position.z = 10.0f;
+			LookAt(vec3(0.0f, 3.0f, 0.0f));
+		}
+		else
+		{
+			if(can_focus)
+			{
+				Focus(App->scene_loader->scene_objects.front()->outside_box);
+			}
+			
+		}
+	}
 
 	// Recalculate matrix -------------
 	CalculateViewMatrix();
