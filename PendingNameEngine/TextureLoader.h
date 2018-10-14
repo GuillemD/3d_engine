@@ -16,7 +16,7 @@ public:
 	bool CleanUp();
 
 	uint LoadTexFromPath(const char* full_path);
-	void SwapTexture(const char* new_path);
+	void SwapTexture(const char* _new_path);
 
 	int getILversion() const;
 

@@ -57,11 +57,15 @@ void Configuration::ShowElement()
 			}
 			if (ImGui::CollapsingHeader("Hardware"))
 			{
-				ImGui::Text("CPUs: %d (Cache: %d kb)", hw.GetNumberCPU(), hw.GetCPUCache());
+				ImGui::Text("CPUs: %d ", GetNumberCPU());
+				ImGui::SameLine();
+				ImGui::TextColored(ImVec4(0, 1, 1, 1), "(Cache: %d kb)", GetCPUCache());
 				ImGui::Text("System RAM: ");
-				ImGui::TextColored(ImVec4(1, 1, 1, 1), "%i", SDL_GetSystemRAM());
+				ImGui::SameLine();
+				ImGui::TextColored(ImVec4(1, 0, 1, 1), "%d", GetRAM());
 
-				PrintCaps(hw.GetCaps());
+				ImGui::Separator();
+				PrintCaps(GetCaps());
 
 			}
 	}
@@ -85,5 +89,65 @@ void Configuration::PrintCaps(std::vector<bool> vec)
 
 	}
 }
+int Configuration::GetNumberCPU() const
+{
+	int cpus = 0;
+
+	cpus = SDL_GetCPUCount();
+	return cpus;
+}
+
+int Configuration::GetCPUCache() const
+{
+	int cache = 0;
+	cache = SDL_GetCPUCacheLineSize();
+	return cache;
+}
+
+int Configuration::GetRAM() const
+{
+	int ram = 0;
+	ram = SDL_GetSystemRAM();
+	return ram;
+}
+
+std::vector<bool> Configuration::GetCaps()
+{
+
+	threednow = SDL_Has3DNow();
+	avx = SDL_HasAVX();
+	altivec = SDL_HasAltiVec();
+	mmx = SDL_HasMMX();
+	rdtsc = SDL_HasRDTSC();
+	sse = SDL_HasSSE();
+	sse2 = SDL_HasSSE2();
+	sse3 = SDL_HasSSE3();
+	sse41 = SDL_HasSSE41();
+	sse42 = SDL_HasSSE42();
+
+	if (threednow)
+		caps.push_back(threednow);
+	if (avx)
+		caps.push_back(avx);
+	if (altivec)
+		caps.push_back(altivec);
+	if (mmx)
+		caps.push_back(mmx);
+	if (rdtsc)
+		caps.push_back(rdtsc);
+	if (sse)
+		caps.push_back(sse);
+	if (sse2)
+		caps.push_back(sse2);
+	if (sse3)
+		caps.push_back(sse3);
+	if (sse41)
+		caps.push_back(sse41);
+	if (sse42)
+		caps.push_back(sse42);
+
+	return caps;
+}
+
 
 

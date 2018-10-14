@@ -107,11 +107,11 @@ uint TextureLoader::LoadTexFromPath(const char* full_path)
 	return tex_id;
 }
 
-void TextureLoader::SwapTexture(const char* new_path)
+void TextureLoader::SwapTexture(const char* _new_path)
 {
 	if (current != new_path)
 	{
-		GLuint new_id = LoadTexFromPath(new_path);
+		GLuint new_id = LoadTexFromPath(_new_path);
 
 		for (std::list<Mesh*>::iterator it = App->scene_loader->scene_objects.begin(); it != App->scene_loader->scene_objects.end(); it++)
 		{
@@ -119,6 +119,7 @@ void TextureLoader::SwapTexture(const char* new_path)
 		}
 
 		current = new_path;
+		new_path = "";
 	}
 	else {
 		CONSOLELOG("Texture already in use");

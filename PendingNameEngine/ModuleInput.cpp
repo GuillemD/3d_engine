@@ -112,7 +112,7 @@ update_status ModuleInput::PreUpdate(float dt)
 					}
 					else if (extension == "png" || extension == "PNG" || extension == "dds" || extension == "DDS") {
 						App->texture->new_path = file_path.c_str();
-						App->texture->SwapTexture(App->texture->new_path);
+						App->texture->SwapTexture(file_path.c_str());
 						SDL_free(e.drop.file);
 					}
 					else {

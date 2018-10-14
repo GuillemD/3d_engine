@@ -3,9 +3,10 @@
 #ifndef __ABOUT_H__
 #define __ABOUT_H__
 #include "Globals.h"
+#include "Panel.h"
 #include "ImGui/imgui.h"
 
-class About
+class About : public Panel
 {
 public:
 	About();
