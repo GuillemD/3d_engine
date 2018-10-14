@@ -28,6 +28,7 @@ bool TextureLoader::Init()
 	bool ret = true;
 
 	LOG("Init DevIL");
+	current = "";
 	CONSOLELOG("Init DevIL");
 
 	return ret;
@@ -44,14 +45,16 @@ bool TextureLoader::CleanUp()
 
 uint TextureLoader::LoadTexFromPath(const char* full_path)
 {
-
-	CONSOLELOG("Importing texture %s", full_path);
 	
+	CONSOLELOG("Importing texture %s", full_path);
+
 	ILuint image_id;
-	ilGenImages(1, &image_id);
-	ilBindImage(image_id);
 	GLuint tex_id;
 	ILenum error;
+	
+	ilGenImages(1, &image_id);
+	ilBindImage(image_id);
+	
 	ILboolean imageloaded = true;
 
 	imageloaded = ilLoadImage(full_path);
@@ -68,12 +71,13 @@ uint TextureLoader::LoadTexFromPath(const char* full_path)
 		ILboolean converted = ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
 		if (!converted)
 		{
+			tex_id = 0;
 			CONSOLELOG("DevIL failed to convert image %s. Error: %s", full_path, iluErrorString(ilGetError()));
-			exit(-1);
+			return tex_id;
 		}
 		int width = ilGetInteger(IL_IMAGE_WIDTH);
 		int height = ilGetInteger(IL_IMAGE_HEIGHT);
-				
+
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
 		glGenTextures(1, &tex_id);
@@ -86,7 +90,7 @@ uint TextureLoader::LoadTexFromPath(const char* full_path)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width , height,
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height,
 			0, ilGetInteger(IL_IMAGE_FORMAT), GL_UNSIGNED_BYTE, ilGetData());
 
 
@@ -95,6 +99,13 @@ uint TextureLoader::LoadTexFromPath(const char* full_path)
 
 
 		CONSOLELOG("Texture %s loaded correctly", full_path);
+		
+
+		for (std::list<Mesh*>::iterator it = App->scene_loader->scene_objects.begin(); it != App->scene_loader->scene_objects.end(); it++)
+		{
+			(*it)->id_texture = tex_id;
+		}
+		//current = full_path;
 	}
 	else
 	{
@@ -105,9 +116,10 @@ uint TextureLoader::LoadTexFromPath(const char* full_path)
 	}
 
 	return tex_id;
+	
 }
 
-void TextureLoader::SwapTexture(const char* _new_path)
+/*void TextureLoader::SwapTexture(const char* _new_path)
 {
 	if (current != new_path)
 	{
@@ -125,7 +137,7 @@ void TextureLoader::SwapTexture(const char* _new_path)
 		CONSOLELOG("Texture already in use");
 	}
 	
-}
+}*/
 
 
 int TextureLoader::getILversion() const

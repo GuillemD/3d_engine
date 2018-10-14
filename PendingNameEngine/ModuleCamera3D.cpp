@@ -62,20 +62,19 @@ update_status ModuleCamera3D::Update(float dt)
 
 		Position += newPos;
 		Reference += newPos;
-		can_focus = true;
+
 	}
 
 	if (App->input->GetMouseZ() > 0)
 	{
 		newPos -= Z * speed; //ZOOM IN
 
-		can_focus = true;
 		Position += newPos;
 		Reference += newPos;
 
 	}
 	if (App->input->GetMouseZ() < 0) {
-		newPos += Z * speed; can_focus = true;//ZOOM OUT
+		newPos += Z * speed;//ZOOM OUT
 		Position += newPos;
 		Reference += newPos;
 
@@ -117,7 +116,7 @@ update_status ModuleCamera3D::Update(float dt)
 		Position = Reference + Z * length(Position);
 		LookAt({ 0,0,0 });
 	}
-	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
 	{
 		if (App->scene_loader->scene_objects.empty())
 		{
@@ -126,10 +125,9 @@ update_status ModuleCamera3D::Update(float dt)
 		}
 		else
 		{
-			if(can_focus)
-			{
-				Focus(App->scene_loader->scene_objects.front()->outside_box);
-			}
+			
+			Focus(App->scene_loader->scene_objects.front()->outside_box);
+			
 			
 		}
 	}
@@ -189,24 +187,22 @@ void ModuleCamera3D::Focus(AABB& box)
 	float fov = DegToRad(60);
 	float camDistance = (radius * 2.0) / Tan(fov / 2.0);
 	Position = vec3(target - Position) * camDistance;*/
-	if (can_focus)
-	{
-		float3 cam_pos = box.CenterPoint();
-		vec3 target = { cam_pos.x, cam_pos.y, cam_pos.z }; //convert to be able to LookAt
+	
+	float3 cam_pos = box.CenterPoint();
+	vec3 target = { cam_pos.x, cam_pos.y, cam_pos.z }; //convert to be able to LookAt
 
 
-		cam_pos.x += box.Diagonal().x + box.HalfDiagonal().x;
-		cam_pos.z -= box.Diagonal().y + box.HalfDiagonal().y;
-		cam_pos.y += box.Diagonal().z + box.HalfDiagonal().z;
+	cam_pos.x += box.Diagonal().x + box.HalfDiagonal().x;
+	cam_pos.z -= box.Diagonal().y + box.HalfDiagonal().y;
+	cam_pos.y += box.Diagonal().z + box.HalfDiagonal().z;
 
 
-		Position.x = cam_pos.x;
-		Position.y = cam_pos.y;
-		Position.z = cam_pos.z;
+	Position.x = cam_pos.x;
+	Position.y = cam_pos.y;
+	Position.z = cam_pos.z;
 
-		LookAt(target);
-		can_focus = false;
-	}
+	LookAt(target);
+	
 	
 	CalculateViewMatrix();
 

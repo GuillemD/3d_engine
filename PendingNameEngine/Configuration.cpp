@@ -43,7 +43,6 @@ void Configuration::ShowElement()
 				if (ImGui::Checkbox("Texture2D", &App->renderer3D->texture)) App->renderer3D->update_texture();
 				ImGui::NextColumn();
 				if (ImGui::Checkbox("Smooth line", &App->renderer3D->line_smooth)) App->renderer3D->update_line_smooth();
-				if (ImGui::Checkbox("Vertex Normals", &App->renderer3D->v_normals_active));
 				ImGui::Columns(1, NULL, false);
 				
 			}

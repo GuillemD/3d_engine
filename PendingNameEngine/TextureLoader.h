@@ -16,13 +16,11 @@ public:
 	bool CleanUp();
 
 	uint LoadTexFromPath(const char* full_path);
-	void SwapTexture(const char* _new_path);
+	//void SwapTexture(const char* _new_path);
 
 	int getILversion() const;
 
-	const char* current = "";
-	const char* new_path = "";
-	
+	const char* current;	
 
 };
 #endif // !__TEXTURE_LOADER_H__

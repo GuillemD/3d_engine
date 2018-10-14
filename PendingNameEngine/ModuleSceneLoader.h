@@ -21,6 +21,8 @@ public:
 public:
 	std::list<Mesh*> scene_objects;
 
+	bool first_mesh = true;
+
 private:
 	Mesh cube;
 

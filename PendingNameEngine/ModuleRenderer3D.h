@@ -43,7 +43,7 @@ public:
 	bool color_material = true;
 	bool lighting = false;
 	bool line_smooth = false;
-	bool v_normals_active = false;
+
 	//swap-checkers
 	void update_wireframe();
 	void update_depth_test();
