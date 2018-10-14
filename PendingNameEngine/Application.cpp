@@ -44,7 +44,7 @@ bool Application::Init()
 	bool ret = true;
 
 	SetAppName("PendingNameEngine");
-	SetVersion("v0.1.3");
+	SetVersion("v1.1.0");
 	SetOrgName("UPC CITM");
 
 	rapidjson::Document document;
