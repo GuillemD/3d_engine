@@ -4,8 +4,10 @@
 
 #include "Globals.h"
 #include "ImGui/imgui.h"
-#include "Hardware.h"
 #include "Panel.h"
+#include "SDL\include\SDL_cpuinfo.h"
+
+#include <vector>
 
 
 class Configuration : public Panel
@@ -17,12 +19,32 @@ public:
 
 	void ShowElement();
 
+	//hardware info
 	void PrintCaps(std::vector<bool> list);
 
-	Hardware hw;
+	int GetNumberCPU() const;
+	int GetCPUCache() const;
+	int GetRAM() const;
+
+	std::vector<bool> GetCaps();
+
 
 public:
 	bool active = true;
+
+private:
+	std::vector<bool> caps;
+
+	bool threednow = false;
+	bool avx = false;
+	bool altivec = false;
+	bool mmx = false;
+	bool rdtsc = false;
+	bool sse = false;
+	bool sse2 = false;
+	bool sse3 = false;
+	bool sse41 = false;
+	bool sse42 = false;
 	
 	
 };

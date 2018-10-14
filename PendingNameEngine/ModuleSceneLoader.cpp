@@ -17,7 +17,7 @@ bool ModuleSceneLoader::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
-	App->texture->current = ".//Assets//Baker_House.png";
+	//App->texture->current = ".//Assets//Baker_House.png";
 	App->texture->LoadTexFromPath(".//Assets//Baker_House.png");
 	App->importer->Import(".//Assets//BakerHouse.fbx");
 	

@@ -142,8 +142,19 @@ void Importer::LoadMesh(const aiScene* _scene, const aiMesh * mesh)
 
 		if (App->texture->current != nullptr)
 		{
+			if (App->scene_loader->first_mesh == true)
+			{
 				
-			my_mesh->id_texture = (GLuint)App->texture->LoadTexFromPath(App->texture->current);
+				my_mesh->id_texture = (GLuint)App->texture->LoadTexFromPath(".//Assets//Baker_House.png");
+				App->texture->current = ".//Assets//Baker_House.png";
+				initial_aux++;
+				if(initial_aux == 2)
+					App->scene_loader->first_mesh = false;
+			}
+			else
+			{
+				my_mesh->id_texture = (GLuint)App->texture->LoadTexFromPath(App->texture->current);
+			}
 				
 		}
 		else
@@ -185,12 +196,11 @@ void Importer::LoadMesh(const aiScene* _scene, const aiMesh * mesh)
 	my_mesh->outside_box = debug_box;
 
 	//DECIDE TO LOAD OR NOT
-	if (correct_num_faces && mesh->HasNormals() && mesh->HasPositions())
+	if (correct_num_faces && mesh->HasPositions())
 	{
 		App->scene_loader->scene_objects.push_back(my_mesh);
-		App->camera->can_focus = true;
+
 		App->camera->Focus(my_mesh->outside_box);
-		App->camera->can_focus = false;
 		
 	}
 	else

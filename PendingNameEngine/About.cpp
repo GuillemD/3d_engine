@@ -2,7 +2,7 @@
 #include "Application.h"
 #include "Assimp/include/version.h"
 
-About::About()
+About::About() : Panel("About")
 {
 }
 

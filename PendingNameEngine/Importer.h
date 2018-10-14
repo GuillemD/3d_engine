@@ -19,6 +19,8 @@ public:
 
 	bool Import(const std::string &full_path);
 	void LoadMesh(const aiScene* _scene, const aiMesh* mesh);
+private:
+	uint initial_aux = 0;
 
 };
 

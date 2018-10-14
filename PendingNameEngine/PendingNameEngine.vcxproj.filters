@@ -459,9 +459,6 @@
     <ClInclude Include="About.h">
       <Filter>Sources\Panels</Filter>
     </ClInclude>
-    <ClInclude Include="Hardware.h">
-      <Filter>Sources\Panels</Filter>
-    </ClInclude>
     <ClInclude Include="Inspector.h">
       <Filter>Sources\Panels</Filter>
     </ClInclude>
@@ -675,9 +672,6 @@
       <Filter>Sources\Tools</Filter>
     </ClCompile>
     <ClCompile Include="About.cpp">
-      <Filter>Sources\Panels</Filter>
-    </ClCompile>
-    <ClCompile Include="Hardware.cpp">
       <Filter>Sources\Panels</Filter>
     </ClCompile>
     <ClCompile Include="Inspector.cpp">
