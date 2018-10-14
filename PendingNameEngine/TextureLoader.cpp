@@ -105,7 +105,7 @@ uint TextureLoader::LoadTexFromPath(const char* full_path)
 		{
 			(*it)->id_texture = tex_id;
 		}
-		//current = full_path;
+
 	}
 	else
 	{
