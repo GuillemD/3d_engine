@@ -67,6 +67,12 @@
     <Filter Include="Sources\Libraries\Devil">
       <UniqueIdentifier>{619fc20e-96c0-42b2-9eb1-59f41f7b50bd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\GameObjectsAndComponents">
+      <UniqueIdentifier>{b607f77a-b92d-4fab-aff4-013a40cdeeed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\GameObjectsAndComponents\Components">
+      <UniqueIdentifier>{46b4e3cf-5644-40e0-87a0-9e0be6111ee2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -333,9 +339,6 @@
     <ClInclude Include="glmath.h">
       <Filter>Sources\Containers</Filter>
     </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>Sources\Containers</Filter>
-    </ClInclude>
     <ClInclude Include="OpenGL.h">
       <Filter>Sources\Helpers</Filter>
     </ClInclude>
@@ -491,6 +494,15 @@
     </ClInclude>
     <ClInclude Include="ModuleSceneLoader.h">
       <Filter>Sources\Modules\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Sources\GameObjectsAndComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Sources\GameObjectsAndComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Sources\GameObjectsAndComponents\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -662,9 +674,6 @@
     <ClCompile Include="glmath.cpp">
       <Filter>Sources\Containers</Filter>
     </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>Sources\Containers</Filter>
-    </ClCompile>
     <ClCompile Include="Importer.cpp">
       <Filter>Sources\Tools</Filter>
     </ClCompile>
@@ -682,6 +691,15 @@
     </ClCompile>
     <ClCompile Include="ModuleSceneLoader.cpp">
       <Filter>Sources\Modules\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Sources\GameObjectsAndComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>Sources\GameObjectsAndComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Sources\GameObjectsAndComponents\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
