@@ -12,7 +12,7 @@ public:
 public:
 	bool Active;
 	std::string Name;
-	std::vector<Component*> Components;
+	//std::vector<Component*> Components;
 
 
 };
