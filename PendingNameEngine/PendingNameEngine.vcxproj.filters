@@ -504,6 +504,7 @@
     <ClInclude Include="Mesh.h">
       <Filter>Sources\GameObjectsAndComponents\Components</Filter>
     </ClInclude>
+    <ClInclude Include="ComponentMesh.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -701,6 +702,7 @@
     <ClCompile Include="Mesh.cpp">
       <Filter>Sources\GameObjectsAndComponents\Components</Filter>
     </ClCompile>
+    <ClCompile Include="ComponentMesh.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MathGeoLib\Math\float2.inl">
