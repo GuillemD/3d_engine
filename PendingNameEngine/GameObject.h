@@ -1,19 +1,26 @@
-#pragma once
+#ifndef __GAME_OBJECT_H__
+#define __GAME_OBJECT_H__
 #include <string>
 #include <vector>
-#include "Component.h"
+#include "Globals.h"
+
+enum ComponentType;
+class Component;
+
+
 class GameObject
 {
 public:
 	GameObject();
 	~GameObject();
-	void SetActive(bool active);
+
+	void SetActive(bool _active);
 
 public:
-	bool Active;
-	std::string Name;
-	std::vector<Component*> Components;
+	bool active;
+	std::string name;
+	std::vector<Component*> components;
 	
 
 };
-
+#endif //__GAME_OBJECT_H__

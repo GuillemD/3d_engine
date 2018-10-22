@@ -1,10 +1,10 @@
 #include "Component.h"
-
+#include "GameObject.h"
 
 
 Component::Component()
 {
-	if (Parent != nullptr && Parent->Active==true) {
+	if (parent != nullptr && parent->active==true) {
 		SetActive(true);
 	}
 
@@ -27,24 +27,23 @@ void Component::Disable()
 {
 }
 
-void Component::SetActive(bool active)
+void Component::SetActive(bool _active)
 {
-	Active = active;
+	active = _active;
 }
 
 bool Component::IsActive()
 {
-	return Active;
+	return active;
 }
 
-Component::ComponentType Component::GetType()
+ComponentType Component::GetType() const
 {
-
 
 	return MyType;
 }
 
-GameObject * Component::GetParent()
+GameObject * Component::GetParent() const
 {
-	return Parent;
+	return parent;
 }

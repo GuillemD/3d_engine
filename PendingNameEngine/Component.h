@@ -1,15 +1,15 @@
-#pragma once
-#include "GameObject.h"
+#ifndef __COMPONENT_H__
+#define __COMPONENT_H__
+
+enum ComponentType
+{
+	MESH = 1,
+	TEXTURE
+};
+class GameObject;
 class Component
 {
 public:
-
-	enum ComponentType
-	{
-		MESH = 1,
-		TEXTURE
-	};
-
 
 	Component();
 	~Component();
@@ -18,18 +18,18 @@ public:
 	virtual void Update();
 	virtual void Disable();
 
-	void SetActive(bool active);
+	void SetActive(bool _active);
 	bool IsActive();
-	Component::ComponentType GetType();
-	GameObject* GetParent();
+	ComponentType GetType()const;
+	GameObject* GetParent()const;
 
 
 public:
 
-	Component::ComponentType MyType;
-	bool Active;
-	GameObject* Parent;
+	ComponentType MyType;
+	bool active;
+	GameObject* parent;
 
 };
 
-
+#endif //COMPONENT_H__
