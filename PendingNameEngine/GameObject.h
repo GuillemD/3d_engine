@@ -11,15 +11,19 @@ class Component;
 class GameObject
 {
 public:
-	GameObject();
+	GameObject(GameObject* parent_go, std::string _name);
 	~GameObject();
 
+	bool IsActive() const;
 	void SetActive(bool _active);
 
 public:
 	bool active;
 	std::string name;
 	std::vector<Component*> components;
+
+	GameObject* parent = nullptr;
+	std::vector<GameObject*> children;
 	
 
 };

@@ -498,13 +498,21 @@
     <ClInclude Include="GameObject.h">
       <Filter>Sources\GameObjectsAndComponents</Filter>
     </ClInclude>
-    <ClInclude Include="Component.h">
-      <Filter>Sources\GameObjectsAndComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="Mesh.h">
+    <ClInclude Include="ComponentMesh.h">
       <Filter>Sources\GameObjectsAndComponents\Components</Filter>
     </ClInclude>
-    <ClInclude Include="ComponentMesh.h" />
+    <ClInclude Include="Mesh.h">
+      <Filter>Sources\GameObjectsAndComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Sources\GameObjectsAndComponents\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentTransf.h">
+      <Filter>Sources\GameObjectsAndComponents\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentMaterial.h">
+      <Filter>Sources\GameObjectsAndComponents\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -696,13 +704,21 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Sources\GameObjectsAndComponents</Filter>
     </ClCompile>
-    <ClCompile Include="Component.cpp">
-      <Filter>Sources\GameObjectsAndComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="Mesh.cpp">
+    <ClCompile Include="ComponentMesh.cpp">
       <Filter>Sources\GameObjectsAndComponents\Components</Filter>
     </ClCompile>
-    <ClCompile Include="ComponentMesh.cpp" />
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Sources\GameObjectsAndComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>Sources\GameObjectsAndComponents\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentTransf.cpp">
+      <Filter>Sources\GameObjectsAndComponents\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentMaterial.cpp">
+      <Filter>Sources\GameObjectsAndComponents\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="MathGeoLib\Math\float2.inl">

@@ -6,6 +6,8 @@
 
 #include <list>
 
+class GameObject;
+
 class ModuleSceneLoader : public Module
 {
 public:
@@ -17,14 +19,15 @@ public:
 	bool CleanUp();
 
 	void Draw() ;
+	//Create GO
+	GameObject* CreateGameObject(GameObject* parent, std::string _name);
+	//Tools
+	GameObject* GetRoot() const;
 
 public:
-	std::list<Mesh*> scene_objects;
-
-	bool first_mesh = true;
-
+	/*std::list<Mesh*> scene_objects;
+	bool first_mesh = true;*/
 private:
-	Mesh cube;
-
+	GameObject* root_go = nullptr;
 
 };

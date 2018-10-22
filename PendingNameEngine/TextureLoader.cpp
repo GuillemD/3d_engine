@@ -101,10 +101,10 @@ uint TextureLoader::LoadTexFromPath(const char* full_path)
 		CONSOLELOG("Texture %s loaded correctly", full_path);
 		
 
-		for (std::list<Mesh*>::iterator it = App->scene_loader->scene_objects.begin(); it != App->scene_loader->scene_objects.end(); it++)
+		/*for (std::list<Mesh*>::iterator it = App->scene_loader->scene_objects.begin(); it != App->scene_loader->scene_objects.end(); it++)
 		{
 			(*it)->id_texture = tex_id;
-		}
+		}*/
 
 	}
 	else

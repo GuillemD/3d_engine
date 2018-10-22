@@ -151,7 +151,7 @@ void ModuleUI::CreateMainMenu()
 
 			}
 			if (ImGui::MenuItem("Delete Meshes"))
-				App->scene_loader->scene_objects.clear();
+				//App->scene_loader->scene_objects.clear();
 			ImGui::Separator();
 			if (ImGui::BeginMenu("Miscelaneous"))
 			{

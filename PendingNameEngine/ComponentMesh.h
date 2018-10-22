@@ -3,25 +3,17 @@
 
 #include "Component.h"
 #include "Mesh.h"
+
 class ComponentMesh : public Component {
 
 public:
-	ComponentMesh();
 	ComponentMesh(GameObject* _gameobject);
 	~ComponentMesh();
 
 	void AttachMesh(Mesh* _mesh);
-	Mesh* mymesh;
+	Mesh* my_mesh;
 
 };
-
-
-
-
-
-
-
-
 
 #endif // !__Component__Mesh__
 

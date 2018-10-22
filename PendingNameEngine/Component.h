@@ -20,15 +20,15 @@ public:
 
 	void SetActive(bool _active);
 	bool IsActive();
-	ComponentType GetType()const;
-	GameObject* GetParent()const;
+	ComponentType GetType() const;
+	GameObject* GetOwner() const;
 
 
 public:
 
 	ComponentType MyType;
 	bool active;
-	GameObject* parent;
+	GameObject* my_go;
 
 };
 

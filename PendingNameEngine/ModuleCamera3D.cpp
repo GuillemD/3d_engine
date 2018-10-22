@@ -118,7 +118,7 @@ update_status ModuleCamera3D::Update(float dt)
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
 	{
-		if (App->scene_loader->scene_objects.empty())
+		/*if (App->scene_loader->scene_objects.empty())
 		{
 			Position.x = 0.0f; Position.y = 10.0f; Position.z = 10.0f;
 			LookAt(vec3(0.0f, 3.0f, 0.0f));
@@ -129,7 +129,7 @@ update_status ModuleCamera3D::Update(float dt)
 			Focus(App->scene_loader->scene_objects.front()->outside_box);
 			
 			
-		}
+		}*/
 	}
 
 	// Recalculate matrix -------------

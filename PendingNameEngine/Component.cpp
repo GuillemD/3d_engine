@@ -4,7 +4,7 @@
 
 Component::Component()
 {
-	if (parent != nullptr && parent->active==true) {
+	if (my_go != nullptr && my_go->active==true) {
 		SetActive(true);
 	}
 
@@ -43,7 +43,7 @@ ComponentType Component::GetType() const
 	return MyType;
 }
 
-GameObject * Component::GetParent() const
+GameObject * Component::GetOwner() const
 {
-	return parent;
+	return my_go;
 }
