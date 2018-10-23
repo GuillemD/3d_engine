@@ -27,7 +27,7 @@ public:
 public:
 	/*std::list<Mesh*> scene_objects;
 	bool first_mesh = true;*/
-private:
+public:
 	GameObject* root_go = nullptr;
 
 };

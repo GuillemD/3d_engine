@@ -4,6 +4,12 @@
 
 
 
+GameObject::GameObject()
+{
+	parent = nullptr;
+	active = true;
+}
+
 GameObject::GameObject(GameObject * parent_go, std::string _name)
 {
 }

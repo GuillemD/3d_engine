@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "Importer.h"
+#include "GameObject.h"
 #include "Module.h"
 #include "Globals.h"
 #include "Mesh.h"
@@ -46,14 +47,10 @@ bool Importer::Import(const std::string &full_path)
 	const aiScene* scene = aiImportFile(full_path.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
 	if (scene != nullptr && scene->HasMeshes())
 	{
-		// Use scene->mNumMeshes to iterate on scene->mMeshes array
-		for (uint i = 0; i < scene->mNumMeshes; i++)
-		{
-			const aiMesh* mesh = scene->mMeshes[i];
+		aiNode* root_node = scene->mRootNode;
 			
-			LoadMesh(scene,mesh);
+		LoadMesh(scene,root_node, App->scene_loader->root_go);
 
-		}
 		aiReleaseImport(scene);
 	}
 	else
@@ -65,13 +62,20 @@ bool Importer::Import(const std::string &full_path)
 	return ret;
 }
 
-void Importer::LoadMesh(const aiScene* _scene, const aiMesh * mesh)
+void Importer::LoadMesh(const aiScene* _scene, const aiNode * root, GameObject* parent_go)
 {
+	GameObject* game_object = new GameObject();
 	Mesh* my_mesh = new Mesh();
 	bool correct_num_faces = false;
 
-	
-	if (mesh->HasPositions())
+	if (root->mNumMeshes >= 1)
+	{
+		if (_scene != nullptr && _scene->HasMeshes())
+		{
+
+		}
+	}
+	/*if (mesh->HasPositions())
 	{
 		my_mesh->data.num_vertex = mesh->mNumVertices;
 		my_mesh->data.vertex = new vec[my_mesh->data.num_vertex];
@@ -193,7 +197,7 @@ void Importer::LoadMesh(const aiScene* _scene, const aiMesh * mesh)
 		
 	}
 	else
-		LOG("Error Loading Mesh");
+		LOG("Error Loading Mesh");*/
 }
 
 void AssimpToConsoleLog(const char * str, char * userData)

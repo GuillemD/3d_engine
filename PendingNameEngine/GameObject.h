@@ -11,6 +11,7 @@ class Component;
 class GameObject
 {
 public:
+	GameObject();
 	GameObject(GameObject* parent_go, std::string _name);
 	~GameObject();
 
