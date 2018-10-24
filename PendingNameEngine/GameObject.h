@@ -17,8 +17,12 @@ public:
 
 	bool IsActive() const;
 	void SetActive(bool _active);
+	bool IsStatic()const;
+	void SetStatic(bool _static);
 
 public:
+
+	bool staticgo;
 	bool active;
 	std::string name;
 	std::vector<Component*> components;

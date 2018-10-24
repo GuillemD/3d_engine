@@ -4,7 +4,10 @@
 enum ComponentType
 {
 	MESH = 1,
-	TEXTURE
+	MATERIAL,
+	TRANSFORMATION,
+	LIGHT,
+	CAMERA,
 };
 class GameObject;
 class Component
@@ -23,7 +26,7 @@ public:
 	ComponentType GetType() const;
 	GameObject* GetOwner() const;
 
-
+	std::string name;
 public:
 
 	ComponentType MyType;

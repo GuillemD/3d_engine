@@ -32,3 +32,13 @@ void GameObject::SetActive(bool _active)
 		active = _active;
 	}
 }
+
+bool GameObject::IsStatic() const
+{
+	return staticgo;
+}
+
+void GameObject::SetStatic(bool _static)
+{
+	staticgo = _static;
+}

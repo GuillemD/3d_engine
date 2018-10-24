@@ -8,6 +8,7 @@ ComponentMesh::ComponentMesh(GameObject * _gameobject)
 	if (_gameobject != nullptr) {
 		my_go = _gameobject;
 		MyType = MESH;
+		name = "Mesh Component";
 	}
 	
 }
