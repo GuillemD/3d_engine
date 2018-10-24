@@ -1,6 +1,6 @@
 #ifndef __COMPONENT_H__
 #define __COMPONENT_H__
-
+#include <string>
 enum ComponentType
 {
 	MESH = 1,
