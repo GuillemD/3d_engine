@@ -24,6 +24,8 @@ bool ModuleSceneLoader::Start()
 	App->importer->Import(".//Assets//BakerHouse.fbx");*/
 
 	root_go = new GameObject(nullptr, "root");
+	scene_objects.push_back(root_go);
+	App->importer->Import(".//Assets//BakerHouse.fbx");
 	
 	App->camera->Move(vec3(0.0f, 10.0f, 10.0f));
 	App->camera->LookAt(vec3(0.0f, 3.0f, 0.0f));

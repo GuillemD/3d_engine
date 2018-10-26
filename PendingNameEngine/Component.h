@@ -31,7 +31,7 @@ public:
 
 	ComponentType MyType;
 	bool active;
-	GameObject* my_go;
+	GameObject* my_go = nullptr;
 
 };
 

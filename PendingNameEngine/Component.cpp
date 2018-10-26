@@ -4,10 +4,7 @@
 
 Component::Component()
 {
-	if (my_go != nullptr && my_go->active==true) {
-		SetActive(true);
-	}
-
+	
 }
 
 
