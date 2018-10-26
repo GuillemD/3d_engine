@@ -4,7 +4,7 @@
 #include "Primitive.h"
 #include "Mesh.h"
 
-#include <list>
+#include <vector>
 
 class GameObject;
 
@@ -25,8 +25,8 @@ public:
 	GameObject* GetRoot() const;
 
 public:
-	/*std::list<Mesh*> scene_objects;
-	bool first_mesh = true;*/
+	std::vector<GameObject*> scene_objects;
+	//bool first_mesh = true;
 public:
 	GameObject* root_go = nullptr;
 

@@ -17,14 +17,17 @@ Component::~Component()
 
 void Component::Enable()
 {
+	active = true;
 }
 
 void Component::Update()
 {
+	
 }
 
 void Component::Disable()
 {
+	active = false;
 }
 
 void Component::SetActive(bool _active)

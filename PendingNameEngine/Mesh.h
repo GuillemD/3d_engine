@@ -34,11 +34,7 @@ struct VertexData {
 	void ResetIds();
 
 };
-struct transf {
-	float3 pos;
-	float3 scale;
-	float3 rot;
-};
+
 class Mesh
 {
 public:
@@ -53,7 +49,7 @@ public:
 
 	AABB outside_box;
 	VertexData data;
-	transf t;
+	float3 pos;
 	uint id_texture;;
 
 	void UnloadVRAMBuffers();
