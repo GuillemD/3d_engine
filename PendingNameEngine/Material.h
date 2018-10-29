@@ -13,11 +13,11 @@ public:
 	uint GetWidth() const;
 	uint GetHeight() const;
 
-private:
+public:
 
 	uint id_texture = 0;
 
 	uint texture_width = 0;
-	uint texture_heigth = 0;
+	uint texture_height = 0;
 };
 #endif // !_MATERIAL_H_

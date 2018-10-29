@@ -23,6 +23,7 @@ public:
 	void Draw();
 
 	Component* GetComponent(ComponentType type) const;
+	void AddComponent(Component* cp);
 
 public:
 

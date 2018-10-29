@@ -5,6 +5,7 @@
 #include "Globals.h"
 
 #include <list>
+class ComponentMaterial;
 
 class TextureLoader : public Module
 {
@@ -15,7 +16,7 @@ public:
 	bool Init();
 	bool CleanUp();
 
-	uint LoadTexFromPath(const char* full_path);
+	ComponentMaterial* LoadTexFromPath(const char* full_path);
 	//void SwapTexture(const char* _new_path);
 
 	int getILversion() const;

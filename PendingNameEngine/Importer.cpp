@@ -49,12 +49,12 @@ bool Importer::Import(const std::string &full_path)
 	const aiScene* scene = aiImportFile(full_path.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
 	if (scene != nullptr && scene->HasMeshes())
 	{
-		std::string file_path = full_path;
-		uint name_start = file_path.find_last_of("\\");
-		uint name_end = file_path.find_last_of(".");
-		std::string root_go_name = file_path.substr(name_start + 1, name_end - name_start - 1);
+		std::string path = full_path;
+		uint start = path.find_last_of("\\");
+		uint end = path.find_last_of(".");
+		std::string root_name = path.substr(start + 1, end - start - 1);
 
-		App->scene_loader->root_go = App->scene_loader->CreateGameObject(nullptr, root_go_name.c_str());
+		App->scene_loader->root_go = App->scene_loader->CreateGameObject(nullptr, root_name.c_str());
 			
 		LoadMesh(scene,scene->mRootNode, App->scene_loader->root_go);
 

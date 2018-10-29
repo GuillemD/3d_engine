@@ -20,5 +20,5 @@ uint Material::GetWidth() const
 
 uint Material::GetHeight() const
 {
-	return texture_heigth;
+	return texture_height;
 }

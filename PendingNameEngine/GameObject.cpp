@@ -98,3 +98,8 @@ Component * GameObject::GetComponent(ComponentType type) const
 
 	return ret;
 }
+
+void GameObject::AddComponent(Component * cp)
+{
+	components.push_back(cp);
+}
