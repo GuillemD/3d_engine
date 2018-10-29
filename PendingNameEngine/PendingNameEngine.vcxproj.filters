@@ -73,6 +73,12 @@
     <Filter Include="Sources\GameObjectsAndComponents\Components">
       <UniqueIdentifier>{46b4e3cf-5644-40e0-87a0-9e0be6111ee2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\GameObjectsAndComponents\GameObjects">
+      <UniqueIdentifier>{151396c4-a89c-49c8-bb03-e45776fd076a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\GameObjectsAndComponents\Basics">
+      <UniqueIdentifier>{1a175cd9-841e-4aec-bff2-e9419354787b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -495,14 +501,8 @@
     <ClInclude Include="ModuleSceneLoader.h">
       <Filter>Sources\Modules\Game</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Sources\GameObjectsAndComponents</Filter>
-    </ClInclude>
     <ClInclude Include="ComponentMesh.h">
       <Filter>Sources\GameObjectsAndComponents\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>Sources\GameObjectsAndComponents</Filter>
     </ClInclude>
     <ClInclude Include="Component.h">
       <Filter>Sources\GameObjectsAndComponents\Components</Filter>
@@ -512,6 +512,15 @@
     </ClInclude>
     <ClInclude Include="ComponentMaterial.h">
       <Filter>Sources\GameObjectsAndComponents\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Sources\GameObjectsAndComponents\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Sources\GameObjectsAndComponents\Basics</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Sources\GameObjectsAndComponents\Basics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -701,14 +710,8 @@
     <ClCompile Include="ModuleSceneLoader.cpp">
       <Filter>Sources\Modules\Game</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Sources\GameObjectsAndComponents</Filter>
-    </ClCompile>
     <ClCompile Include="ComponentMesh.cpp">
       <Filter>Sources\GameObjectsAndComponents\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>Sources\GameObjectsAndComponents</Filter>
     </ClCompile>
     <ClCompile Include="Component.cpp">
       <Filter>Sources\GameObjectsAndComponents\Components</Filter>
@@ -718,6 +721,15 @@
     </ClCompile>
     <ClCompile Include="ComponentMaterial.cpp">
       <Filter>Sources\GameObjectsAndComponents\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Sources\GameObjectsAndComponents\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Sources\GameObjectsAndComponents\Basics</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>Sources\GameObjectsAndComponents\Basics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

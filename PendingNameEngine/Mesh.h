@@ -30,8 +30,6 @@ struct VertexData {
 	uint id_texture_coords = 0;
 	uint num_texture_coords = 0;
 
-	uint texture_width = 0;
-	uint texture_heigth = 0;
 
 	void ResetIds();
 
@@ -52,7 +50,7 @@ public:
 	AABB outside_box;
 	VertexData data;
 	float3 pos;
-	uint id_texture;;
+	uint id_texture;
 
 	void UnloadVRAMBuffers();
 
