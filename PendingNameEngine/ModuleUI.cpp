@@ -10,18 +10,33 @@ ModuleUI::ModuleUI( bool start_enabled) : Module(start_enabled)
 ModuleUI::~ModuleUI()
 {}
 
+
+bool ModuleUI::Init(rapidjson::Document& document)
+{
+
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO();
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
+	
+
+	return true;
+}
+
+
 bool ModuleUI::Start()
 {
 	LOG("Setting up UI");
 	bool ret = true;
-	ImGui_ImplSdl_Init(App->window->window);
 
 	return ret;
 }
 
 update_status ModuleUI::PreUpdate(float dt)
 {
-	ImGui_ImplSdl_NewFrame(App->window->window);
+
+	
+	ImGui_ImplSDL2_NewFrame(App->window->window);
 	
 	return UPDATE_CONTINUE;
 }
@@ -33,7 +48,7 @@ update_status ModuleUI::Update(float dt)
 	about.ShowElement();
 	confg.ShowElement();
 	insp.ShowElement();
-	if (ShowTestWindow) ShowDemoWindow();
+	//if (ShowTestWindow) ShowDemoWindow();
 	if (closeApp) return UPDATE_STOP;
 	console.CreateConsole();
 
@@ -73,15 +88,12 @@ void ModuleUI::DrawImGui() {
 bool ModuleUI::CleanUp()
 {
 	LOG("Cleaning UI");
-	ImGui_ImplSdl_Shutdown();
+	ImGui_ImplSDL2_Shutdown();
 	return true;
 }
 
 
-void ModuleUI::ShowDemoWindow()
-{
-	ImGui::ShowTestWindow();
-}
+
 void ModuleUI::ShowRNGenerator()
 {
 

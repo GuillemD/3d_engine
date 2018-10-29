@@ -31,6 +31,7 @@ public:
 	bool CleanUp();
 
 	void DrawImGui();
+	bool Init(rapidjson::Document& document);
 
 private:
 	
@@ -45,7 +46,6 @@ private:
 
 private:
 
-	void ModuleUI::ShowDemoWindow();
 	void ModuleUI::ShowRNGenerator();
 
 	void CreateMainMenu();

@@ -15,7 +15,7 @@ Console::~Console()
 void Console::ConsoleLog(const char* log_text) {
 
 	ScrollToBottom = true;
-	text.append(log_text);
+	text.appendf(log_text);
 }
 
 void Console::EmptyConsole()
