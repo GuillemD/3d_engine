@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef __ModuleUI_H__
 #define __ModuleUI_H__
 

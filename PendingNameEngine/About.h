@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef __ABOUT_H__
 #define __ABOUT_H__
 #include "Globals.h"
