@@ -49,9 +49,14 @@ bool Importer::Import(const std::string &full_path)
 	const aiScene* scene = aiImportFile(full_path.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
 	if (scene != nullptr && scene->HasMeshes())
 	{
-		aiNode* root_node = scene->mRootNode;
+		std::string file_path = full_path;
+		uint name_start = file_path.find_last_of("\\");
+		uint name_end = file_path.find_last_of(".");
+		std::string root_go_name = file_path.substr(name_start + 1, name_end - name_start - 1);
+
+		App->scene_loader->root_go = App->scene_loader->CreateGameObject(nullptr, root_go_name.c_str());
 			
-		LoadMesh(scene,root_node, App->scene_loader->root_go);
+		LoadMesh(scene,scene->mRootNode, App->scene_loader->root_go);
 
 		aiReleaseImport(scene);
 	}
@@ -64,22 +69,22 @@ bool Importer::Import(const std::string &full_path)
 	return ret;
 }
 
-void Importer::LoadMesh(const aiScene* _scene, const aiNode * root, GameObject* parent_go)
+void Importer::LoadMesh(const aiScene* _scene, const aiNode * node, GameObject* parent_go)
 {
 	GameObject* game_object = new GameObject();
 	
 	bool correct_num_faces = false;
 
-	if (root->mNumMeshes >= 1)
+	if (node->mNumMeshes >= 1)
 	{
 		if (_scene != nullptr && _scene->HasMeshes())
 		{
-			for (uint i = 0; i < root->mNumMeshes; i++)
+			for (uint i = 0; i < node->mNumMeshes; i++)
 			{
-				GameObject* child_go = new GameObject(game_object, root->mName.C_Str()); 
+				GameObject* child_go = new GameObject(game_object, node->mName.C_Str()); 
 				
 				Mesh* my_mesh = new Mesh();
-				aiMesh* aimesh = _scene->mMeshes[root->mMeshes[i]];
+				aiMesh* aimesh = _scene->mMeshes[node->mMeshes[i]];
 
 				if (aimesh->HasPositions()) //Vertex
 				{
@@ -183,13 +188,13 @@ void Importer::LoadMesh(const aiScene* _scene, const aiNode * root, GameObject* 
 
 				child_go->components.push_back(cmp_mesh);
 				
-				if (root != nullptr)
+				if (node != nullptr)
 				{
 					aiVector3D translation;
 					aiVector3D scaling;
 					aiQuaternion quat_rot;
 
-					root->mTransformation.Decompose(scaling, quat_rot, translation);
+					node->mTransformation.Decompose(scaling, quat_rot, translation);
 
 					ComponentTransf* cmp_transf = new ComponentTransf(child_go);
 
@@ -231,7 +236,7 @@ void Importer::LoadMesh(const aiScene* _scene, const aiNode * root, GameObject* 
 	}
 	else
 	{
-		if (root->mName.C_Str() == "RootNode")
+		if (node->mName.C_Str() == "RootNode")
 		{
 			App->scene_loader->root_go = game_object;
 		}
@@ -245,13 +250,13 @@ void Importer::LoadMesh(const aiScene* _scene, const aiNode * root, GameObject* 
 			parent_go->children.push_back(game_object);
 
 
-		if (root != nullptr)
+		if (node != nullptr)
 		{
 			aiVector3D translation;
 			aiVector3D scaling;
 			aiQuaternion quat_rot;
 
-			root->mTransformation.Decompose(scaling, quat_rot, translation);
+			node->mTransformation.Decompose(scaling, quat_rot, translation);
 
 			ComponentTransf* cmp_transf = new ComponentTransf(game_object);
 
@@ -270,9 +275,9 @@ void Importer::LoadMesh(const aiScene* _scene, const aiNode * root, GameObject* 
 		}
 		App->scene_loader->scene_objects.push_back(game_object);
 	}
-	for (uint i = 0; i < root->mNumChildren; i++)
+	for (uint i = 0; i < node->mNumChildren; i++)
 	{
-		LoadMesh(_scene, root->mChildren[i], game_object);
+		LoadMesh(_scene, node->mChildren[i], game_object);
 	}
 	
 }

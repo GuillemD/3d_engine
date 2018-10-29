@@ -1,3 +1,6 @@
+#ifndef _MESH_H_
+#define _MESH_H_
+
 #include "Globals.h"
 #include "Primitive.h"
 #include "MathGeoLib\MathGeoLib.h"
@@ -44,7 +47,7 @@ public:
 	void DrawSphere() const;
 
 	void DefineVerticesAndIndicesForACube(vec _position, float size);
-	void DefineVerticesForASphere(vec _position,float rad, uint secCount, uint stCount);
+	void DefineVerticesForASphere(vec _position, float rad, uint secCount, uint stCount);
 
 	AABB outside_box;
 	VertexData data;
@@ -52,7 +55,7 @@ public:
 	uint id_texture;;
 
 	void UnloadVRAMBuffers();
-	
+
 private:
 
 	MESH_TYPE type;
@@ -61,7 +64,10 @@ private:
 	std::vector<float> sphere_vertices;
 	std::vector<uint> sphere_indices;
 
-	
+
 
 };
+
+
+#endif // !_MESH_H_
 

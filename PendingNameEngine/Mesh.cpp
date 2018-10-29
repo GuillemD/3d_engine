@@ -19,7 +19,7 @@ Mesh::~Mesh()
 void Mesh::DrawMesh() 
 {
 
-	glEnableClientState(GL_VERTEX_ARRAY);
+	/*glEnableClientState(GL_VERTEX_ARRAY);
 
 	if (data.vertex != nullptr)
 	{
@@ -47,7 +47,7 @@ void Mesh::DrawMesh()
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glDisableClientState(GL_VERTEX_ARRAY);	
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);*/
 
 }
 
@@ -70,7 +70,7 @@ void Mesh::DefineVerticesAndIndicesForACube(vec _position, float size)
 	glGenBuffers(1, (GLuint*) &(data.id_vertex));
 	glGenBuffers(1, (GLuint*) &(data.id_index));
 
-	type = CUBE_MESH;
+	//type = CUBE_MESH;
 	data.num_vertex = 8;
 	data.vertex = new vec[data.num_vertex];
 	{
@@ -184,7 +184,7 @@ void Mesh::DefineVerticesAndIndicesForACube(vec _position, float size)
 
 void Mesh::DefineVerticesForASphere(vec _position, float rad, uint secCount, uint stCount)
 {
-	type = SPHERE_MESH;
+	//type = SPHERE_MESH;
 	pos = _position;
 
 	float x, y, z, xz;                              // vertex position

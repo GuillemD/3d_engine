@@ -20,6 +20,10 @@ public:
 	bool IsStatic()const;
 	void SetStatic(bool _static);
 
+	void Draw();
+
+	Component* GetComponent(ComponentType type) const;
+
 public:
 
 	bool staticgo;

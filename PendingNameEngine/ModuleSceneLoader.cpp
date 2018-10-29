@@ -23,8 +23,6 @@ bool ModuleSceneLoader::Start()
 	App->texture->LoadTexFromPath(".//Assets//Baker_House.png");
 	App->importer->Import(".//Assets//BakerHouse.fbx");*/
 
-	root_go = new GameObject(nullptr, "root");
-	scene_objects.push_back(root_go);
 	App->importer->Import(".//Assets//BakerHouse.fbx");
 	
 	App->camera->Move(vec3(0.0f, 10.0f, 10.0f));
@@ -40,12 +38,12 @@ bool ModuleSceneLoader::CleanUp()
 	LOG("Unloading Intro scene");
 	return true;
 }
-void ModuleSceneLoader::Draw()
+void ModuleSceneLoader::DrawSceneGO()
 {
-	/*for (std::list<Mesh*>::iterator it = scene_objects.begin(); it != scene_objects.end(); it++)
+	for (uint i = 0; i < scene_objects.size(); i++)
 	{
-		(*it)->DrawMesh();
-	}*/
+		scene_objects[i]->Draw();
+	}
 
 }
 

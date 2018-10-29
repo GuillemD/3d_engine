@@ -1,3 +1,5 @@
+#ifndef _LIGHT_H_
+#define _LIGHT_H_
 #include "Color.h"
 #include "MathGeoLib/MathGeoLib.h"
 struct Light
@@ -16,3 +18,6 @@ struct Light
 	int ref;
 	bool on;
 };
+#endif // !_LIGHT_H_
+
+

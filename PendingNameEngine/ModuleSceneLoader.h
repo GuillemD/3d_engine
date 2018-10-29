@@ -18,7 +18,7 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
-	void Draw() ;
+	void DrawSceneGO() ;
 	//Create GO
 	GameObject* CreateGameObject(GameObject* parent, std::string _name);
 	//Tools
