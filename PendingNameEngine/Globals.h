@@ -1,5 +1,5 @@
-#pragma once
-
+#ifndef _GLOBALS_H_
+#define _GLOBALS_H_
 // Warning disabled ---
 #pragma warning( disable : 4577 ) // Warning that exceptions are disabled
 #pragma warning( disable : 4530 )
@@ -59,4 +59,7 @@ enum update_status
 	       x = nullptr;\
 		 }\
 	 }
+#endif // !_GLOBALS_H_
+
+
 

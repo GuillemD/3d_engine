@@ -64,8 +64,7 @@ void GameObject::Draw()
 						glBindBuffer(GL_ARRAY_BUFFER, mesh_it->my_mesh->data.id_texture_coords);
 						glTexCoordPointer(3, GL_FLOAT, 0, NULL);
 					}
-					//ComponentMaterial* mat_it = (ComponentMaterial*)(*it)->GetComponent(MATERIAL);
-					//glBindTexture(GL_TEXTURE_2D, mat_it->id_texture);
+					
 
 					glDrawElements(GL_TRIANGLES, mesh_it->my_mesh->data.num_index, GL_UNSIGNED_INT, NULL);
 				}

@@ -12,6 +12,6 @@ public:
 	~ComponentMaterial();
 
 public:
-	Material* mat;
+	Material* mat = nullptr;
 };
 #endif // !__COMPONENT_MATERIAL_H__

@@ -1,6 +1,5 @@
-#pragma once
-#ifndef log__H
-#define log__H
+#ifndef log_CPP_
+#define log_CPP_
 #include "Globals.h"
 #include "ModuleUI.h"
 #include "Application.h"
@@ -35,5 +34,5 @@ void consolelog(const char file[], int line, const char* format, ...)
 
 	App->ui->console.ConsoleLog(tmp_string2);
 }
-#endif // !log__H
+#endif // !log_CPP_
 

@@ -50,7 +50,7 @@ public:
 	AABB outside_box;
 	VertexData data;
 	float3 pos;
-	uint id_texture;
+	//uint id_texture;
 
 	void UnloadVRAMBuffers();
 

@@ -260,7 +260,7 @@ void Mesh::UnloadVRAMBuffers()
 	if (data.normals != nullptr) RELEASE_ARRAY(data.normals);
 	if (data.TexCoords != nullptr) RELEASE_ARRAY(data.TexCoords);
 
-	glDeleteTextures(1, &id_texture);
+	//glDeleteTextures(1, &id_texture);
 
 }
 
