@@ -17,7 +17,11 @@ bool ModuleUI::Init(rapidjson::Document& document)
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO();
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+	
+
+
 	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer3D->context);
+	ImGui_ImplOpenGL2_Init();
 	
 
 	return true;
@@ -34,16 +38,23 @@ bool ModuleUI::Start()
 
 update_status ModuleUI::PreUpdate(float dt)
 {
-
-	
+	ImGui_ImplOpenGL2_NewFrame();
 	ImGui_ImplSDL2_NewFrame(App->window->window);
-	
+	ImGui::NewFrame();
+
 	return UPDATE_CONTINUE;
 }
 
 update_status ModuleUI::Update(float dt)
 {
 	
+	
+
+	return UPDATE_CONTINUE;
+
+}
+update_status ModuleUI::PostUpdate(float dt)
+{
 	CreateMainMenu();
 	about.ShowElement();
 	confg.ShowElement();
@@ -51,13 +62,6 @@ update_status ModuleUI::Update(float dt)
 	//if (ShowTestWindow) ShowDemoWindow();
 	if (closeApp) return UPDATE_STOP;
 	console.CreateConsole();
-
-	return UPDATE_CONTINUE;
-
-}
-update_status ModuleUI::PostUpdate(float dt)
-{
-	
 	return UPDATE_CONTINUE;
 }
 void ModuleUI::DrawImGui() {
@@ -73,6 +77,7 @@ void ModuleUI::DrawImGui() {
 		if (!App->renderer3D->color_material) {
 			glEnable(GL_COLOR_MATERIAL);
 		}
+		
 		ImGui::Render();    
 
 		if (auxwireframe) {
@@ -82,13 +87,21 @@ void ModuleUI::DrawImGui() {
 			glDisable(GL_COLOR_MATERIAL);
 		}
 	}
-	else ImGui::Render();
+	else {
+		ImGui::Render();
+		
+	}
 }
 
 bool ModuleUI::CleanUp()
 {
-	LOG("Cleaning UI");
+	LOG("Cleaning UI"); 
+
+	ImGui_ImplOpenGL2_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
+	ImGui::DestroyContext();
+
+
 	return true;
 }
 
@@ -135,6 +148,7 @@ void ModuleUI::ShowRNGenerator()
 }
 void ModuleUI::CreateMainMenu()
 {
+	
 	if (ImGui::BeginMainMenuBar()) {
 		if (ImGui::BeginMenu("Menu")) {
 			if (ImGui::MenuItem("Save config"))

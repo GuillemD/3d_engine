@@ -6,6 +6,7 @@
 #include "Module.h"
 #include "ImGui/imgui.h"
 #include "ImGui/imgui_impl_sdl.h"
+#include "ImGui/imgui_impl_opengl2.h"
 #include "MathGeoLib/MathGeoLib.h"
 #include "PCG/pcg_basic.h"
 #include "Console.h"
