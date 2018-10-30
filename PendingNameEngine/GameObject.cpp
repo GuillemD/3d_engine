@@ -6,14 +6,11 @@
 
 
 
-GameObject::GameObject()
+GameObject::GameObject(std::string _name, GameObject* parent_go, bool _active)
 {
-	parent = nullptr;
-	active = true;
-}
-
-GameObject::GameObject(GameObject * parent_go, std::string _name)
-{
+	parent = parent_go;
+	active = _active;
+	name = _name;
 }
 
 
@@ -102,4 +99,26 @@ Component * GameObject::GetComponent(ComponentType type) const
 void GameObject::AddComponent(Component * cp)
 {
 	components.push_back(cp);
+}
+
+GameObject * GameObject::GetParent() const
+{
+	return parent;
+}
+
+void GameObject::SetParent(GameObject * _parent)
+{
+	parent = _parent;
+}
+
+GameObject * GameObject::CreateChild(std::string _name)
+{
+	GameObject* child_go = new GameObject(_name, this, true);
+	PushChild(child_go);
+	return child_go;
+}
+
+void GameObject::PushChild(GameObject* _child)
+{
+	children.push_back(_child);
 }

@@ -20,14 +20,9 @@ public:
 
 	void DrawSceneGO() ;
 	//Create GO
-	GameObject* CreateGameObject(GameObject* parent, std::string _name);
-	//Tools
-	GameObject* GetRoot() const;
+	GameObject* CreateGameObject(std::string _name);
 
 public:
 	std::vector<GameObject*> scene_objects;
-	//bool first_mesh = true;
-public:
-	GameObject* root_go = nullptr;
 
 };

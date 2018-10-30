@@ -19,13 +19,10 @@ bool ModuleSceneLoader::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
-	/*App->texture->current = ".//Assets//Baker_House.png";
-	App->texture->LoadTexFromPath(".//Assets//Baker_House.png");
-	App->importer->Import(".//Assets//BakerHouse.fbx");*/
-
-	App->importer->Import(".//Assets//BakerHouse.fbx");
-	ComponentMaterial* baker_text = App->texture->LoadTexFromPath(".//Assets//Baker_House.png");
-	scene_objects[0]->AddComponent((Component*)baker_text);
+	
+	//App->importer->Import(".//Assets//BakerHouse.fbx");
+	//ComponentMaterial* baker_text = App->texture->LoadTexFromPath(".//Assets//Baker_House.png");
+	//scene_objects[0]->AddComponent((Component*)baker_text);
 	
 	App->camera->Move(vec3(0.0f, 10.0f, 10.0f));
 	App->camera->LookAt(vec3(0.0f, 3.0f, 0.0f));
@@ -44,27 +41,19 @@ void ModuleSceneLoader::DrawSceneGO()
 {
 	for (uint i = 0; i < scene_objects.size(); i++)
 	{
-		scene_objects[i]->Draw();
+		if(scene_objects[i]->IsActive())
+			scene_objects[i]->Draw();
 	}
 
 }
 
-GameObject * ModuleSceneLoader::CreateGameObject(GameObject * parent, std::string go_name)
+GameObject * ModuleSceneLoader::CreateGameObject(std::string go_name)
 {
-	if (parent == nullptr)
-	{
-		parent = root_go;
-	}
-
-	GameObject* created_go = new GameObject(parent, go_name);
+	
+	GameObject* created_go = new GameObject(go_name);
+	scene_objects.push_back(created_go);
 	
 	return created_go;
-}
-
-
-GameObject * ModuleSceneLoader::GetRoot() const
-{
-	return root_go;
 }
 
 update_status ModuleSceneLoader::Update(float dt)
