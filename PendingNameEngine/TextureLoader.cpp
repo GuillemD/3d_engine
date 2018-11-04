@@ -30,7 +30,7 @@ bool TextureLoader::Init()
 	bool ret = true;
 
 	LOG("Init DevIL");
-	current = "";
+
 	CONSOLELOG("Init DevIL");
 
 	return ret;
@@ -74,7 +74,7 @@ ComponentMaterial* TextureLoader::LoadTexFromPath(const char* full_path)
 			iluFlipImage();
 		}
 
-		ILboolean converted = ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
+		ILboolean converted = ilConvertImage(IL_RGB, IL_UNSIGNED_BYTE);
 		if (!converted)
 		{
 			tex_id = 0;
@@ -107,6 +107,8 @@ ComponentMaterial* TextureLoader::LoadTexFromPath(const char* full_path)
 
 
 		CONSOLELOG("Texture %s loaded correctly", full_path);
+
+		ilDeleteImage(ilGetInteger(IL_ACTIVE_IMAGE));
 
 
 	}

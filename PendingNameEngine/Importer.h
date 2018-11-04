@@ -19,8 +19,7 @@ public:
 
 	bool Import(const std::string &full_path);
 	void LoadMesh(const aiScene* _scene, const aiNode * node, GameObject* parent_go);
-private:
-	uint initial_aux = 0;
+
 
 };
 

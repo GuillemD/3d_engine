@@ -21,7 +21,6 @@ public:
 
 	int getILversion() const;
 
-	const char* current;	
 
 };
 #endif // !__TEXTURE_LOADER_H__
