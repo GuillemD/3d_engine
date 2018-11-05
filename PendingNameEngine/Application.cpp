@@ -8,9 +8,10 @@ Application::Application()
 	input = new ModuleInput(this);
 	importer = new Importer(this);
 	texture = new TextureLoader(this);
+	ui = new ModuleUI(this);
 	renderer3D = new ModuleRenderer3D(this);
 	camera = new ModuleCamera3D(this);
-	ui = new ModuleUI(this);
+	
 	scene_loader = new ModuleSceneLoader(this);
 
 	// The order of calls is very important!

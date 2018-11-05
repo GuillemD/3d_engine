@@ -48,20 +48,22 @@ update_status ModuleUI::PreUpdate(float dt)
 update_status ModuleUI::Update(float dt)
 {
 	
-	
-
-	return UPDATE_CONTINUE;
-
-}
-update_status ModuleUI::PostUpdate(float dt)
-{
 	CreateMainMenu();
 	about.ShowElement();
 	confg.ShowElement();
 	insp.ShowElement();
 	//if (ShowTestWindow) ShowDemoWindow();
-	if (closeApp) return UPDATE_STOP;
+	if (closeApp) {
+		return UPDATE_STOP;
+	}
 	console.CreateConsole();
+	
+	return UPDATE_CONTINUE;
+
+}
+update_status ModuleUI::PostUpdate(float dt)
+{
+	
 	return UPDATE_CONTINUE;
 }
 void ModuleUI::DrawImGui() {
@@ -79,6 +81,7 @@ void ModuleUI::DrawImGui() {
 		}
 		
 		ImGui::Render();    
+		ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
 
 		if (auxwireframe) {
 			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -89,16 +92,18 @@ void ModuleUI::DrawImGui() {
 	}
 	else {
 		ImGui::Render();
-		
+		ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
 	}
 }
 
 bool ModuleUI::CleanUp()
 {
-	LOG("Cleaning UI"); 
+	CONSOLELOG("Cleaning UI"); 
 
-	ImGui_ImplOpenGL2_Shutdown();
+
+	
 	ImGui_ImplSDL2_Shutdown();
+	ImGui_ImplOpenGL2_Shutdown();
 	ImGui::DestroyContext();
 
 
