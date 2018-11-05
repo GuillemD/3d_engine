@@ -47,6 +47,26 @@ void ModuleSceneLoader::DrawSceneGO()
 
 }
 
+void ModuleSceneLoader::DrawHierarchy()
+{
+	std::vector<GameObject*> root_obj;
+	for (uint i = 0; i < scene_objects.size(); i++)
+	{
+		if (scene_objects[i]->parent == nullptr)
+		{
+			root_obj.push_back(scene_objects[i]);
+		}
+	}
+	for (uint j = 0; j < root_obj.size(); j++)
+	{
+		if (bool draw = ImGui::TreeNode(root_obj[j]->name.c_str()))
+		{
+			root_obj[j]->DrawInHierarchy();
+		}
+
+	}
+}
+
 GameObject * ModuleSceneLoader::CreateGameObject(std::string go_name)
 {
 	

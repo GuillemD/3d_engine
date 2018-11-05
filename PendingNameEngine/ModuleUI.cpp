@@ -33,6 +33,7 @@ update_status ModuleUI::Update(float dt)
 	about.ShowElement();
 	confg.ShowElement();
 	insp.ShowElement();
+	hier.CreateHierarchy();
 	if (ShowTestWindow) ShowDemoWindow();
 	if (closeApp) return UPDATE_STOP;
 	console.CreateConsole();

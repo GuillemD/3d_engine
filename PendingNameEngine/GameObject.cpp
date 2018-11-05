@@ -3,6 +3,7 @@
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
 #include "OpenGL.h"
+#include "ImGui/imgui.h"
 
 
 
@@ -75,6 +76,17 @@ void GameObject::Draw()
 				glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 			}
 			
+		}
+	}
+}
+
+void GameObject::DrawInHierarchy()
+{
+	for (uint i = 0; i < children.size(); i++)
+	{
+		if (bool draw_node = ImGui::TreeNode(children[i]->name.c_str()))
+		{
+			children[i]->DrawInHierarchy();
 		}
 	}
 }

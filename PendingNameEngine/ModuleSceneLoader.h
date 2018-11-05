@@ -20,6 +20,8 @@ public:
 	bool CleanUp();
 
 	void DrawSceneGO();
+	void DrawHierarchy();
+
 	//Create GO
 	GameObject* CreateGameObject(std::string _name);
 

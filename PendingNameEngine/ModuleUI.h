@@ -10,6 +10,7 @@
 #include "About.h"
 #include "Configuration.h"
 #include "Inspector.h"
+#include "Hierarchy.h"
 
 class ModuleUI : public Module
 {
@@ -26,6 +27,7 @@ public:
 	About about;
 	Configuration confg;
 	Inspector insp;
+	Hierarchy hier;
 	bool CleanUp();
 
 	void DrawImGui();

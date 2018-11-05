@@ -21,6 +21,7 @@ public:
 	void SetStatic(bool _static);
 
 	void Draw();
+	void DrawInHierarchy();
 
 	Component* GetComponent(ComponentType type) const;
 	void AddComponent(Component* cp);
