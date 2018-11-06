@@ -10,6 +10,8 @@ public:
 	ComponentMesh(GameObject* _gameobject);
 	~ComponentMesh();
 
+	void DrawInInspector();
+
 	void AttachMesh(Mesh* _mesh);
 	Mesh* my_mesh;
 

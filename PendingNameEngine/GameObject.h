@@ -22,6 +22,7 @@ public:
 
 	void Draw();
 	void DrawInHierarchy();
+	void DrawInInspector();
 
 	Component* GetComponent(ComponentType type) const;
 	void AddComponent(Component* cp);

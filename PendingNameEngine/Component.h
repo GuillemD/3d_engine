@@ -20,6 +20,8 @@ public:
 	virtual void Update();
 	virtual void Disable();
 
+	virtual void DrawInInspector() {};
+
 	void SetActive(bool _active);
 	bool IsActive();
 	ComponentType GetType() const;

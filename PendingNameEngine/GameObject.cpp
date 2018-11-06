@@ -91,6 +91,21 @@ void GameObject::DrawInHierarchy()
 	}
 }
 
+void GameObject::DrawInInspector()
+{
+	ImGui::Text(name.c_str());
+	ImGui::Separator();
+	ImGui::Checkbox("active", &active);
+	ImGui::SameLine();
+	ImGui::Checkbox("static", &staticgo);
+
+	for (std::vector<Component*>::const_iterator c_it = components.begin(); c_it != components.end(); c_it++)
+	{
+		(*c_it)->DrawInInspector();
+	}
+
+}
+
 Component * GameObject::GetComponent(ComponentType type) const
 {
 	Component* ret = nullptr;

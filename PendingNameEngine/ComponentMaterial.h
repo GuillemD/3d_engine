@@ -11,6 +11,8 @@ public:
 	ComponentMaterial(GameObject* _gameobject);
 	~ComponentMaterial();
 
+	void DrawInInspector();
+
 public:
 	Material* mat = nullptr;
 };

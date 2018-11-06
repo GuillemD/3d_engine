@@ -11,6 +11,8 @@ public:
 	ComponentTransf(GameObject* _gameobject);
 	~ComponentTransf();
 
+	void DrawInInspector();
+
 public:
 	float3 position = { 0.0f,0.0f,0.0f };
 	float3 scale = { 1.0f,1.0f,1.0f };
