@@ -11,14 +11,27 @@ class Component;
 class GameObject
 {
 public:
-	GameObject();
-	GameObject(GameObject* parent_go, std::string _name);
+
+	GameObject(std::string _name, GameObject* parent_go = nullptr, bool _active = true);
 	~GameObject();
 
 	bool IsActive() const;
 	void SetActive(bool _active);
 	bool IsStatic()const;
 	void SetStatic(bool _static);
+
+	void Draw();
+	void DrawInHierarchy();
+	void DrawInInspector();
+
+	Component* GetComponent(ComponentType type) const;
+	void AddComponent(Component* cp);
+
+	GameObject* GetParent() const;
+	void SetParent(GameObject* _parent);
+
+	GameObject* CreateChild(std::string _name);
+	void PushChild(GameObject* _child);
 
 public:
 

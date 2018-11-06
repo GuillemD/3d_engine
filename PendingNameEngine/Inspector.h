@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _INSPECTOR_H_
+#define _INSPECTOR_H_
 #include "Panel.h"
 #include "ImGui/imgui.h"
 
@@ -10,4 +11,7 @@ public:
 	void ShowElement();
 
 };
+
+
+#endif // !_INSPECTOR_H_
 

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _MODULESCENELOADER_H_
+#define _MODULESCENELOADER_H_
 #include "Module.h"
 #include "Globals.h"
 #include "Primitive.h"
@@ -18,16 +19,16 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
-	void Draw() ;
+	void DrawSceneGO();
+	void DrawHierarchy();
+
 	//Create GO
-	GameObject* CreateGameObject(GameObject* parent, std::string _name);
-	//Tools
-	GameObject* GetRoot() const;
+	GameObject* CreateGameObject(std::string _name);
 
 public:
 	std::vector<GameObject*> scene_objects;
-	//bool first_mesh = true;
-public:
-	GameObject* root_go = nullptr;
 
 };
+#endif // !_MODULESCENELOADER_H_
+
+

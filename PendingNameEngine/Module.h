@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _MODULE_H_
+#define _MODULE_H_
 #include "Globals.h"
 #include "rapidjson/document.h"
 #include "rapidjson/prettywriter.h" 
@@ -7,7 +8,7 @@ class Application;
 
 class Module
 {
-private :
+private:
 	bool enabled;
 
 public:
@@ -20,7 +21,7 @@ public:
 
 	virtual bool Init(rapidjson::Document& document)
 	{
-		return true; 
+		return true;
 	}
 
 	virtual bool Start()
@@ -43,9 +44,9 @@ public:
 		return UPDATE_CONTINUE;
 	}
 
-	virtual bool CleanUp() 
-	{ 
-		return true; 
+	virtual bool CleanUp()
+	{
+		return true;
 	}
 
 	virtual bool Save(rapidjson::Document& document, rapidjson::FileWriteStream& os)
@@ -61,3 +62,5 @@ public:
 	}
 };
 extern Application* App;
+#endif // !_MODULE_H_
+

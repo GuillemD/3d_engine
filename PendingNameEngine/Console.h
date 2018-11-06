@@ -1,4 +1,4 @@
-#pragma once
+
 #ifndef Console_H
 #define Console_H
 #include "Globals.h"

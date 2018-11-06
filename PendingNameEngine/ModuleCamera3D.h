@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _MODULECAMARA3D_H_
+#define _MODULECAMARA3D_H_
 #include "Module.h"
 #include "Globals.h"
 #include "glmath.h"
@@ -32,3 +33,5 @@ public:
 
 
 };
+#endif // !_MODULECAMARA3D_H_
+

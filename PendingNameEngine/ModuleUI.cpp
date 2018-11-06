@@ -58,10 +58,10 @@ update_status ModuleUI::PostUpdate(float dt)
 	about.ShowElement();
 	confg.ShowElement();
 	insp.ShowElement();
-	//if (ShowTestWindow) ShowDemoWindow();
-	if (closeApp) {
-		return UPDATE_STOP;
-	}
+	hier.CreateHierarchy();
+	if (ShowTestWindow) ShowDemoWindow();
+	if (closeApp) return UPDATE_STOP;
+
 	console.CreateConsole();
 
 	return UPDATE_CONTINUE;
@@ -100,12 +100,9 @@ bool ModuleUI::CleanUp()
 {
 	CONSOLELOG("Cleaning UI"); 
 
-
-	
 	ImGui_ImplSDL2_Shutdown();
 	ImGui_ImplOpenGL2_Shutdown();
 	ImGui::DestroyContext();
-
 
 	return true;
 }

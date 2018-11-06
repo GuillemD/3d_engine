@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _MESH_H_
+#define _MESH_H_
+
 #include "Globals.h"
 #include "Primitive.h"
 #include "MathGeoLib\MathGeoLib.h"
@@ -28,8 +30,6 @@ struct VertexData {
 	uint id_texture_coords = 0;
 	uint num_texture_coords = 0;
 
-	uint texture_width = 0;
-	uint texture_heigth = 0;
 
 	void ResetIds();
 
@@ -45,15 +45,15 @@ public:
 	void DrawSphere() const;
 
 	void DefineVerticesAndIndicesForACube(vec _position, float size);
-	void DefineVerticesForASphere(vec _position,float rad, uint secCount, uint stCount);
+	void DefineVerticesForASphere(vec _position, float rad, uint secCount, uint stCount);
 
 	AABB outside_box;
 	VertexData data;
 	float3 pos;
-	uint id_texture;;
+	//uint id_texture;
 
 	void UnloadVRAMBuffers();
-	
+
 private:
 
 	MESH_TYPE type;
@@ -62,7 +62,10 @@ private:
 	std::vector<float> sphere_vertices;
 	std::vector<uint> sphere_indices;
 
-	
+
 
 };
+
+
+#endif // !_MESH_H_
 

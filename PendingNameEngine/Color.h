@@ -1,10 +1,9 @@
-
-#pragma once
-
+#ifndef _COLOR_H_
+#define _COLOR_H_
 struct Color
 {
 	float r, g, b, a;
-	
+
 	Color() : r(0.0f), g(0.0f), b(0.0f), a(1.0f)
 	{}
 
@@ -32,3 +31,5 @@ extern Color Black;
 extern Color White;
 extern Color Grey;
 extern Color Yellow;
+#endif // !_COLOR_H_
+

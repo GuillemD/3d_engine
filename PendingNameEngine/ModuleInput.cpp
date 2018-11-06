@@ -114,9 +114,7 @@ update_status ModuleInput::PreUpdate(float dt)
 					else if (extension == "png" || extension == "PNG" || extension == "dds" || extension == "DDS") {
 						std::string tex_file_path = file_path;
 						
-						App->texture->LoadTexFromPath(tex_file_path.c_str());
-						App->texture->current = tex_file_path.c_str();
-							
+						App->texture->LoadTexFromPath(tex_file_path.c_str());							
 						SDL_free(e.drop.file);
 					}
 					else {

@@ -19,13 +19,10 @@ bool ModuleSceneLoader::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
-	/*App->texture->current = ".//Assets//Baker_House.png";
-	App->texture->LoadTexFromPath(".//Assets//Baker_House.png");
-	App->importer->Import(".//Assets//BakerHouse.fbx");*/
-
-	root_go = new GameObject(nullptr, "root");
-	scene_objects.push_back(root_go);
+	
 	App->importer->Import(".//Assets//BakerHouse.fbx");
+	ComponentMaterial* baker_text = App->texture->LoadTexFromPath(".//Assets//Baker_House.png");
+	scene_objects[0]->AddComponent((Component*)baker_text);
 	
 	App->camera->Move(vec3(0.0f, 10.0f, 10.0f));
 	App->camera->LookAt(vec3(0.0f, 3.0f, 0.0f));
@@ -40,31 +37,43 @@ bool ModuleSceneLoader::CleanUp()
 	LOG("Unloading Intro scene");
 	return true;
 }
-void ModuleSceneLoader::Draw()
+void ModuleSceneLoader::DrawSceneGO()
 {
-	/*for (std::list<Mesh*>::iterator it = scene_objects.begin(); it != scene_objects.end(); it++)
+	for (uint i = 0; i < scene_objects.size(); i++)
 	{
-		(*it)->DrawMesh();
-	}*/
-
-}
-
-GameObject * ModuleSceneLoader::CreateGameObject(GameObject * parent, std::string go_name)
-{
-	if (parent == nullptr)
-	{
-		parent = root_go;
+		if(scene_objects[i]->IsActive())
+			scene_objects[i]->Draw();
 	}
 
-	GameObject* created_go = new GameObject(parent, go_name);
-	
-	return created_go;
 }
 
-
-GameObject * ModuleSceneLoader::GetRoot() const
+void ModuleSceneLoader::DrawHierarchy()
 {
-	return root_go;
+	std::vector<GameObject*> root_obj;
+	for (uint i = 0; i < scene_objects.size(); i++)
+	{
+		if (scene_objects[i]->parent == nullptr)
+		{
+			root_obj.push_back(scene_objects[i]);
+		}
+	}
+	for (uint j = 0; j < root_obj.size(); j++)
+	{
+		if (bool draw = ImGui::TreeNode(root_obj[j]->name.c_str()))
+		{
+			root_obj[j]->DrawInHierarchy();
+		}
+
+	}
+}
+
+GameObject * ModuleSceneLoader::CreateGameObject(std::string go_name)
+{
+	
+	GameObject* created_go = new GameObject(go_name);
+	scene_objects.push_back(created_go);
+	
+	return created_go;
 }
 
 update_status ModuleSceneLoader::Update(float dt)

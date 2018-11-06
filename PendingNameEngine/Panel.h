@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _PANEL_H_
+#define _PANEL_H_
 #include "Globals.h"
 #include <string>
 class Panel
@@ -17,3 +18,5 @@ public:
 
 
 };
+#endif // !_PANEL_H_
+

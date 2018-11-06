@@ -6,7 +6,6 @@ enum ComponentType
 	MESH = 1,
 	MATERIAL,
 	TRANSFORMATION,
-	LIGHT,
 	CAMERA,
 };
 class GameObject;
@@ -20,6 +19,8 @@ public:
 	virtual void Enable();
 	virtual void Update();
 	virtual void Disable();
+
+	virtual void DrawInInspector() {};
 
 	void SetActive(bool _active);
 	bool IsActive();
