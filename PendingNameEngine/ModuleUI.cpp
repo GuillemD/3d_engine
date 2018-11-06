@@ -48,6 +48,12 @@ update_status ModuleUI::PreUpdate(float dt)
 update_status ModuleUI::Update(float dt)
 {
 	
+	
+	return UPDATE_CONTINUE;
+
+}
+update_status ModuleUI::PostUpdate(float dt)
+{
 	CreateMainMenu();
 	about.ShowElement();
 	confg.ShowElement();
@@ -57,13 +63,7 @@ update_status ModuleUI::Update(float dt)
 		return UPDATE_STOP;
 	}
 	console.CreateConsole();
-	
-	return UPDATE_CONTINUE;
 
-}
-update_status ModuleUI::PostUpdate(float dt)
-{
-	
 	return UPDATE_CONTINUE;
 }
 void ModuleUI::DrawImGui() {
