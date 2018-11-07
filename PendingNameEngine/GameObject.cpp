@@ -1,9 +1,12 @@
+#include "Application.h"
 #include "GameObject.h"
 #include "Component.h"
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
+#include "ComponentTransf.h"
 #include "OpenGL.h"
 #include "ImGui/imgui.h"
+#include "Material.h"
 
 
 
@@ -43,41 +46,109 @@ void GameObject::SetStatic(bool _static)
 	staticgo = _static;
 }
 
-void GameObject::Draw()
+/*void GameObject::Draw()
 {
-	if (active)
+	
+	
+	for (std::vector<Component*>::iterator comp = components.begin(); comp != components.end(); comp++)
 	{
-		if (!children.empty())
+		if ((*comp)->GetType() == ComponentType::MATERIAL)
 		{
-			for (std::vector<GameObject*>::iterator it = children.begin(); it != children.end(); it++)
+			ComponentMaterial* c_m = (ComponentMaterial*)(*comp);
+			if (c_m->mat != nullptr)
+			{
+				glBindTexture(GL_TEXTURE_2D, c_m->mat->GetID());
+			}
+		}
+		
+	}
+	for (std::vector<Component*>::iterator comp = components.begin(); comp != components.end(); comp++)
+	{
+		if ((*comp)->GetType() == ComponentType::MESH)
+		{
+			ComponentMesh* c_mesh = (ComponentMesh*)(*comp);
+			if (c_mesh->my_mesh != nullptr)
 			{
 				glEnableClientState(GL_VERTEX_ARRAY);
-				ComponentMesh* mesh_it = (ComponentMesh*)(*it)->GetComponent(MESH);
-				if (mesh_it != nullptr)
+				glBindBuffer(GL_ARRAY_BUFFER, c_mesh->my_mesh->data.id_vertex);
+				glVertexPointer(3, GL_FLOAT, 0, NULL);
+				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, c_mesh->my_mesh->data.id_index);
+
+				if (c_mesh->my_mesh->data.num_texture_coords != 0)
 				{
-					glBindBuffer(GL_ARRAY_BUFFER, mesh_it->my_mesh->data.id_vertex);
-					glVertexPointer(3, GL_FLOAT, 0, NULL);
-					glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh_it->my_mesh->data.id_index);
-
-					if (mesh_it->my_mesh->data.num_texture_coords != 0)
-					{
-						glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-						glBindBuffer(GL_ARRAY_BUFFER, mesh_it->my_mesh->data.id_texture_coords);
-						glTexCoordPointer(3, GL_FLOAT, 0, NULL);
-					}
-					
-
-					glDrawElements(GL_TRIANGLES, mesh_it->my_mesh->data.num_index, GL_UNSIGNED_INT, NULL);
+					glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+					glBindBuffer(GL_ARRAY_BUFFER, c_mesh->my_mesh->data.id_texture_coords);
+					glTexCoordPointer(3, GL_FLOAT, 0, NULL);
 				}
-				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-				glBindBuffer(GL_ARRAY_BUFFER, 0);
-				glBindTexture(GL_TEXTURE_2D, 0);
-				glDisableClientState(GL_VERTEX_ARRAY);
-				glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+
+				glDrawElements(GL_TRIANGLES, c_mesh->my_mesh->data.num_index, GL_UNSIGNED_INT, NULL);
 			}
 			
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+			glDisableClientState(GL_VERTEX_ARRAY);
+			glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+			break;
 		}
 	}
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	if (!children.empty())
+	{
+		for (std::vector<GameObject*>::iterator it = children.begin(); it != children.end(); it++)
+		{
+			if ((*it)->active)
+			{
+				(*it)->Draw();
+			}
+		}
+		
+	}
+	
+}*/
+
+void GameObject::Draw()
+{
+	glEnableClientState(GL_VERTEX_ARRAY);
+	ComponentMesh* aux_mesh = (ComponentMesh*)GetComponent(MESH);
+	//ComponentMaterial* aux_material = (ComponentMaterial*)GetComponent(MATERIAL);
+	//ComponentTransf* aux_transform = (ComponentTransf*)GetComponent(TRANSFORMATION);
+
+	//glPushMatrix();
+	//glMultMatrixf(aux_transform->trans_matrix_g.Transposed().ptr());
+
+	if (aux_mesh != nullptr)
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, aux_mesh->my_mesh->data.id_vertex);
+		glVertexPointer(3, GL_FLOAT, 0, NULL);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, aux_mesh->my_mesh->data.id_index);
+
+		if (aux_mesh->my_mesh->data.num_texture_coords != 0)
+		{
+			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+			glBindBuffer(GL_ARRAY_BUFFER, aux_mesh->my_mesh->data.id_texture_coords);
+			glTexCoordPointer(3, GL_FLOAT, 0, NULL);
+		}
+		//glBindTexture(GL_TEXTURE_2D, aux_material->mat->id_texture);
+
+		glDrawElements(GL_TRIANGLES, aux_mesh->my_mesh->data.num_index, GL_UNSIGNED_INT, NULL);
+	}
+	
+
+
+	//Unbind
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	//glBindTexture(GL_TEXTURE_2D, 0);
+
+	//Disable Client
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	//glPopMatrix();
+
+
 }
 
 void GameObject::DrawInHierarchy()

@@ -3,6 +3,7 @@
 #include "ModuleSceneLoader.h"
 #include "Component.h"
 #include "GameObject.h"
+#include "ComponentMaterial.h"
 
 #include "OpenGL.h"
 
@@ -21,8 +22,7 @@ bool ModuleSceneLoader::Start()
 
 	
 	App->importer->Import(".//Assets//BakerHouse.fbx");
-	ComponentMaterial* baker_text = App->texture->LoadTexFromPath(".//Assets//Baker_House.png");
-	scene_objects[0]->AddComponent((Component*)baker_text);
+	
 	
 	App->camera->Move(vec3(0.0f, 10.0f, 10.0f));
 	App->camera->LookAt(vec3(0.0f, 3.0f, 0.0f));

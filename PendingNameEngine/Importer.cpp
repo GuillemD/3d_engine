@@ -3,9 +3,11 @@
 #include "GameObject.h"
 #include "ComponentMesh.h"
 #include "ComponentTransf.h"
+#include "ComponentMaterial.h"
 #include "Module.h"
 #include "Globals.h"
 #include "Mesh.h"
+#include "Material.h"
 
 
 void AssimpToConsoleLog(const char* str, char* userData);
@@ -49,6 +51,7 @@ bool Importer::Import(const std::string &full_path)
 	const aiScene* scene = aiImportFile(full_path.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
 	if (scene != nullptr && scene->HasMeshes())
 	{
+		
 		std::string path = full_path;
 		uint start = path.find_last_of("//"); uint end = path.find_last_of(".");
 		std::string root_name = path.substr(start + 1, end - start - 1);
@@ -188,6 +191,12 @@ void Importer::LoadMesh(const aiScene* _scene, const aiNode * node, GameObject* 
 		cmp_mesh->Enable();
 
 		aux->components.push_back(cmp_mesh);
+
+		/*ComponentMaterial* cmp_mat = new ComponentMaterial(aux);
+		cmp_mat->Enable();
+		cmp_mat->mat = scene_materials[aimesh->mMaterialIndex];
+
+		aux->components.push_back(cmp_mat);*/
 	
 
 		if (node != nullptr)
