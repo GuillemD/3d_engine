@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Sources">
@@ -113,6 +113,18 @@
     </ClInclude>
     <ClInclude Include="ModuleUI.h">
       <Filter>Sources\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imconfig.h">
+      <Filter>Sources\Libraries\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui.h">
+      <Filter>Sources\Libraries\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui_impl_sdl.h">
+      <Filter>Sources\Libraries\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui_internal.h">
+      <Filter>Sources\Libraries\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="MathGeoLib\MathBuildConfig.h">
       <Filter>Sources\Libraries\MathGeoLib</Filter>
@@ -327,9 +339,6 @@
     <ClInclude Include="OpenGL.h">
       <Filter>Sources\Helpers</Filter>
     </ClInclude>
-    <ClInclude Include="Importer.h">
-      <Filter>Sources\Tools</Filter>
-    </ClInclude>
     <ClInclude Include="Assimp.h">
       <Filter>Sources\Helpers</Filter>
     </ClInclude>
@@ -492,29 +501,6 @@
     <ClInclude Include="ComponentMaterial.h">
       <Filter>Sources\GameObjectsAndComponents\Components</Filter>
     </ClInclude>
-    <ClInclude Include="ImGui\imconfig.h">
-      <Filter>Sources\Libraries\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="ImGui\imgui.h">
-      <Filter>Sources\Libraries\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="ImGui\imgui_impl_opengl2.h">
-      <Filter>Sources\Libraries\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="ImGui\imgui_impl_sdl.h">
-      <Filter>Sources\Libraries\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="ImGui\imgui_internal.h">
-      <Filter>Sources\Libraries\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="ImGui\imstb_rectpack.h">
-      <Filter>Sources\Libraries\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="ImGui\imstb_textedit.h">
-      <Filter>Sources\Libraries\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="ImGui\imstb_truetype.h">
-      <Filter>Sources\Libraries\ImGui</Filter>
     <ClInclude Include="GameObject.h">
       <Filter>Sources\GameObjectsAndComponents\GameObjects</Filter>
     </ClInclude>
@@ -526,6 +512,21 @@
     </ClInclude>
     <ClInclude Include="Hierarchy.h">
       <Filter>Sources\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imstb_truetype.h">
+      <Filter>Sources\Libraries\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui_impl_opengl2.h">
+      <Filter>Sources\Libraries\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Importer.h">
+      <Filter>Sources\Libraries\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imstb_rectpack.h">
+      <Filter>Sources\Libraries\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imstb_textedit.h">
+      <Filter>Sources\Libraries\ImGui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -561,6 +562,15 @@
     </ClCompile>
     <ClCompile Include="ModuleUI.cpp">
       <Filter>Sources\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui.cpp">
+      <Filter>Sources\Libraries\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_draw.cpp">
+      <Filter>Sources\Libraries\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_impl_sdl.cpp">
+      <Filter>Sources\Libraries\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="MathGeoLib\Time\Clock.cpp">
       <Filter>Sources\Libraries\MathGeoLib\Time</Filter>
@@ -685,9 +695,6 @@
     <ClCompile Include="glmath.cpp">
       <Filter>Sources\Containers</Filter>
     </ClCompile>
-    <ClCompile Include="Importer.cpp">
-      <Filter>Sources\Tools</Filter>
-    </ClCompile>
     <ClCompile Include="TextureLoader.cpp">
       <Filter>Sources\Tools</Filter>
     </ClCompile>
@@ -715,20 +722,6 @@
     <ClCompile Include="ComponentMaterial.cpp">
       <Filter>Sources\GameObjectsAndComponents\Components</Filter>
     </ClCompile>
-    <ClCompile Include="ImGui\imgui.cpp">
-      <Filter>Sources\Libraries\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="ImGui\imgui_draw.cpp">
-      <Filter>Sources\Libraries\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="ImGui\imgui_impl_opengl2.cpp">
-      <Filter>Sources\Libraries\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="ImGui\imgui_impl_sdl.cpp">
-      <Filter>Sources\Libraries\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="ImGui\imgui_widgets.cpp">
-      <Filter>Sources\Libraries\ImGui</Filter>
     <ClCompile Include="GameObject.cpp">
       <Filter>Sources\GameObjectsAndComponents\GameObjects</Filter>
     </ClCompile>
@@ -740,6 +733,15 @@
     </ClCompile>
     <ClCompile Include="HIerarchy.cpp">
       <Filter>Sources\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_widgets.cpp">
+      <Filter>Sources\Libraries\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Importer.cpp">
+      <Filter>Sources\Libraries\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_impl_opengl2.cpp">
+      <Filter>Sources\Libraries\ImGui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
