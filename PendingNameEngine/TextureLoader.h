@@ -6,6 +6,7 @@
 
 #include <list>
 class ComponentMaterial;
+class Material;
 
 class TextureLoader : public Module
 {
@@ -17,7 +18,8 @@ public:
 	bool CleanUp();
 
 	ComponentMaterial* LoadTexFromPath(const char* full_path);
-	//void SwapTexture(const char* _new_path);
+	Material* ImportMaterial(const char* full_path);
+	
 
 	int getILversion() const;
 
