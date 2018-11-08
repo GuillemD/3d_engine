@@ -155,9 +155,11 @@ void GameObject::DrawInHierarchy()
 {
 	for (uint i = 0; i < children.size(); i++)
 	{
-		if (bool draw_node = ImGui::TreeNode(children[i]->name.c_str()))
+		uint flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
+		if (bool draw_node = ImGui::TreeNodeEx(children[i]->name.c_str(), flags))
 		{
 			children[i]->DrawInHierarchy();
+			ImGui::TreePop();
 		}
 	}
 }

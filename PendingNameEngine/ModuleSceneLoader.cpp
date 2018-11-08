@@ -59,9 +59,11 @@ void ModuleSceneLoader::DrawHierarchy()
 	}
 	for (uint j = 0; j < root_obj.size(); j++)
 	{
-		if (bool draw = ImGui::TreeNode(root_obj[j]->name.c_str()))
+		uint flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
+		if (bool draw = ImGui::TreeNodeEx(root_obj[j]->name.c_str(), flags))
 		{
 			root_obj[j]->DrawInHierarchy();
+			ImGui::TreePop();
 		}
 
 	}

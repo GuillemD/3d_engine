@@ -106,15 +106,13 @@ update_status ModuleInput::PreUpdate(float dt)
 					std::string extension = file_path.substr(idx + 1);
 
 					if (extension == "fbx" || extension == "FBX") {
-						std::string mesh_file_path = file_path;
-						//App->scene_loader->scene_objects.clear();
-						App->importer->Import(mesh_file_path.c_str());
+						
+						App->importer->Import(file_path.c_str());
 						SDL_free(e.drop.file);
 					}
 					else if (extension == "png" || extension == "PNG" || extension == "dds" || extension == "DDS") {
-						std::string tex_file_path = file_path;
-						
-						App->texture->LoadTexFromPath(tex_file_path.c_str());							
+						//TODO: SWAP TEXTURE					
+						//App->texture->LoadTexFromPath(tex_file_path.c_str());							
 						SDL_free(e.drop.file);
 					}
 					else {

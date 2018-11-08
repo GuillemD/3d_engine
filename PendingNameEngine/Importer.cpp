@@ -191,7 +191,7 @@ void Importer::LoadMesh(const aiScene* _scene, const aiNode * node, GameObject* 
 		cmp_mesh->Enable();
 
 		aux->components.push_back(cmp_mesh);
-
+		//TODO: get material
 		/*ComponentMaterial* cmp_mat = new ComponentMaterial(aux);
 		cmp_mat->Enable();
 		cmp_mat->mat = scene_materials[aimesh->mMaterialIndex];
