@@ -24,9 +24,13 @@ public:
 
 	//Create GO
 	GameObject* CreateGameObject(std::string _name);
+	//Utility
+	GameObject* GetRoot() const;
 
 public:
 	std::vector<GameObject*> scene_objects;
+
+	GameObject* root = nullptr;
 
 };
 #endif // !_MODULESCENELOADER_H_

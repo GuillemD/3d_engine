@@ -21,7 +21,7 @@ bool ModuleSceneLoader::Start()
 	bool ret = true;
 
 	
-	App->importer->Import(".//Assets//BakerHouse.fbx");
+	//App->importer->Import(".//Assets//BakerHouse.fbx");
 	
 	
 	App->camera->Move(vec3(0.0f, 10.0f, 10.0f));
@@ -76,6 +76,12 @@ GameObject * ModuleSceneLoader::CreateGameObject(std::string go_name)
 	scene_objects.push_back(created_go);
 	
 	return created_go;
+}
+
+GameObject * ModuleSceneLoader::GetRoot() const
+{
+
+	return root;
 }
 
 update_status ModuleSceneLoader::Update(float dt)

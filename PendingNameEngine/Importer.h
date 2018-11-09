@@ -18,9 +18,10 @@ public:
 	bool CleanUp();
 
 	bool Import(const std::string &full_path);
-	void LoadMesh(const aiScene* _scene, const aiNode * node, GameObject* parent_go);
+	void LoadMesh(const aiScene* _scene, const aiNode * node, GameObject* parent_go, const std::vector<Material*>& mats);
 
-
+public:
+	std::string tex_path;
 };
 
 #endif // !__IMPORTER_H__

@@ -14,15 +14,19 @@ public:
 	virtual ~ComponentTransf();
 
 	void SetPosition(float3 _pos);
+	void SetPosition(float _x, float _y, float _z);
 	float3 GetPosition() const;
 
 	void SetScale(float3 _sca);
+	void SetScale(float _x, float _y, float _z);
 	float3 GetScale() const;
 
 	void SetRotation(Quat _rot);
 	void SetRotation(const float3& _rot);
 	Quat GetRotation() const;
 	float3 GetEulerRotation() const;
+
+	void SetTransform(float3 _pos, float3 _scale, Quat _rot);
 
 	void SetLocalTransf(const float4x4& l_transf);
 	float4x4 GetLocalTransf() const;
@@ -34,7 +38,7 @@ public:
 
 	void DrawInInspector();
 
-private:
+public:
 	float3 position = { 0.0f,0.0f,0.0f };
 	float3 scale = { 1.0f,1.0f,1.0f };
 	float3 eulerRotation = { 0.0f,0.0f,0.0f };

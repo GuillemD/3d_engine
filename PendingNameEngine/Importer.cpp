@@ -52,13 +52,31 @@ bool Importer::Import(const std::string &full_path)
 	if (scene != nullptr && scene->HasMeshes())
 	{
 		
+		std::vector<Material*> scene_mats;
+		if (scene->HasMaterials())
+		{
+			for (uint m = 0; m < scene->mNumMaterials; ++m)
+			{
+				Material* material = nullptr;
+				aiMaterial* curr_mat = scene->mMaterials[m];
+				aiString assimp_path;
+
+				curr_mat->GetTexture(aiTextureType_DIFFUSE, 0, &assimp_path);
+				std::string m_path = assimp_path.C_Str();
+				uint name_pos = m_path.find_last_of("\\");
+				tex_path += m_path.substr(name_pos + 1);
+
+				material = App->texture->ImportMaterial(tex_path.c_str());
+				scene_mats.push_back(material);
+			}
+		}
 		std::string path = full_path;
 		uint start = path.find_last_of("//"); uint end = path.find_last_of(".");
 		std::string root_name = path.substr(start + 1, end - start - 1);
 
 		GameObject* root_go = App->scene_loader->CreateGameObject(root_name.c_str());
 			
-		LoadMesh(scene,scene->mRootNode, root_go);
+		LoadMesh(scene,scene->mRootNode, root_go, scene_mats);
 
 		aiReleaseImport(scene);
 	}
@@ -71,11 +89,16 @@ bool Importer::Import(const std::string &full_path)
 	return ret;
 }
 
-void Importer::LoadMesh(const aiScene* _scene, const aiNode * node, GameObject* parent_go)
+void Importer::LoadMesh(const aiScene* _scene, const aiNode * node, GameObject* parent_go,const std::vector<Material*>& mats)
 {
-	/*aiString s_name = node->mName;
-	GameObject* go = parent_go;
-	bool correct_num_faces = false;
+	aiString s_name = node->mName;
+	GameObject* first = parent_go;
+	bool discard = false;
+
+	aiVector3D translation;
+	aiVector3D scaling;
+	aiQuaternion quat_rot;
+	node->mTransformation.Decompose(scaling, quat_rot, translation);
 
 	for (uint i = 0; i < node->mNumMeshes; i++)
 	{
@@ -86,12 +109,12 @@ void Importer::LoadMesh(const aiScene* _scene, const aiNode * node, GameObject* 
 			aux = parent_go->CreateChild(s_name.C_Str());
 
 		if (i == 0)
-			go = aux;
+			first = aux;
 
 		Mesh* my_mesh = new Mesh();
 		aiMesh* aimesh = _scene->mMeshes[node->mMeshes[i]];
 
-		if (aimesh->HasPositions()) //Vertex
+		if (aimesh->HasPositions() && aimesh != nullptr) //Vertex
 		{
 			my_mesh->num_vertex = aimesh->mNumVertices;
 			my_mesh->vertex = new vec[my_mesh->num_vertex];
@@ -121,11 +144,11 @@ void Importer::LoadMesh(const aiScene* _scene, const aiNode * node, GameObject* 
 				if (aimesh->mFaces[i].mNumIndices != 3)
 				{
 					CONSOLELOG("WARNING, geometry face with != 3 indices!");
+					discard = true;
 				}
 				else
 				{
-					memcpy(&my_mesh->index[i * 3], aimesh->mFaces[i].mIndices, sizeof(uint) * 3);
-					correct_num_faces = true;
+					memcpy(&my_mesh->index[i * 3], aimesh->mFaces[i].mIndices, sizeof(uint) * 3);	
 
 				}
 			}
@@ -142,7 +165,7 @@ void Importer::LoadMesh(const aiScene* _scene, const aiNode * node, GameObject* 
 		{
 			CONSOLELOG("WARNING! Mesh with no faces. Will not load.");
 		}
-	
+
 		if (aimesh->HasTextureCoords(0)) {
 
 			my_mesh->num_texture_coords = aimesh->mNumVertices;
@@ -162,69 +185,52 @@ void Importer::LoadMesh(const aiScene* _scene, const aiNode * node, GameObject* 
 		else
 		{
 			CONSOLELOG("Warning, mesh has no Texture Coords.");
+			discard = true;
 		}
-
-		//DEBUG BOX
-		AABB debug_box(float3::zero, float3::zero);
-		debug_box.Enclose((float3*)aimesh->mVertices, aimesh->mNumVertices);
-		//my_mesh->outside_box = debug_box;
-
-		
-		ComponentMesh* cmp_mesh = new ComponentMesh(aux);
-		cmp_mesh->AttachMesh(my_mesh);
-		cmp_mesh->Enable();
-
-		aux->components.push_back(cmp_mesh);
-		//TODO: get material
-		ComponentMaterial* cmp_mat = new ComponentMaterial(aux);
-		cmp_mat->Enable();
-		cmp_mat->mat = scene_materials[aimesh->mMaterialIndex];
-
-		aux->components.push_back(cmp_mat);
-	
-
-		if (node != nullptr)
+		if (discard)
 		{
-			aiVector3D translation;
-			aiVector3D scaling;
-			aiQuaternion quat_rot;
-
-			node->mTransformation.Decompose(scaling, quat_rot, translation);
-
-			ComponentTransf* cmp_transf = new ComponentTransf(aux);
-
-			cmp_transf->position = { translation.x,translation.y, translation.z };
-			CONSOLELOG("Mesh position { %f,%f,%f }", translation.x, translation.y, translation.z);
-			cmp_transf->scale = { scaling.x,scaling.y, scaling.z };
-			CONSOLELOG("Mesh  scale { %f,%f,%f }", scaling.x, scaling.y, scaling.z);
-
-			math::Quat math_quat(quat_rot.x, quat_rot.y, quat_rot.z, quat_rot.w); // to be able to pass to EULER
-			cmp_transf->quatRotation = { quat_rot.x, quat_rot.y, quat_rot.z, quat_rot.w };
-			cmp_transf->eulerRotation = math::RadToDeg(math_quat.ToEulerXYZ());
-
-			CONSOLELOG("Mesh rotation { %f,%f,%f }", cmp_transf->eulerRotation.x, cmp_transf->eulerRotation.y, cmp_transf->eulerRotation.z);
-
-			aux->components.push_back(cmp_transf);
-
-			if (correct_num_faces)
-			{
-				App->scene_loader->scene_objects.push_back(go);
-
-				
-			}
-			else
-			{
-				CONSOLELOG("Mesh not pushed into scene");
-			}
+			my_mesh->UnloadVRAMBuffers();
+			CONSOLELOG("Error loading mesh");
 		}
-		
-	}				
+		else
+		{
+			//DEBUG BOX
+			AABB debug_box(float3::zero, float3::zero);
+			debug_box.Enclose((float3*)aimesh->mVertices, aimesh->mNumVertices);
+			my_mesh->outside_box = debug_box;
+
+			ComponentMesh* cmp_mesh = new ComponentMesh(aux);
+			cmp_mesh->AttachMesh(my_mesh);
+			cmp_mesh->Enable();
+			aux->AddComponent((ComponentMesh*)cmp_mesh);
+
+			ComponentMaterial* cmp_mat = new ComponentMaterial(aux);
+			cmp_mat->Enable();
+			cmp_mat->mat = mats[aimesh->mMaterialIndex];
+			cmp_mat->mat->path = tex_path;
+			aux->AddComponent((ComponentMaterial*)cmp_mat);
+		}
+
+		ComponentTransf* cmp_transf = new ComponentTransf(aux);
+		float3 _pos(translation.x, translation.y, translation.z);
+		float3 _scale(scaling.x, scaling.y, scaling.z);
+		Quat _rot(quat_rot.x, quat_rot.y, quat_rot.z, quat_rot.w);
+		cmp_transf->SetTransform(_pos, _scale, _rot);
+
+		aux->AddComponent((ComponentTransf*)cmp_transf);
+
+
+		App->scene_loader->scene_objects.push_back(aux);
+		App->camera->Focus(my_mesh->outside_box);
+
+	}
 	for (uint i = 0; i < node->mNumChildren; i++)
 	{
-		LoadMesh(_scene, node->mChildren[i], go);
+		LoadMesh(_scene, node->mChildren[i], first, mats);
 	}
-	*/
+	
 }
+
 
 void AssimpToConsoleLog(const char * str, char * userData)
 {

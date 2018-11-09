@@ -30,6 +30,8 @@ public:
 	uint id_texture_coords = 0;
 	uint num_texture_coords = 0;
 
+	AABB outside_box;
+
 };
 
 

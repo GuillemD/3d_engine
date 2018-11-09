@@ -24,6 +24,13 @@ void ComponentTransf::SetPosition(float3 _pos)
 	RecalculateTransform();
 }
 
+void ComponentTransf::SetPosition(float _x, float _y, float _z)
+{
+	position.x = _x; position.y = _y; position.z = _z;
+
+	RecalculateTransform();
+}
+
 float3 ComponentTransf::GetPosition() const
 {
 	return position;
@@ -32,6 +39,13 @@ float3 ComponentTransf::GetPosition() const
 void ComponentTransf::SetScale(float3 _sca)
 {
 	scale = _sca;
+
+	RecalculateTransform();
+}
+
+void ComponentTransf::SetScale(float _x, float _y, float _z)
+{
+	scale.x = _x; scale.y = _y; scale.z = _z;
 
 	RecalculateTransform();
 }
@@ -62,6 +76,16 @@ Quat ComponentTransf::GetRotation() const
 float3 ComponentTransf::GetEulerRotation() const
 {
 	return eulerRotation;
+}
+
+void ComponentTransf::SetTransform(float3 _pos, float3 _scale, Quat _rot)
+{
+	position = _pos;
+	scale = _scale;
+	quatRotation = _rot;
+
+	RecalculateTransform();
+
 }
 
 void ComponentTransf::SetLocalTransf(const float4x4 & l_transf)
