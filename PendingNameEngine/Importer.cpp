@@ -73,7 +73,7 @@ bool Importer::Import(const std::string &full_path)
 
 void Importer::LoadMesh(const aiScene* _scene, const aiNode * node, GameObject* parent_go)
 {
-	aiString s_name = node->mName;
+	/*aiString s_name = node->mName;
 	GameObject* go = parent_go;
 	bool correct_num_faces = false;
 
@@ -93,16 +93,16 @@ void Importer::LoadMesh(const aiScene* _scene, const aiNode * node, GameObject* 
 
 		if (aimesh->HasPositions()) //Vertex
 		{
-			my_mesh->data.num_vertex = aimesh->mNumVertices;
-			my_mesh->data.vertex = new vec[my_mesh->data.num_vertex];
-			memcpy(my_mesh->data.vertex, aimesh->mVertices, sizeof(vec)*my_mesh->data.num_vertex);
+			my_mesh->num_vertex = aimesh->mNumVertices;
+			my_mesh->vertex = new vec[my_mesh->num_vertex];
+			memcpy(my_mesh->vertex, aimesh->mVertices, sizeof(vec)*my_mesh->num_vertex);
 			CONSOLELOG("New Mesh with:");
-			CONSOLELOG("   - %d vertices", my_mesh->data.num_vertex);
+			CONSOLELOG("   - %d vertices", my_mesh->num_vertex);
 
-			glGenBuffers(1, (GLuint*) &(my_mesh->data.id_vertex));
+			glGenBuffers(1, (GLuint*) &(my_mesh->id_vertex));
 
-			glBindBuffer(GL_ARRAY_BUFFER, my_mesh->data.id_vertex);
-			glBufferData(GL_ARRAY_BUFFER, sizeof(vec)*my_mesh->data.num_vertex, my_mesh->data.vertex, GL_STATIC_DRAW);
+			glBindBuffer(GL_ARRAY_BUFFER, my_mesh->id_vertex);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(vec)*my_mesh->num_vertex, my_mesh->vertex, GL_STATIC_DRAW);
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 		}
@@ -112,9 +112,9 @@ void Importer::LoadMesh(const aiScene* _scene, const aiNode * node, GameObject* 
 		}
 		if (aimesh->HasFaces())
 		{
-			my_mesh->data.num_index = aimesh->mNumFaces * 3;
-			my_mesh->data.index = new uint[my_mesh->data.num_index];
-			CONSOLELOG("   - %d indices", my_mesh->data.num_index);
+			my_mesh->num_index = aimesh->mNumFaces * 3;
+			my_mesh->index = new uint[my_mesh->num_index];
+			CONSOLELOG("   - %d indices", my_mesh->num_index);
 
 			for (uint i = 0; i < aimesh->mNumFaces; ++i)
 			{
@@ -124,54 +124,38 @@ void Importer::LoadMesh(const aiScene* _scene, const aiNode * node, GameObject* 
 				}
 				else
 				{
-					memcpy(&my_mesh->data.index[i * 3], aimesh->mFaces[i].mIndices, sizeof(uint) * 3);
+					memcpy(&my_mesh->index[i * 3], aimesh->mFaces[i].mIndices, sizeof(uint) * 3);
 					correct_num_faces = true;
 
 				}
 			}
-			CONSOLELOG("   - %d triangles", my_mesh->data.num_index / 3);
+			CONSOLELOG("   - %d triangles", my_mesh->num_index / 3);
 
 			//index
-			glGenBuffers(1, (GLuint*) &(my_mesh->data.id_index));
+			glGenBuffers(1, (GLuint*) &(my_mesh->id_index));
 
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_mesh->data.id_index);
-			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * my_mesh->data.num_index, my_mesh->data.index, GL_STATIC_DRAW);
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, my_mesh->id_index);
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint) * my_mesh->num_index, my_mesh->index, GL_STATIC_DRAW);
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		}
 		else
 		{
 			CONSOLELOG("WARNING! Mesh with no faces. Will not load.");
 		}
-		if (aimesh->HasNormals())
-		{
-			my_mesh->data.num_normals = aimesh->mNumVertices * 3;
-			my_mesh->data.normals = new vec[my_mesh->data.num_normals];
-			memcpy(my_mesh->data.normals, aimesh->mNormals, sizeof(float)*my_mesh->data.num_normals);
-
-			CONSOLELOG("   - %d normals", my_mesh->data.num_normals);
-			glGenBuffers(1, (GLuint*)&(my_mesh->data.id_normals));
-
-			glBindBuffer(GL_ARRAY_BUFFER, my_mesh->data.id_normals);
-			glBufferData(GL_ARRAY_BUFFER, sizeof(vec)*my_mesh->data.num_normals, my_mesh->data.normals, GL_STATIC_DRAW);
-			glBindBuffer(GL_ARRAY_BUFFER, 0);
-		}
-		else
-		{
-			CONSOLELOG("WARNING! Mesh has no normals");
-		}
+	
 		if (aimesh->HasTextureCoords(0)) {
 
-			my_mesh->data.num_texture_coords = aimesh->mNumVertices;
-			my_mesh->data.TexCoords = new float[my_mesh->data.num_texture_coords * 3];
+			my_mesh->num_texture_coords = aimesh->mNumVertices;
+			my_mesh->TexCoords = new float[my_mesh->num_texture_coords * 3];
 
-			memcpy(my_mesh->data.TexCoords, aimesh->mTextureCoords[0], sizeof(float)*my_mesh->data.num_texture_coords * 3);
+			memcpy(my_mesh->TexCoords, aimesh->mTextureCoords[0], sizeof(float)*my_mesh->num_texture_coords * 3);
 
-			CONSOLELOG("   - %d texture coords", my_mesh->data.num_texture_coords);
+			CONSOLELOG("   - %d texture coords", my_mesh->num_texture_coords);
 
-			glGenBuffers(1, (GLuint*)&my_mesh->data.id_texture_coords);
+			glGenBuffers(1, (GLuint*)&my_mesh->id_texture_coords);
 
-			glBindBuffer(GL_ARRAY_BUFFER, my_mesh->data.id_texture_coords);
-			glBufferData(GL_ARRAY_BUFFER, sizeof(uint) * my_mesh->data.num_texture_coords * 3, my_mesh->data.TexCoords, GL_STATIC_DRAW);
+			glBindBuffer(GL_ARRAY_BUFFER, my_mesh->id_texture_coords);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(uint) * my_mesh->num_texture_coords * 3, my_mesh->TexCoords, GL_STATIC_DRAW);
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 		}
@@ -183,7 +167,7 @@ void Importer::LoadMesh(const aiScene* _scene, const aiNode * node, GameObject* 
 		//DEBUG BOX
 		AABB debug_box(float3::zero, float3::zero);
 		debug_box.Enclose((float3*)aimesh->mVertices, aimesh->mNumVertices);
-		my_mesh->outside_box = debug_box;
+		//my_mesh->outside_box = debug_box;
 
 		
 		ComponentMesh* cmp_mesh = new ComponentMesh(aux);
@@ -192,11 +176,11 @@ void Importer::LoadMesh(const aiScene* _scene, const aiNode * node, GameObject* 
 
 		aux->components.push_back(cmp_mesh);
 		//TODO: get material
-		/*ComponentMaterial* cmp_mat = new ComponentMaterial(aux);
+		ComponentMaterial* cmp_mat = new ComponentMaterial(aux);
 		cmp_mat->Enable();
 		cmp_mat->mat = scene_materials[aimesh->mMaterialIndex];
 
-		aux->components.push_back(cmp_mat);*/
+		aux->components.push_back(cmp_mat);
 	
 
 		if (node != nullptr)
@@ -226,7 +210,7 @@ void Importer::LoadMesh(const aiScene* _scene, const aiNode * node, GameObject* 
 			{
 				App->scene_loader->scene_objects.push_back(go);
 
-				App->camera->Focus(my_mesh->outside_box);
+				
 			}
 			else
 			{
@@ -239,7 +223,7 @@ void Importer::LoadMesh(const aiScene* _scene, const aiNode * node, GameObject* 
 	{
 		LoadMesh(_scene, node->mChildren[i], go);
 	}
-	
+	*/
 }
 
 void AssimpToConsoleLog(const char * str, char * userData)

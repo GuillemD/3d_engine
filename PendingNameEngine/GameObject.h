@@ -1,11 +1,14 @@
 #ifndef __GAME_OBJECT_H__
 #define __GAME_OBJECT_H__
+
 #include <string>
 #include <vector>
 #include "Globals.h"
 
 enum ComponentType;
 class Component;
+class Material;
+class Mesh;
 
 
 class GameObject
@@ -13,36 +16,46 @@ class GameObject
 public:
 
 	GameObject(std::string _name, GameObject* parent_go = nullptr, bool _active = true);
-	~GameObject();
+	virtual ~GameObject();
+
+	void Update();
 
 	bool IsActive() const;
 	void SetActive(bool _active);
-	bool IsStatic()const;
+	bool IsStatic() const;
 	void SetStatic(bool _static);
+	bool IsSelected() const;
+	void SetSelected(bool _selected);
+
+	void SetName(const std::string& n);
+	std::string GetName() const;
+
 
 	void Draw();
 	void DrawInHierarchy();
 	void DrawInInspector();
 
-	Component* GetComponent(ComponentType type) const;
+	Component* GetComponentByType(ComponentType type) const;
 	void AddComponent(Component* cp);
+	std::vector<Component*> GetComponents() const;
 
 	GameObject* GetParent() const;
 	void SetParent(GameObject* _parent);
 
 	GameObject* CreateChild(std::string _name);
 	void PushChild(GameObject* _child);
+	std::vector<GameObject*> GetChildren() const;
 
 public:
 
-	bool staticgo;
-	bool active;
+	GameObject* parent = nullptr;
+	std::vector<GameObject*> children;
+	bool staticgo = false;
+	bool active = true;
+	bool selected = false;
 	std::string name;
 	std::vector<Component*> components;
 
-	GameObject* parent = nullptr;
-	std::vector<GameObject*> children;
-	
 
 };
 #endif //__GAME_OBJECT_H__

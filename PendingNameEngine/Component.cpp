@@ -4,6 +4,7 @@
 
 Component::Component()
 {
+	active = true;
 	
 }
 
@@ -37,13 +38,33 @@ bool Component::IsActive()
 	return active;
 }
 
+void Component::SetType(ComponentType ct)
+{
+	MyType = ct;
+}
+
 ComponentType Component::GetType() const
 {
 
 	return MyType;
 }
 
+void Component::SetOwner(GameObject * own)
+{
+	my_go = own;
+}
+
 GameObject * Component::GetOwner() const
 {
 	return my_go;
+}
+
+void Component::SetName(const char * n)
+{
+	name = n;
+}
+
+const char * Component::GetName() const
+{
+	return name;
 }

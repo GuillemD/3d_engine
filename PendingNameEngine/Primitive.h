@@ -61,4 +61,5 @@ public:
 	vec normal;
 	float constant;
 };
+
 #endif // __PRIMITIVE_H__

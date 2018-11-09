@@ -14,7 +14,7 @@ class Component
 public:
 
 	Component();
-	~Component();
+	virtual ~Component();
 
 	virtual void Enable();
 	virtual void Update();
@@ -23,13 +23,20 @@ public:
 	virtual void DrawInInspector() {};
 
 	void SetActive(bool _active);
-	bool IsActive();
+	virtual bool IsActive();
+
+	void SetType(ComponentType ct);
 	ComponentType GetType() const;
+
+	void SetOwner(GameObject* own);
 	GameObject* GetOwner() const;
 
-	std::string name;
-public:
+	virtual void SetName(const char* n);
+	const char* GetName() const;
 
+	
+public:
+	const char* name;
 	ComponentType MyType;
 	bool active;
 	GameObject* my_go = nullptr;

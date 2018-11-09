@@ -25,10 +25,9 @@ void ComponentMesh::DrawInInspector()
 	{
 		if (ImGui::CollapsingHeader("Component Mesh"))
 		{
-			ImGui::Text("Num Vertices: %d", my_mesh->data.num_vertex);
-			ImGui::Text("Num Index: %d", my_mesh->data.num_index);
-			ImGui::Text("Num Normals: %d", my_mesh->data.num_normals);
-			ImGui::Text("Num TexCoords: %d", my_mesh->data.num_texture_coords);
+			ImGui::Text("Num Vertices: %d", my_mesh->num_vertex);
+			ImGui::Text("Num Index: %d", my_mesh->num_index);
+			ImGui::Text("Num TexCoords: %d", my_mesh->num_texture_coords);
 		}
 		
 	}
