@@ -27,24 +27,20 @@ public:
 	float3 GetEulerRotation() const;
 
 	void SetTransform(float3 _pos, float3 _scale, Quat _rot);
-
-	void SetLocalTransf(const float4x4& l_transf);
-	float4x4 GetLocalTransf() const;
-
 	void SetGlobalTransf(const float4x4& g_transf);
-	float4x4 GetGlobalTransf();
+	float4x4 GetGlobalTransf() const;
 
 	void RecalculateTransform();
+	void ChangeTransformEvent();
 
 	void DrawInInspector();
 
 public:
 	float3 position = { 0.0f,0.0f,0.0f };
-	float3 scale = { 1.0f,1.0f,1.0f };
+	float3 scal = { 1.0f,1.0f,1.0f };
 	float3 eulerRotation = { 0.0f,0.0f,0.0f };
 	Quat quatRotation = { 1.0f,0.0f,0.0f,0.0f };
 
-	float4x4 localTransf;
 	float4x4 globalTransf;
 
 };

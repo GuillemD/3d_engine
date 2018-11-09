@@ -11,6 +11,8 @@ ComponentTransf::ComponentTransf(GameObject* _gameobject)
 		my_go = _gameobject;
 		name = "Component Transformation";
 	}
+
+	globalTransf = float4x4::FromTRS(position, quatRotation, scal);
 }
 
 ComponentTransf::~ComponentTransf()
@@ -38,21 +40,21 @@ float3 ComponentTransf::GetPosition() const
 
 void ComponentTransf::SetScale(float3 _sca)
 {
-	scale = _sca;
+	scal = _sca;
 
 	RecalculateTransform();
 }
 
 void ComponentTransf::SetScale(float _x, float _y, float _z)
 {
-	scale.x = _x; scale.y = _y; scale.z = _z;
+	scal.x = _x; scal.y = _y; scal.z = _z;
 
 	RecalculateTransform();
 }
 
 float3 ComponentTransf::GetScale() const
 {
-	return scale;
+	return scal;
 }
 
 void ComponentTransf::SetRotation(Quat _rot)
@@ -81,21 +83,11 @@ float3 ComponentTransf::GetEulerRotation() const
 void ComponentTransf::SetTransform(float3 _pos, float3 _scale, Quat _rot)
 {
 	position = _pos;
-	scale = _scale;
+	scal = _scale;
 	quatRotation = _rot;
 
 	RecalculateTransform();
 
-}
-
-void ComponentTransf::SetLocalTransf(const float4x4 & l_transf)
-{
-	localTransf.Set(l_transf);
-}
-
-float4x4 ComponentTransf::GetLocalTransf() const
-{
-	return localTransf;
 }
 
 void ComponentTransf::SetGlobalTransf(const float4x4 & g_transf)
@@ -103,34 +95,33 @@ void ComponentTransf::SetGlobalTransf(const float4x4 & g_transf)
 	globalTransf.Set(g_transf);
 }
 
-float4x4 ComponentTransf::GetGlobalTransf()
+float4x4 ComponentTransf::GetGlobalTransf() const
 {
-	globalTransf = globalTransf.FromTRS(position, quatRotation, scale);
 	return globalTransf;
 }
 
 void ComponentTransf::RecalculateTransform()
 {
-	localTransf.Set(float4x4::FromTRS(position, quatRotation, scale));
-	float4x4 global_to_replace(globalTransf);
-
-	if (my_go->GetParent() != nullptr) {
-		ComponentTransf* owner_transf = (ComponentTransf*)my_go->GetParent()->GetComponentByType(TRANSFORMATION);
-		if (my_go != nullptr)
-			globalTransf.Set(owner_transf->GetGlobalTransf().Mul(localTransf));
-		else
-			globalTransf.Set(localTransf);
-	}
+	if (GetOwner()->GetParent() == nullptr)
+		globalTransf = float4x4::FromTRS(position, quatRotation, scal);
 	else
-		globalTransf.Set(localTransf);
-
-	std::vector<GameObject*> iterate = my_go->GetChildren();
-	ComponentTransf* child_transf;
-	for (int i = 0; i < iterate.size(); ++i)
 	{
-		child_transf = (ComponentTransf*)iterate[i]->GetComponentByType(TRANSFORMATION);
-		if (child_transf != nullptr)
-			child_transf->RecalculateTransform();
+		ComponentTransf* parent = (ComponentTransf*)GetOwner()->GetParent()->GetComponentByType(TRANSFORMATION);
+		globalTransf = parent->GetGlobalTransf()*float4x4::FromTRS(position, quatRotation, scal);
+	}
+
+	GetOwner()->OnTransformEvent();
+	
+}
+
+void ComponentTransf::ChangeTransformEvent()
+{
+	if (GetOwner()->GetParent() == nullptr)
+		globalTransf = float4x4::FromTRS(position, quatRotation, scal);
+	else
+	{
+		ComponentTransf* parent = (ComponentTransf*)GetOwner()->GetParent()->GetComponentByType(TRANSFORMATION);
+		globalTransf = parent->globalTransf*float4x4::FromTRS(position, quatRotation, scal);
 	}
 }
 
@@ -140,37 +131,36 @@ void ComponentTransf::DrawInInspector()
 	{
 		float3 pos = { position.x, position.y, position.z };
 		float3 rot = { RadToDeg(quatRotation.ToEulerXYZ().x), RadToDeg(quatRotation.ToEulerXYZ().y), RadToDeg(quatRotation.ToEulerXYZ().z) };
-		float3 sc = { scale.x,scale.y,scale.z };
+		float3 sc = { scal.x,scal.y,scal.z };
 
-		if (ImGui::DragFloat3("Position", (float*)&pos, 0.25f, -INFINITY, INFINITY))
+		bool call_update = false;
+		if (!GetOwner()->IsStatic())
 		{
-			/*if (!my_go->IsStatic())
+			if (ImGui::DragFloat3("Position", (float*)&pos, 0.25f, -INFINITY, INFINITY))
 			{
-				position = { pos.x, pos.y, pos.z };
-				RecalculateTransform();
-			}*/
-		}
+				position = { pos.x,pos.y,pos.z };
+				call_update = true;
+			}
 
 
-		if (ImGui::DragFloat3("Rotation", (float*)&rot, 0.15f, -360, 360))
-		{
-			/*if (!my_go->IsStatic())
+			if (ImGui::DragFloat3("Rotation", (float*)&rot, 0.15f, -360, 360))
 			{
-				//TODO rotation
-				RecalculateTransform();
-			}*/
-		}
+				Quat new_rot = Quat::FromEulerXYZ(DegToRad(rot.x), DegToRad(rot.y), DegToRad(rot.z));
+				call_update = true;
+			}
 
 
-		if (ImGui::DragFloat3("Scale", (float*)&sc, 0.05f, 0, INFINITY))
-		{
-			/*if (!my_go->IsStatic())
+			if (ImGui::DragFloat3("Scale", (float*)&sc, 0.05f, 0, INFINITY))
 			{
-				scale = { sc.x, sc.y, sc.z };
-				RecalculateTransform();
-			}*/
+				scal = { sc.x,sc.y,sc.z };
+				call_update = true;
 
+			}
+
+			if (call_update)
+				RecalculateTransform();
 		}
+		
 	}
 		
 

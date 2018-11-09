@@ -19,6 +19,7 @@ public:
 	virtual ~GameObject();
 
 	void Update();
+	void OnTransformEvent();
 
 	bool IsActive() const;
 	void SetActive(bool _active);

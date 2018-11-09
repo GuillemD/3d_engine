@@ -16,13 +16,9 @@ GameObject::GameObject(std::string _name, GameObject* parent_go, bool _active) :
 	{
 		parent_go->PushChild(this);
 	}
-	//TODO bounding box
-	//TODO serialization
-
-	/*if (parent_go->IsStatic())
-		staticgo = true;
-	else
-		staticgo = false;*/
+	
+	ComponentTransf* transform = new ComponentTransf(this);
+	AddComponent((ComponentTransf*)transform);
 }
 
 
@@ -40,6 +36,19 @@ void GameObject::Update()
 	for (uint i = 0; i < components.size(); i++) {
 		components[i]->Update();
 	}*/
+}
+
+void GameObject::OnTransformEvent()
+{
+	for (int i = 0; i < components.size(); ++i)
+	{
+		components[i]->ChangeTransformEvent();
+	}
+
+	for (int i = 0; i < children.size(); ++i)
+	{
+		children[i]->OnTransformEvent();
+	}
 }
 
 bool GameObject::IsActive() const
@@ -96,7 +105,7 @@ void GameObject::Draw()
 	{
 		glMatrixMode(GL_MODELVIEW);
 		glPushMatrix();
-		//glMultMatrixf(aux_transform->GetLocalTransform().Transposed().ptr());
+		glMultMatrixf(aux_transform->GetGlobalTransf().Transposed().ptr());
 
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glBindBuffer(GL_ARRAY_BUFFER, aux_mesh->my_mesh->id_vertex);

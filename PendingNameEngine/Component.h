@@ -21,6 +21,7 @@ public:
 	virtual void Disable();
 
 	virtual void DrawInInspector() {};
+	virtual void ChangeTransformEvent() {};
 
 	void SetActive(bool _active);
 	virtual bool IsActive();

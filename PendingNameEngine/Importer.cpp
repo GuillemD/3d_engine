@@ -211,13 +211,11 @@ void Importer::LoadMesh(const aiScene* _scene, const aiNode * node, GameObject* 
 			aux->AddComponent((ComponentMaterial*)cmp_mat);
 		}
 
-		ComponentTransf* cmp_transf = new ComponentTransf(aux);
+		ComponentTransf* cmp_transf = (ComponentTransf*)aux->GetComponentByType(TRANSFORMATION);
 		float3 _pos(translation.x, translation.y, translation.z);
 		float3 _scale(scaling.x, scaling.y, scaling.z);
 		Quat _rot(quat_rot.x, quat_rot.y, quat_rot.z, quat_rot.w);
 		cmp_transf->SetTransform(_pos, _scale, _rot);
-
-		aux->AddComponent((ComponentTransf*)cmp_transf);
 
 
 		App->scene_loader->scene_objects.push_back(aux);
