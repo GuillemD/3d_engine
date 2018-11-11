@@ -30,6 +30,9 @@ bool Importer::Init(rapidjson::Document& document)
 	stream.callback = AssimpToConsoleLog;
 	aiAttachLogStream(&stream);
 
+	App->CreateNewDirectory("Assets\\Mesh");
+	App->CreateNewDirectory("Library\\Mesh");
+
 	return ret;
 }
 
@@ -117,7 +120,7 @@ void Importer::LoadMesh(const aiScene* _scene, const aiNode * node, GameObject* 
 		if (aimesh->HasPositions() && aimesh != nullptr) //Vertex
 		{
 			my_mesh->num_vertex = aimesh->mNumVertices;
-			my_mesh->vertex = new vec[my_mesh->num_vertex];
+			my_mesh->vertex = new float[my_mesh->num_vertex*3];
 			memcpy(my_mesh->vertex, aimesh->mVertices, sizeof(vec)*my_mesh->num_vertex);
 			CONSOLELOG("New Mesh with:");
 			CONSOLELOG("   - %d vertices", my_mesh->num_vertex);
@@ -194,6 +197,7 @@ void Importer::LoadMesh(const aiScene* _scene, const aiNode * node, GameObject* 
 		}
 		else
 		{
+			BinarySave(my_mesh);
 			//DEBUG BOX
 			AABB debug_box(float3::zero, float3::zero);
 			debug_box.Enclose((float3*)aimesh->mVertices, aimesh->mNumVertices);
@@ -227,6 +231,105 @@ void Importer::LoadMesh(const aiScene* _scene, const aiNode * node, GameObject* 
 		LoadMesh(_scene, node->mChildren[i], first, mats);
 	}
 	
+}
+
+void Importer::BinarySave(Mesh * mesh)
+{
+	uint elements_num[3] = { mesh->num_index, mesh->num_vertex * 3, mesh->num_texture_coords * 3 };
+	uint total_size = sizeof(elements_num) + sizeof(uint)*mesh->num_index + sizeof(float)*(mesh->num_vertex * 3 + mesh->num_texture_coords * 3);
+
+	char* data = new char[total_size];
+	char* cursor = data;
+
+	//number of elements
+	uint size = sizeof(elements_num);
+	memcpy(cursor, elements_num, size);
+	cursor += size;
+
+	//indices
+	size = sizeof(uint)*elements_num[0];
+	memcpy(cursor, mesh->index, size);
+	cursor += size;
+
+	//vertices
+	size = sizeof(float)*elements_num[1];
+	memcpy(cursor, mesh->vertex, size);
+	cursor += size;
+
+	//texture_coords
+	size = sizeof(float)*elements_num[2];
+	memcpy(cursor, mesh->TexCoords, size);
+	cursor += size;
+
+	//Serialize data to file
+	char file[69];
+	sprintf_s(file, "Library\\Mesh\\Mesh_%d.pn", num_mesh++);
+
+	FILE* f = fopen(file, "wb");
+	fwrite(data, sizeof(char), total_size, f);
+	fclose(f);
+
+	RELEASE_ARRAY(data);
+
+	CONSOLELOG("Created %s.", file);
+}
+
+void* Importer::BinaryLoad(const char * file_path)
+{
+	Mesh* mesh = new Mesh();
+	//Open file path + size
+	FILE* file = fopen(file_path, "rb");
+	fseek(file, 0L, SEEK_END);
+	uint total_size = ftell(file);
+	rewind(file);
+
+	// Copy file to buffer
+	char* data = new char[total_size];
+	char* cursor = data;
+	fread(data, sizeof(char), total_size, file);
+	fclose(file);
+
+	//Read num_elements
+	uint elements_num[3];
+	uint size = sizeof(elements_num);
+	memcpy(elements_num, cursor, size);
+	cursor += size;
+
+	//Read index
+	uint* ind = new uint[elements_num[0]];
+	size = sizeof(uint)*elements_num[0];
+	memcpy(ind, cursor, size);
+	cursor += size;
+
+	//Read vertex
+	float* vert = new float[elements_num[1]];
+	size = sizeof(float)*elements_num[1];
+	memcpy(vert, cursor, size);
+	cursor += size;
+
+	//Read TexCoords
+	float* tex_coords = new float[elements_num[2]];
+	size = sizeof(float)*elements_num[2];
+	memcpy(tex_coords, cursor, size);
+	cursor += size;
+
+	//Fill mesh with info
+	mesh->num_index = elements_num[0];
+	mesh->index = ind;
+	mesh->num_vertex = elements_num[1] / 3;
+	mesh->vertex = vert;
+	mesh->num_texture_coords = elements_num[2] / 3;
+	mesh->TexCoords = tex_coords;
+	
+	GameObject* go = App->scene_loader->CreateGameObject("GameObject");
+	ComponentMesh* cmp_mesh = new ComponentMesh(go);
+	
+	cmp_mesh->AttachMesh(mesh);
+	go->AddComponent((ComponentMesh*)cmp_mesh);
+
+	RELEASE_ARRAY(data);
+
+	return mesh;
 }
 
 

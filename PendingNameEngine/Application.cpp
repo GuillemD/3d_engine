@@ -250,6 +250,43 @@ bool Application::LoadConfig()
 	return ret;
 }
 
+void Application::CreateNewDirectory(const char * output_directory) const
+{
+
+	if (!CreateDirectory(output_directory, NULL))
+	{
+		if (ERROR_ALREADY_EXISTS == GetLastError())
+		{
+			CONSOLELOG("Folder already exists");
+			return;
+		}
+		else if (ERROR_PATH_NOT_FOUND == GetLastError())
+		{
+			CONSOLELOG("Path not found");
+			return;
+		}
+			
+	}
+	
+}
+
+bool Application::FileCopy(const char * file_to_copy, const char * output_directory)
+{
+	bool ret = true;
+
+	std::string curr_file = file_to_copy;
+	uint cut = curr_file.find_last_of("\\");
+	std::string dest_file = output_directory;
+	if (dest_file.find_last_of("\\") == dest_file.size() - 1)
+		dest_file += curr_file.substr(cut + 1, curr_file.size() - cut + 1);
+	else
+		dest_file += curr_file.substr(cut, curr_file.size() - cut);
+
+	ret = CopyFile(file_to_copy, dest_file.c_str(), false);
+
+	return ret;
+}
+
 bool Application::SaveConfig()
 {
 	bool ret = true;

@@ -20,8 +20,13 @@ public:
 	bool Import(const std::string &full_path);
 	void LoadMesh(const aiScene* _scene, const aiNode * node, GameObject* parent_go, const std::vector<Material*>& mats);
 
+	void BinarySave(Mesh* mesh);
+	void* BinaryLoad(const char* file_path);
+
 public:
 	std::string tex_path;
+private:
+	uint num_mesh = 0;
 };
 
 #endif // !__IMPORTER_H__

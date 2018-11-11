@@ -75,6 +75,9 @@ public:
 	bool SaveConfig();
 	bool LoadConfig();
 
+	void CreateNewDirectory(const char* output_directory) const;
+	bool FileCopy(const char* file_to_copy, const char* output_directory);
+
 
 private:
 

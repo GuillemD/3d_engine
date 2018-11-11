@@ -22,7 +22,7 @@ public:
 
 	uint id_vertex = 0; // unique vertex in VRAM
 	uint num_vertex = 0;
-	vec* vertex = nullptr;
+	float* vertex = nullptr;
 
 	uint num_faces = 0;
 
