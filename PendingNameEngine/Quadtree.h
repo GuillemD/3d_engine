@@ -6,14 +6,22 @@
 class Quadtree
 {
 public:
-	Quadtree(AABB limits);
+	Quadtree();
+	Quadtree(AABB _qtbb, int _currentsubdivisions);
 	~Quadtree();
 	void Clear();
 	void Insert(GameObject* _go);
 	void Remove(GameObject* _go);
-	void Intersect(std::vector<GameObject*>& _go, )
+	void SubDivide();
+	void CheckIntersections(std::vector<GameObject*>& _go, AABB* _goboundingbox);
+	void RenderQuadTree();
 
-	
+public:
+	AABB * quadtreeboundingbox;
+	int my_subdivision;
+	std::vector<Quadtree*> childs;
+	std::vector<GameObject*> my_objects;
+	int maxcapacity= 1;
 };
 
 

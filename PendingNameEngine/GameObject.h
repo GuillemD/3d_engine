@@ -56,7 +56,7 @@ public:
 	bool selected = false;
 	std::string name;
 	std::vector<Component*> components;
-	AABB myboundingbox;
+	//AABB myboundingbox;
 
 };
 #endif //__GAME_OBJECT_H__
