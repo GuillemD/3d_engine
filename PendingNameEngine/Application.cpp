@@ -56,6 +56,7 @@ bool Application::Init()
 
 	document.ParseStream(is);
 
+
 	// Call Init() in all modules
 
 	for (std::list<Module*>::iterator item = list_modules.begin(); item != list_modules.end(); item++) {

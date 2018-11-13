@@ -1,6 +1,7 @@
 #ifndef __COMPONENT_H__
 #define __COMPONENT_H__
 #include <string>
+#include "SerializationManager.h"
 enum ComponentType
 {
 	MESH = 1,
@@ -23,6 +24,9 @@ public:
 	virtual void DrawInInspector() {};
 	virtual void ChangeTransformEvent() {};
 
+	//virtual void Save(JSON_Value* component) const = 0;
+	//virtual void Load(JSON_Value* component) = 0;
+
 	void SetActive(bool _active);
 	virtual bool IsActive();
 
@@ -41,6 +45,8 @@ public:
 	ComponentType MyType;
 	bool active;
 	GameObject* my_go = nullptr;
+
+	uint UUID;
 
 };
 

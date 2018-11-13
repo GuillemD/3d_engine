@@ -2,9 +2,11 @@
 #include "GameObject.h"
 
 
+
 Component::Component()
 {
 	active = true;
+	//UUID = generateUID();
 	
 }
 

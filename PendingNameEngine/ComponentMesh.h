@@ -12,6 +12,9 @@ public:
 
 	void DrawInInspector();
 
+	//void Save(JSON_Value* go)const override;
+	//void Load(JSON_Value* go);
+	
 	void AttachMesh(Mesh* _mesh);
 	Mesh* my_mesh;
 

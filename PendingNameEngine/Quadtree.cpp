@@ -1,6 +1,5 @@
 #include "Quadtree.h"
-
-Quadtree::Quadtree(AABB* limits)
+/*Quadtree::Quadtree(AABB* limits)
 {
 }
 
@@ -17,3 +16,4 @@ void Quadtree::Insert(GameObject * _go)
 {
 	if(_go->IsStatic() && )
 }
+*/

@@ -14,6 +14,7 @@
 #include "rapidjson\document.h"
 #include "rapidjson\filereadstream.h"
 #include "rapidjson\filewritestream.h"
+//#include "rng.h"
 
 class Configuration;
 

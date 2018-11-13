@@ -6,12 +6,12 @@
 class Quadtree
 {
 public:
-	Quadtree(AABB limits);
+	/*Quadtree(AABB limits);
 	~Quadtree();
 	void Clear();
 	void Insert(GameObject* _go);
 	void Remove(GameObject* _go);
-	void Intersect(std::vector<GameObject*>& _go, )
+	void Intersect(std::vector<GameObject*>& _go, )*/
 
 	
 };

@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 #include "Globals.h"
+//#include "rng.h"
+#include "SerializationManager.h"
 
 enum ComponentType;
 class Component;
@@ -16,7 +18,7 @@ class GameObject
 public:
 
 	GameObject(std::string _name, GameObject* parent_go = nullptr, bool _active = true);
-	virtual ~GameObject();
+	~GameObject();
 
 	void Update();
 	void OnTransformEvent();
@@ -47,6 +49,9 @@ public:
 	void PushChild(GameObject* _child);
 	std::vector<GameObject*> GetChildren() const;
 
+	void Save(JSON_Value* go);
+	void Load(JSON_Value* go);
+
 public:
 
 	GameObject* parent = nullptr;
@@ -56,7 +61,10 @@ public:
 	bool selected = false;
 	std::string name;
 	std::vector<Component*> components;
-	AABB myboundingbox;
+	//AABB myboundingbox;
+
+	uint UUID;
+	uint parentUUID;
 
 };
 #endif //__GAME_OBJECT_H__

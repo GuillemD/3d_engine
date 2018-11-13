@@ -12,10 +12,7 @@
 
 GameObject::GameObject(std::string _name, GameObject* parent_go, bool _active) : parent(parent_go), active(_active), name(_name)
 {
-	if (parent_go != nullptr)
-	{
-		parent_go->PushChild(this);
-	}
+	//UUID = generateUID();
 	
 	ComponentTransf* transform = new ComponentTransf(this);
 	AddComponent((ComponentTransf*)transform);
@@ -25,6 +22,23 @@ GameObject::GameObject(std::string _name, GameObject* parent_go, bool _active) :
 
 GameObject::~GameObject()
 {
+	std::vector<Component*>::iterator it_cp;
+	it_cp = components.begin();
+	while (it_cp != components.end())
+	{
+		RELEASE((*it_cp));
+		it_cp++;
+	}
+	components.clear();
+
+	std::vector<GameObject*>::iterator it_c;
+	it_c = children.begin();
+	while (it_c != children.end())
+	{
+		RELEASE((*it_c));
+		it_c++;
+	}
+	children.clear();
 }
 
 void GameObject::Update()
@@ -246,4 +260,51 @@ void GameObject::PushChild(GameObject* _child)
 std::vector<GameObject*> GameObject::GetChildren() const
 {
 	return children;
+}
+
+void GameObject::Save(JSON_Value * go) 
+{
+	JSON_Value* gameObject = go->createValue();
+
+	gameObject->addUint("UUID", UUID);
+	gameObject->addUint("ParentUUID", (parent == App->scene_loader->root) ? 0 : parent->UUID);
+	gameObject->addString("Name", name.c_str());
+
+	JSON_Value* Components = go->createValue();
+	Components->convertToArray();
+
+	for (std::vector<Component*>::iterator it_c = components.begin(); it_c != components.end(); it_c++)
+	{
+		//(*it_c)->Save(Components);
+	}
+
+	gameObject->addValue("Components", Components);
+
+	go->addValue("", gameObject);
+
+	for (std::vector<GameObject*>::iterator it_c = children.begin(); it_c != children.end(); it_c++)
+	{
+		(*it_c)->Save(go);
+	}
+}
+
+void GameObject::Load(JSON_Value * go)
+{
+	UUID = go->getUint("UUID");
+	parentUUID = go->getUint("ParentUUID");
+	name = go->getString("Name");
+
+	JSON_Value* Components = go->getValue("Components"); //It is an array of values
+	if (Components->getRapidJSONValue()->IsArray()) //Just make sure
+	{
+		for (int i = 0; i < Components->getRapidJSONValue()->Size(); i++)
+		{
+			JSON_Value* componentData = Components->getValueFromArray(i); //Get the component data
+			//Component* component = new Component();
+			//component->SetType((ComponentType)componentData->getInt("Type"));
+			//component->Load(componentData); //Load its info
+		}
+	}
+
+	
 }
