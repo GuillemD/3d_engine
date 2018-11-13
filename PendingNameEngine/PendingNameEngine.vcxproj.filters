@@ -528,7 +528,9 @@
     <ClInclude Include="ImGui\imstb_textedit.h">
       <Filter>Sources\Libraries\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="ComponentCamera.h" />
+    <ClInclude Include="ComponentCamera.h">
+      <Filter>Sources\GameObjectsAndComponents\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">
@@ -744,7 +746,9 @@
     <ClCompile Include="ImGui\imgui_impl_opengl2.cpp">
       <Filter>Sources\Libraries\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="ComponentCamera.cpp" />
+    <ClCompile Include="ComponentCamera.cpp">
+      <Filter>Sources\GameObjectsAndComponents\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="MathGeoLib\Math\float2.inl">

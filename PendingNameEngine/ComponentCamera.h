@@ -8,27 +8,29 @@
 
 class ComponentCamera : public Component {
 public:
+
 	ComponentCamera();
 	~ComponentCamera();
 
 	void SetAspectRatio(float _aspectratio);
 	void DrawCameraBoundingBox();
-
+	void DrawCameraFrustum();
 
 	float GetNearPlaneDist() const;
 	float GetFarPlaneDist() const;
 	float GetFOV() const;
 	float GetAspectRatio() const;
 
-	void SetNearPlaneDist(float dist);
-	void SetFarPlaneDist(float dist);
-	void SetFOV(float fov);
+	void SetNearPlaneDist(float _dist);
+	void SetFarPlaneDist(float _dist);
+	void SetFOV(float _fov);
 	
-	void Look(const float3& position);
+	void Look(const float3& _position);
 
 	float* GetOpenGLViewMatrix();
 	float* GetOpenGLProjectionMatrix();
 
+	void AttachToGo(GameObject* _go);
 public:
 	Frustum camerafrustum;
 	AABB cameraboundingbox;

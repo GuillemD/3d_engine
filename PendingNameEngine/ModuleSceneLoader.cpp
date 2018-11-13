@@ -28,7 +28,8 @@ bool ModuleSceneLoader::Start()
 	App->camera->LookAt(vec3(0.0f, 3.0f, 0.0f));
 
 	App->renderer3D->OnResize(App->window->width, App->window->height);
-
+	scene_objects[0]->AddComponent();
+	
 	return ret; 
 }
 
