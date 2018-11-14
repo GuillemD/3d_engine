@@ -71,6 +71,18 @@ void Quadtree::Insert(GameObject * _go)
 
 void Quadtree::Remove(GameObject * _go)
 {
+	if (childs[0] != nullptr) {
+		for (int i = 0; i < 4; i++) {
+			childs[0]->Remove(_go);
+		}
+	}
+	else {
+		for (std::vector<GameObject*>::iterator item = my_objects.begin(); item != my_objects.end(); item++) {
+			if ((*item)==_go) {
+				my_objects.erase(item);
+			}
+		}
+	}
 }
 
 void Quadtree::SubDivide()
