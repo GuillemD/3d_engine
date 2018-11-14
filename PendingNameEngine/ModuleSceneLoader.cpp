@@ -25,13 +25,29 @@ bool ModuleSceneLoader::Start()
 	App->importer->Import(".//Assets//test2.fbx");
 	
 	
-	GlobalQuadTree = new Quadtree(AABB(vec(-20, -20, -20), vec(20, 20, 20)), 0);
+	GlobalQuadTree = new Quadtree(AABB(vec(-30, -20, -30), vec(10, 20, 10)), 0);
+
+	
+	
 
 
 	App->camera->Move(vec3(0.0f, 10.0f, 10.0f));
 	App->camera->LookAt(vec3(0.0f, 3.0f, 0.0f));
 
 	App->renderer3D->OnResize(App->window->width, App->window->height);
+
+	for (uint i = 0; i < scene_objects.size(); i++)
+	{
+		scene_objects[i]->staticgo = true;
+	}
+
+
+	for (uint i = 0; i < scene_objects.size(); i++)
+	{
+		if (scene_objects[i]->IsActive())
+			GlobalQuadTree->Insert(scene_objects[i]);
+
+	}
 
 	return ret; 
 }

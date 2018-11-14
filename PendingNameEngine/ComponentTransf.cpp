@@ -102,14 +102,18 @@ float4x4 ComponentTransf::GetGlobalTransf() const
 
 void ComponentTransf::RecalculateTransform()
 {
-	if (GetOwner()->GetParent() == nullptr)
+	if (GetOwner()->GetParent() == nullptr) {
 		globalTransf = float4x4::FromTRS(position, quatRotation, scal);
+		
+	}
+		
 	else
 	{
 		ComponentTransf* parent = (ComponentTransf*)GetOwner()->GetParent()->GetComponentByType(TRANSFORMATION);
 		globalTransf = parent->GetGlobalTransf()*float4x4::FromTRS(position, quatRotation, scal);
+		
 	}
-
+	
 	GetOwner()->OnTransformEvent();
 	
 }

@@ -38,7 +38,7 @@ void Quadtree::Clear()
 void Quadtree::Insert(GameObject * _go)
 {
 	if (_go != nullptr) {
-		if (quadtreeboundingbox->Intersects(_go->boundingbox)) {
+		if (quadtreeboundingbox->Intersects(_go->boundingbox) && _go->IsStatic()) {
 			if (childs[0] != nullptr) {
 				for (int i = 0; i < 4; i++) {
 
@@ -50,9 +50,10 @@ void Quadtree::Insert(GameObject * _go)
 			else {
 				my_objects.push_back(_go);
 				if (my_objects.size() > maxcapacity) {
-					if(childs[0]!=nullptr)
-					SubDivide();
-
+					if (childs[0] == nullptr) {
+						SubDivide();
+					}
+				
 					for (int i = 0; i < my_objects.size(); i++) {
 						for (int j = 0; j < 4; j++) {
 							childs[j]->Insert(my_objects[i]);

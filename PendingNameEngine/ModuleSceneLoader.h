@@ -22,6 +22,8 @@ public:
 	void DrawSceneGO();
 	void DrawHierarchy();
 	void DrawGOBoundingBoxes();
+
+	
 	//Create GO
 	GameObject* CreateGameObject(std::string _name);
 	//Utility

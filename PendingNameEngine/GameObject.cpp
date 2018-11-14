@@ -186,7 +186,11 @@ void GameObject::DrawInInspector()
 	ImGui::SameLine();
 	ImGui::Checkbox("active", &active);
 	ImGui::SameLine();
-	ImGui::Checkbox("static", &staticgo);
+	if (ImGui::Checkbox("static", &staticgo)) {
+		if (staticgo) {
+			App->scene_loader->GlobalQuadTree->Insert(this);
+		}
+	}
 
 	for (std::vector<Component*>::const_iterator c_it = components.begin(); c_it != components.end(); c_it++)
 	{
