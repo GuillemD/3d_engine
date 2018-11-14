@@ -37,6 +37,8 @@ public:
 	void DrawInHierarchy();
 	void DrawInInspector();
 
+	void RenderBoundingBox();
+
 	Component* GetComponentByType(ComponentType type) const;
 	void AddComponent(Component* cp);
 	std::vector<Component*> GetComponents() const;

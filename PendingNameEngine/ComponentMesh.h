@@ -13,6 +13,7 @@ public:
 	void DrawInInspector();
 
 	void AttachMesh(Mesh* _mesh);
+	void UpdateBoundingBox();
 	Mesh* my_mesh;
 
 };

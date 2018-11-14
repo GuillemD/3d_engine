@@ -38,3 +38,8 @@ void ComponentMesh::AttachMesh(Mesh * _mesh)
 {
 	my_mesh = _mesh;
 }
+
+void ComponentMesh::UpdateBoundingBox()
+{
+
+}

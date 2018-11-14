@@ -8,9 +8,9 @@ Quadtree::Quadtree(AABB _qtbb, int _currentsubdivisions)
 {
 	quadtreeboundingbox = new AABB(_qtbb);
 	my_subdivision = _currentsubdivisions;
-
+	
 	for (int i = 0; i < 4; i++) {
-		childs[i] = nullptr;
+		childs.push_back(nullptr);
 	}
 }
 

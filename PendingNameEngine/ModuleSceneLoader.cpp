@@ -5,6 +5,7 @@
 #include "GameObject.h"
 #include "ComponentMaterial.h"
 
+
 #include "OpenGL.h"
 
 
@@ -21,9 +22,12 @@ bool ModuleSceneLoader::Start()
 	bool ret = true;
 
 	
-	App->importer->Import(".//Assets//BakerHouse.fbx");
+	App->importer->Import(".//Assets//test2.fbx");
 	
 	
+	GlobalQuadTree = new Quadtree(AABB(vec(-20, -20, -20), vec(20, 20, 20)), 0);
+
+
 	App->camera->Move(vec3(0.0f, 10.0f, 10.0f));
 	App->camera->LookAt(vec3(0.0f, 3.0f, 0.0f));
 
@@ -43,6 +47,8 @@ void ModuleSceneLoader::DrawSceneGO()
 	{
 		if(scene_objects[i]->IsActive())
 			scene_objects[i]->Draw();
+			
+
 	}
 
 }
@@ -69,6 +75,18 @@ void ModuleSceneLoader::DrawHierarchy()
 	}
 }
 
+void ModuleSceneLoader::DrawGOBoundingBoxes()
+{
+	for (uint i = 0; i < scene_objects.size(); i++)
+	{
+		if (scene_objects[i]->IsActive())
+			scene_objects[i]->RenderBoundingBox();
+
+
+	}
+
+}
+
 GameObject * ModuleSceneLoader::CreateGameObject(std::string go_name)
 {
 	
@@ -86,6 +104,8 @@ GameObject * ModuleSceneLoader::GetRoot() const
 
 update_status ModuleSceneLoader::Update(float dt)
 {
+
+
 	return UPDATE_CONTINUE;
 }
 

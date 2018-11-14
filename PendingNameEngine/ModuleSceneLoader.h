@@ -4,7 +4,7 @@
 #include "Globals.h"
 #include "Primitive.h"
 #include "Mesh.h"
-
+#include "Quadtree.h"
 #include <vector>
 
 class GameObject;
@@ -21,12 +21,14 @@ public:
 
 	void DrawSceneGO();
 	void DrawHierarchy();
-
+	void DrawGOBoundingBoxes();
 	//Create GO
 	GameObject* CreateGameObject(std::string _name);
 	//Utility
 	GameObject* GetRoot() const;
 
+
+	Quadtree* GlobalQuadTree;
 public:
 	std::vector<GameObject*> scene_objects;
 

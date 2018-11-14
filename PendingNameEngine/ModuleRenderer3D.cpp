@@ -141,7 +141,8 @@ update_status ModuleRenderer3D::PostUpdate(float dt)
 	}
 
 	App->scene_loader->DrawSceneGO();
-
+	App->scene_loader->DrawGOBoundingBoxes();
+	App->scene_loader->GlobalQuadTree->RenderQuadTree();
 	App->ui->DrawImGui();
 	
 	EnableLight();

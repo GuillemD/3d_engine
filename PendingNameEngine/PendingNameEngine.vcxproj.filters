@@ -531,7 +531,9 @@
     <ClInclude Include="ComponentCamera.h">
       <Filter>Sources\GameObjectsAndComponents\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Quadtree.h" />
+    <ClInclude Include="Quadtree.h">
+      <Filter>Sources\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleCamera3D.cpp">

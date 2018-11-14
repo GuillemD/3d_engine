@@ -203,6 +203,7 @@ void Importer::LoadMesh(const aiScene* _scene, const aiNode * node, GameObject* 
 			debug_box.SetNegativeInfinity();
 			debug_box.Enclose((float3*)aimesh->mVertices, aimesh->mNumVertices);
 			my_mesh->outside_box = debug_box;
+			
 
 			ComponentMesh* cmp_mesh = new ComponentMesh(aux);
 			cmp_mesh->AttachMesh(my_mesh);
@@ -222,11 +223,19 @@ void Importer::LoadMesh(const aiScene* _scene, const aiNode * node, GameObject* 
 		Quat _rot(quat_rot.x, quat_rot.y, quat_rot.z, quat_rot.w);
 		cmp_transf->SetTransform(_pos, _scale, _rot);
 
+		AABB bb;
+		bb.SetNegativeInfinity();
+		bb.Enclose((float3*)my_mesh->vertex, my_mesh->num_vertex);
+		aux->boundingbox = bb;
+
+		aux->boundingbox.TransformAsAABB(cmp_transf->GetGlobalTransf());
+
 
 		App->scene_loader->scene_objects.push_back(aux);
 		App->camera->Focus(my_mesh->outside_box);
 
 	}
+
 	for (uint i = 0; i < node->mNumChildren; i++)
 	{
 		LoadMesh(_scene, node->mChildren[i], first, mats);
