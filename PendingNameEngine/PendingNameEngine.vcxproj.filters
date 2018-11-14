@@ -750,7 +750,9 @@
     <ClCompile Include="ComponentCamera.cpp">
       <Filter>Sources\GameObjectsAndComponents\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Quadtree.cpp" />
+    <ClCompile Include="Quadtree.cpp">
+      <Filter>Sources\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="MathGeoLib\Math\float2.inl">

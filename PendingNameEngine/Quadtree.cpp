@@ -17,6 +17,7 @@ Quadtree::Quadtree(AABB _qtbb, int _currentsubdivisions)
 
 Quadtree::~Quadtree()
 {
+	Clear();
 }
 
 void Quadtree::Clear()
@@ -41,7 +42,7 @@ void Quadtree::Insert(GameObject * _go)
 			if (childs[0] != nullptr) {
 				for (int i = 0; i < 4; i++) {
 
-					childs[i]->Insert(_go->boundingbox);
+					childs[i]->Insert(_go);
 
 				}
 				
@@ -107,9 +108,24 @@ void Quadtree::SubDivide()
 
 }
 
-void Quadtree::CheckIntersections(std::vector<GameObject*>& _go, AABB * _goboundingbox)
+void Quadtree::CollectIntersections(std::vector<GameObject*>& _goicollidewith, AABB & _goboundingbox)
 {
-	
+	if (my_objects.empty() == false) {
+		if (quadtreeboundingbox->Intersects(_goboundingbox)) {
+			if (childs[0] == nullptr) {
+				for (int i = 0; i < my_objects.size(); i++) {
+					if (_goboundingbox.Intersects(my_objects[i]->boundingbox)) {
+						_goicollidewith.push_back(my_objects[i]);
+					}
+				}
+			}
+			else {
+				for (int i = 0; i < 4; i++) {
+					childs[i]->CollectIntersections(_goicollidewith, _goboundingbox);
+				}
+			}
+		}
+	}
 }
 
 void Quadtree::RenderQuadTree()

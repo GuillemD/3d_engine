@@ -13,7 +13,7 @@ public:
 	void Insert(GameObject* _go);
 	void Remove(GameObject* _go);
 	void SubDivide();
-	void CheckIntersections(std::vector<GameObject*>& _go, AABB* _goboundingbox);
+	void CollectIntersections(std::vector<GameObject*>& _goicollidewith, AABB& _goboundingbox);
 	void RenderQuadTree();
 
 public:

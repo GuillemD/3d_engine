@@ -199,7 +199,8 @@ void Importer::LoadMesh(const aiScene* _scene, const aiNode * node, GameObject* 
 		{
 			BinarySave(my_mesh);
 			//DEBUG BOX
-			AABB debug_box(float3::zero, float3::zero);
+			AABB debug_box;
+			debug_box.SetNegativeInfinity();
 			debug_box.Enclose((float3*)aimesh->mVertices, aimesh->mNumVertices);
 			my_mesh->outside_box = debug_box;
 

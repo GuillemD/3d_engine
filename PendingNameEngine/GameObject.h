@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include "Globals.h"
+#include "MathGeoLib/MathGeoLib.h"
 
 enum ComponentType;
 class Component;
@@ -56,7 +57,7 @@ public:
 	bool selected = false;
 	std::string name;
 	std::vector<Component*> components;
-	//AABB myboundingbox;
+	math::AABB boundingbox;
 
 };
 #endif //__GAME_OBJECT_H__
