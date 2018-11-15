@@ -28,10 +28,6 @@ int Material::GetFormat() const
 	return texture_format;
 }
 
-const char * Material::GetName() const
-{
-	return name;
-}
 
 std::string Material::GetPath() const
 {
@@ -58,7 +54,4 @@ void Material::SetFormat(const int & format)
 	texture_format = format;
 }
 
-void Material::SetName(const char * n)
-{
-	name = n;
-}
+
