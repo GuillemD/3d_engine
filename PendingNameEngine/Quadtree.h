@@ -1,6 +1,7 @@
 #ifndef __Quatree__
 #define __Quatree__
 #include "MathGeoLib/MathGeoLib.h"
+
 #include "GameObject.h"
 #include <vector>
 class Quadtree
@@ -15,7 +16,8 @@ public:
 	void SubDivide();
 	void CollectIntersections(std::vector<GameObject*>& _goicollidewith, AABB& _goboundingbox);
 	void RenderQuadTree();
-
+	void RecalculateQuadTree();
+	void RemoveMyObjects();
 public:
 	AABB * quadtreeboundingbox;
 	int my_subdivision;

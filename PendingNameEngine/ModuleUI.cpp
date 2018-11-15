@@ -154,6 +154,10 @@ void ModuleUI::CreateMainMenu()
 		if (ImGui::BeginMenu("Menu")) {
 			if (ImGui::MenuItem("Save config"))
 				App->SaveConfig();
+
+			if (ImGui::MenuItem("Recalculate Quadtree")) {
+				App->scene_loader->GlobalQuadTree->RecalculateQuadTree();
+			}
 			if (ImGui::MenuItem("Close Application")) {
 				closeApp = !closeApp;
 			}

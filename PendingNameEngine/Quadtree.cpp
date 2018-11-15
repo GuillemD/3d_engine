@@ -1,7 +1,9 @@
 #include "Quadtree.h"
 #include "GLEW/include/glew.h"
+#include "Application.h"
 Quadtree::Quadtree()
 {
+
 }
 
 Quadtree::Quadtree(AABB _qtbb, int _currentsubdivisions)
@@ -198,3 +200,28 @@ void Quadtree::RenderQuadTree()
 		glLineWidth(1.0f);
 	}
 }
+
+void Quadtree::RecalculateQuadTree()
+{
+	if (childs[0] != nullptr) {
+		for (int i = 0; i < 4; i++) {
+			childs[i]->RemoveMyObjects();
+
+		}
+	}
+	RemoveMyObjects();
+	if (!App->scene_loader->scene_objects.empty()) {
+		for (int i = 0; i < App->scene_loader->scene_objects.size(); i++) {
+			Insert(App->scene_loader->scene_objects[i]);
+		}
+	
+	}
+
+}
+
+void Quadtree::RemoveMyObjects()
+{
+	my_objects.clear();
+}
+
+

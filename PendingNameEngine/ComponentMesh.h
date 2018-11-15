@@ -14,6 +14,8 @@ public:
 
 	void AttachMesh(Mesh* _mesh);
 	void UpdateBoundingBox();
+
+	void TransformMesh(float4x4* _transf);
 	Mesh* my_mesh;
 
 };

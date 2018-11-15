@@ -29,13 +29,7 @@ GameObject::~GameObject()
 
 void GameObject::Update()
 {
-	/*for (uint i = 0; i < children.size(); i++) {
-		children[i]->Update();
-	}
-
-	for (uint i = 0; i < components.size(); i++) {
-		components[i]->Update();
-	}*/
+	
 }
 
 void GameObject::OnTransformEvent()
@@ -49,6 +43,8 @@ void GameObject::OnTransformEvent()
 	{
 		children[i]->OnTransformEvent();
 	}
+	
+
 }
 
 bool GameObject::IsActive() const
@@ -274,6 +270,52 @@ void GameObject::AddComponent(Component * cp)
 std::vector<Component*> GameObject::GetComponents() const
 {
 	return components;
+}
+
+ComponentTransf* GameObject::GetComponentTransform()
+{
+	if (this->IsActive())
+	{
+		ComponentTransf* comptrans = (ComponentTransf*)this->GetComponentByType(ComponentType::TRANSFORMATION);
+		if (comptrans != nullptr)
+			return comptrans;
+		else
+			return nullptr;
+	}
+}
+
+ComponentMesh* GameObject::GetComponentMesh()
+{
+	if (this->IsActive())
+	{
+		ComponentMesh* compmesh = (ComponentMesh*)this->GetComponentByType(ComponentType::MESH);
+		if (compmesh != nullptr)
+			return compmesh;
+		else
+			return nullptr;
+	}
+}
+
+bool GameObject::HasComponentMesh()
+{
+	bool ret = false;
+	for (int i = 0; i < components.size(); i++)
+	{
+		if (components[i]->MyType == ComponentType::MESH)
+			ret = true;
+	}
+	return ret;
+}
+
+bool GameObject::HasComponentTransform()
+{
+	bool ret = false;
+	for (int i = 0; i < components.size(); i++)
+	{
+		if (components[i]->MyType == ComponentType::TRANSFORMATION)
+			ret = true;
+	}
+	return ret;
 }
 
 GameObject * GameObject::GetParent() const

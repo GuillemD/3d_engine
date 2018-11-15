@@ -43,3 +43,14 @@ void ComponentMesh::UpdateBoundingBox()
 {
 
 }
+
+
+
+void ComponentMesh::TransformMesh(float4x4* _transf)
+{
+	if (this != nullptr) {
+		my_mesh->outside_box.SetNegativeInfinity();
+		my_mesh->outside_box.Enclose((float3*)my_mesh->vertex, my_mesh->num_vertex / 3);
+		my_mesh->outside_box.TransformAsAABB(_transf);
+	}
+}

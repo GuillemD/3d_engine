@@ -10,6 +10,8 @@ enum ComponentType;
 class Component;
 class Material;
 class Mesh;
+class ComponentTransf;
+class ComponentMesh;
 
 
 class GameObject
@@ -42,6 +44,12 @@ public:
 	Component* GetComponentByType(ComponentType type) const;
 	void AddComponent(Component* cp);
 	std::vector<Component*> GetComponents() const;
+
+	ComponentTransf* GetComponentTransform();
+	ComponentMesh* GetComponentMesh();
+
+	bool HasComponentMesh();
+	bool HasComponentTransform();
 
 	GameObject* GetParent() const;
 	void SetParent(GameObject* _parent);

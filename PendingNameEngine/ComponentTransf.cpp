@@ -1,7 +1,7 @@
 #include "ComponentTransf.h"
 #include "GameObject.h"
 #include "ImGui/imgui.h"
-
+#include "ComponentMesh.h"
 #include <vector>
 
 ComponentTransf::ComponentTransf(GameObject* _gameobject)
@@ -120,13 +120,25 @@ void ComponentTransf::RecalculateTransform()
 
 void ComponentTransf::ChangeTransformEvent()
 {
-	if (GetOwner()->GetParent() == nullptr)
+	if (GetOwner()->GetParent() == nullptr) {
 		globalTransf = float4x4::FromTRS(position, quatRotation, scal);
+		
+		GameObject* go = GetOwner();
+		ComponentMesh* mesh= go->GetComponentMesh();
+		mesh->TransformMesh(&globalTransf);
+	}
+		
 	else
 	{
 		ComponentTransf* parent = (ComponentTransf*)GetOwner()->GetParent()->GetComponentByType(TRANSFORMATION);
 		globalTransf = parent->globalTransf*float4x4::FromTRS(position, quatRotation, scal);
+		
+		GameObject* go = GetOwner();
+		ComponentMesh* mesh = go->GetComponentMesh();
+		mesh->TransformMesh(&globalTransf);
 	}
+	
+	
 }
 
 void ComponentTransf::DrawInInspector()
@@ -162,7 +174,11 @@ void ComponentTransf::DrawInInspector()
 			}
 
 			if (call_update)
+			{
 				RecalculateTransform();
+							
+			}
+				
 		}
 		
 	}
