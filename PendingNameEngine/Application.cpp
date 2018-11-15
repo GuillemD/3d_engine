@@ -8,6 +8,7 @@ Application::Application()
 	input = new ModuleInput(this);
 	importer = new Importer(this);
 	texture = new TextureLoader(this);
+	SM = new SerializationManager(this);
 	ui = new ModuleUI(this);
 	renderer3D = new ModuleRenderer3D(this);
 	camera = new ModuleCamera3D(this);
@@ -25,6 +26,7 @@ Application::Application()
 	AddModule(texture);
 	AddModule(input);
 	AddModule(ui);
+	AddModule(SM);
 
 	// Scenes
 	AddModule(scene_loader);

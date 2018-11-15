@@ -49,8 +49,8 @@ public:
 	void PushChild(GameObject* _child);
 	std::vector<GameObject*> GetChildren() const;
 
-	void Save(JSON_Value* go);
-	void Load(JSON_Value* go);
+	void Save(JSONFile* file, rapidjson::Value* value);
+	void Load(JSONFile* file);
 
 public:
 

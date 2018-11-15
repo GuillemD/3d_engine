@@ -46,8 +46,6 @@ public:
 	bool active;
 	GameObject* my_go = nullptr;
 
-	uint UUID;
-
 };
 
 #endif //COMPONENT_H__

@@ -17,11 +17,16 @@ public:
 	bool Init();
 	bool CleanUp();
 
+	void SaveDDS();
 	ComponentMaterial* LoadTexFromPath(const char* full_path);
-	Material* ImportMaterial(const char* full_path);
+	Material* LoadMaterial(const char* full_path);
 	
-
 	int getILversion() const;
+	std::string GetExtension(const char* path);
+	std::string GetPath(const char* path);
+private:
+
+	uint num_tex = 0;
 
 
 };

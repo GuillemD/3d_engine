@@ -69,7 +69,7 @@ bool Importer::Import(const std::string &full_path)
 				uint name_pos = m_path.find_last_of("\\");
 				tex_path += m_path.substr(name_pos + 1);
 
-				material = App->texture->ImportMaterial(tex_path.c_str());
+				material = App->texture->LoadMaterial(tex_path.c_str());
 				scene_mats.push_back(material);
 			}
 		}

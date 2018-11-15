@@ -6,8 +6,7 @@
 Component::Component()
 {
 	active = true;
-	//UUID = generateUID();
-	
+		
 }
 
 

@@ -262,49 +262,31 @@ std::vector<GameObject*> GameObject::GetChildren() const
 	return children;
 }
 
-void GameObject::Save(JSON_Value * go) 
+void GameObject::Save(JSONFile * file, rapidjson::Value* value)
 {
-	JSON_Value* gameObject = go->createValue();
+	rapidjson::Document::AllocatorType& all = file->document->GetAllocator();
 
-	gameObject->addUint("UUID", UUID);
-	gameObject->addUint("ParentUUID", (parent == App->scene_loader->root) ? 0 : parent->UUID);
-	gameObject->addString("Name", name.c_str());
+	rapidjson::Value val(rapidjson::kObjectType);
+	val.AddMember("UUID", UUID, all);
 
-	JSON_Value* Components = go->createValue();
-	Components->convertToArray();
-
-	for (std::vector<Component*>::iterator it_c = components.begin(); it_c != components.end(); it_c++)
+	rapidjson::Value comps(rapidjson::kObjectType);
+	for (std::vector<Component*>::iterator it = components.begin(); it != components.end(); it++)
 	{
-		//(*it_c)->Save(Components);
+		//(*it)->Save_Component(file->document, &comps);
 	}
+	val.AddMember("Component", comps, all);
 
-	gameObject->addValue("Components", Components);
-
-	go->addValue("", gameObject);
-
-	for (std::vector<GameObject*>::iterator it_c = children.begin(); it_c != children.end(); it_c++)
+	rapidjson::Value childs(rapidjson::kObjectType);
+	for (std::vector<GameObject*>::iterator it = children.begin(); it != children.end(); it++)
 	{
-		(*it_c)->Save(go);
+		(*it)->Save(file, &childs);
 	}
+	val.AddMember("Children", childs, all);
+
+	value->AddMember("OBJECT", val, all);
 }
 
-void GameObject::Load(JSON_Value * go)
+void GameObject::Load(JSONFile * file)
 {
-	UUID = go->getUint("UUID");
-	parentUUID = go->getUint("ParentUUID");
-	name = go->getString("Name");
-
-	JSON_Value* Components = go->getValue("Components"); //It is an array of values
-	if (Components->getRapidJSONValue()->IsArray()) //Just make sure
-	{
-		for (int i = 0; i < Components->getRapidJSONValue()->Size(); i++)
-		{
-			JSON_Value* componentData = Components->getValueFromArray(i); //Get the component data
-			//Component* component = new Component();
-			//component->SetType((ComponentType)componentData->getInt("Type"));
-			//component->Load(componentData); //Load its info
-		}
-	}
-
-	
+		
 }

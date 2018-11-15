@@ -18,6 +18,9 @@ TextureLoader::TextureLoader(bool start_enabled)
 	iluInit();
 	ilutInit();
 	ilutRenderer(ILUT_OPENGL);
+
+	App->CreateNewDirectory("Assets\\Textures");
+	App->CreateNewDirectory("Library\\Textures");
 }
 
 TextureLoader::~TextureLoader()
@@ -45,6 +48,32 @@ bool TextureLoader::CleanUp()
 	return ret;
 }
 
+
+
+void TextureLoader::SaveDDS()
+{
+	ILuint		size;
+	ILubyte*	data;
+
+	ilSetInteger(IL_DXTC_FORMAT, IL_DXT5);
+
+	size = ilSaveL(IL_DDS, NULL, 0);
+	if (size > 0)
+	{
+		data = new ILubyte[size];
+		if (ilSaveL(IL_DDS, data, size) > 0)
+		{
+			char file[69];
+			sprintf_s(file, "Library\\Textures\\Texture_%d.dds", num_tex++);
+			FILE* tex_file = fopen(file, "wb");
+			fwrite(data, sizeof(ILubyte), size, tex_file);
+			fclose(tex_file);
+
+
+		}
+	}
+}
+
 ComponentMaterial* TextureLoader::LoadTexFromPath(const char* full_path)
 {
 	
@@ -57,15 +86,13 @@ ComponentMaterial* TextureLoader::LoadTexFromPath(const char* full_path)
 	ilGenImages(1, &image_id);
 	ilBindImage(image_id);
 	
-	ILboolean imageloaded = true;
-
-	imageloaded = ilLoadImage(full_path);
-
 	ComponentMaterial* cmp_material = new ComponentMaterial();
 	cmp_material->SetActive(true);
 	cmp_material->mat = new Material();
 
-	if (imageloaded) {
+	
+
+	if (ilLoad(IL_TYPE_UNKNOWN, full_path)) {
 		ILinfo info;
 		iluGetImageInfo(&info);
 
@@ -91,6 +118,7 @@ ComponentMaterial* TextureLoader::LoadTexFromPath(const char* full_path)
 		glBindTexture(GL_TEXTURE_2D, tex_id);
 
 		cmp_material->mat->id_texture = tex_id;
+		
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
@@ -124,7 +152,7 @@ ComponentMaterial* TextureLoader::LoadTexFromPath(const char* full_path)
 	
 }
 
-Material * TextureLoader::ImportMaterial(const char * full_path)
+Material * TextureLoader::LoadMaterial(const char * full_path)
 {
 	CONSOLELOG("Importing texture %s", full_path);
 
@@ -135,13 +163,9 @@ Material * TextureLoader::ImportMaterial(const char * full_path)
 	ilGenImages(1, &image_id);
 	ilBindImage(image_id);
 
-	ILboolean imageloaded = true;
-
-	imageloaded = ilLoadImage(full_path);
-
 	Material* m = new Material();
 
-	if (imageloaded) {
+	if (ilLoad(IL_TYPE_UNKNOWN, full_path)) {
 		ILinfo info;
 		iluGetImageInfo(&info);
 
@@ -167,6 +191,8 @@ Material * TextureLoader::ImportMaterial(const char * full_path)
 		glBindTexture(GL_TEXTURE_2D, tex_id);
 
 		m->id_texture = tex_id;
+		m->ext = GetExtension(full_path);
+		m->path = GetPath(full_path);
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
@@ -181,6 +207,7 @@ Material * TextureLoader::ImportMaterial(const char * full_path)
 		CONSOLELOG("Image width: %d", ilGetInteger(IL_IMAGE_WIDTH));
 		CONSOLELOG("Image height: %d", ilGetInteger(IL_IMAGE_HEIGHT));
 
+		SaveDDS();
 
 		CONSOLELOG("Texture %s loaded correctly", full_path);
 
@@ -203,4 +230,26 @@ Material * TextureLoader::ImportMaterial(const char * full_path)
 int TextureLoader::getILversion() const
 {
 	return IL_VERSION;
+}
+
+std::string TextureLoader::GetExtension(const char * path)
+{
+	std::string _path = path;
+	std::string ext;
+
+	uint dot = _path.find_last_of(".");
+	ext = _path.substr(dot + 1);
+
+	return ext;
+}
+
+std::string TextureLoader::GetPath(const char * path)
+{
+	std::string _path = path;
+	std::string rel_path;
+
+	uint slash = _path.find_last_of("\\");
+	rel_path = _path.substr(0, slash + 1);
+
+	return rel_path;
 }

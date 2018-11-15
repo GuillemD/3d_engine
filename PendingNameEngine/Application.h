@@ -9,12 +9,13 @@
 #include "ModuleCamera3D.h"
 #include "ModuleUI.h"
 #include "Importer.h"
+#include "SerializationManager.h"
 #include <list>
 #include "rapidjson\rapidjson.h"
 #include "rapidjson\document.h"
 #include "rapidjson\filereadstream.h"
 #include "rapidjson\filewritestream.h"
-//#include "rng.h"
+
 
 class Configuration;
 
@@ -29,6 +30,7 @@ public:
 	ModuleRenderer3D* renderer3D;
 	ModuleCamera3D* camera;
 	ModuleUI* ui;
+	SerializationManager* SM;
 
 
 private:
